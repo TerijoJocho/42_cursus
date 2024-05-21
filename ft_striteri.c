@@ -6,7 +6,7 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:21:05 by terijo            #+#    #+#             */
-/*   Updated: 2024/05/21 13:24:05 by terijo           ###   ########.fr       */
+/*   Updated: 2024/05/21 15:31:23 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,17 @@
 
 void ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-    
+    int     i;
+
+    i = 0;
+    if (s != NULL && f != NULL)
+    {
+        while (s[i] != '\0')
+        {
+            f(i, &s[i]);
+            i++;
+        }
+        
+    }
 }
+//pas testé 
