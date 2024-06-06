@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str.c                                     :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:26:03 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/06 13:25:38 by daavril          ###   ########.fr       */
+/*   Created: 2024/04/24 16:56:46 by terijo            #+#    #+#             */
+/*   Updated: 2024/05/27 16:02:38 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "libft.h"
 
-int	ft_print_str(char *value, int *writtenCarac)
+char	*ft_strchr(const char *s, int c)
 {
 	int	i;
 
 	i = 0;
-	if (!value)
-		value = "(null)";
-	while (value[i] != '\0')
-	{
-		ft_print_char(value[i]);
-		writtenCarac++;
+	while (s[i] != '\0' && s[i] != (char)c)
 		i++;
-	}
-	return (1);
+	if (s[i] == (char)c)
+		return ((char *)&s[i]);
+	return (NULL);
 }
+/*#include <string.h>
+#include <stdio.h>
+
+int	main(void)
+{
+	char    s[] = "tripouille";
+	int c;
+
+	c = 't' + 256;
+	printf("Vrai fonction :%s\n", strchr(s, c));
+	printf("Ma fonction :%s", ft_strchr(s, c));
+	return (0);
+}*/
+// finiii !!

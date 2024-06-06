@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str.c                                     :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:26:03 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/06 13:25:38 by daavril          ###   ########.fr       */
+/*   Created: 2024/05/22 11:51:28 by daavril           #+#    #+#             */
+/*   Updated: 2024/05/27 16:02:24 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "libft.h"
 
-int	ft_print_str(char *value, int *writtenCarac)
+void	ft_putendl_fd(char *s, int fd)
 {
 	int	i;
 
 	i = 0;
-	if (!value)
-		value = "(null)";
-	while (value[i] != '\0')
+	if (!s || !fd)
+		return ;
+	while (s[i])
 	{
-		ft_print_char(value[i]);
-		writtenCarac++;
+		write(fd, &s[i], 1);
 		i++;
 	}
-	return (1);
+	write(fd, "\n", 1);
 }
+/*int     main(void)
+{
+	char    *s = "Bonjour";
+
+	ft_putendl_fd(NULL, 1);
+	return (0);
+}*/

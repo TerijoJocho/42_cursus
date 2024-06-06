@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str.c                                     :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:26:03 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/06 13:25:38 by daavril          ###   ########.fr       */
+/*   Created: 2024/05/22 11:43:22 by daavril           #+#    #+#             */
+/*   Updated: 2024/05/27 16:02:21 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "libft.h"
 
-int	ft_print_str(char *value, int *writtenCarac)
+void	ft_putchar_fd(char c, int fd)
 {
-	int	i;
-
-	i = 0;
-	if (!value)
-		value = "(null)";
-	while (value[i] != '\0')
-	{
-		ft_print_char(value[i]);
-		writtenCarac++;
-		i++;
-	}
-	return (1);
+	write(fd, &c, 1);
 }
+/*int     main(void)
+{
+	char    c = 'c';
+
+	ft_putchar_fd(c, 0);
+	write(1, "\n", 1);
+	ft_putchar_fd(c, 1);
+	write(1, "\n", 1);
+	ft_putchar_fd(c, 2);
+	return (0);
+}*/

@@ -6,14 +6,14 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:22:28 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/03 19:11:20 by daavril          ###   ########.fr       */
+/*   Updated: 2024/06/06 13:49:58 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "files.h"
 #include "../libft/libft.h"
 
-char    *ft_type(char c, va_list value, int *writtenCarac)
+void    ft_type(char c, va_list value, int *writtenCarac)
 {
     if (c == 'c')
     {
@@ -22,8 +22,8 @@ char    *ft_type(char c, va_list value, int *writtenCarac)
     }
     else if (c == 's')
         ft_print_str(va_arg(value, char *), writtenCarac);
-    //else if (c == 'p')
-    //    ft_print_p(va_arg(value, unsigned long long), writtenCarac);
+    else if (c == 'p')
+        ft_print_p(va_arg(value, unsigned long long), writtenCarac);
     else if (c == 'd' || c == 'i')
         ft_print_id(va_arg(value, int), writtenCarac);
     //else if (c == 'u')
@@ -58,11 +58,3 @@ int	ft_printf(const char *str, ...)
     return (writtenCarac);
 }
 
-int	main(void)
-{
-	char    *c = "bonjour";
-    
-    printf("%s\n",c);
-	ft_printf("Ma fonction :%s",c);
-	return (0);
-}

@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files.h                                            :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 14:16:32 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/03 19:09:34 by daavril          ###   ########.fr       */
+/*   Created: 2024/04/24 16:46:38 by terijo            #+#    #+#             */
+/*   Updated: 2024/05/27 16:06:50 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILES_H
-# define FILES_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <assert.h>
-# include <stdarg.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+void	*ft_memset(void *b, int c, size_t len)
+{
+	while (len--)
+		*((unsigned char *)(b + len)) = (unsigned char)c;
+	return (b);
+}
+/*#include <string.h>
+#include <stdio.h>
 
-void	ft_print_char(char c);
-int		ft_print_id(int value, int *writtenCarac);
-int		ft_print_str(char *value, int *writtenCarac);
-char	*ft_print_p(char *str, int *writtenCarac);
+int	main(void)
+{
+	int c;
+	char b[5];
+	char    a[6];
 
-#endif
+	c = '0';
+	ft_memset(a, c, sizeof a);
+	printf("ft_memset :%s\n", a);
+	return (0);
+}*/
+/*test check*/

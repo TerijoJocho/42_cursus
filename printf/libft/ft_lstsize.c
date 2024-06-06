@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str.c                                     :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:26:03 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/06 13:25:38 by daavril          ###   ########.fr       */
+/*   Created: 2024/05/30 14:35:29 by daavril           #+#    #+#             */
+/*   Updated: 2024/05/30 17:51:47 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "libft.h"
 
-int	ft_print_str(char *value, int *writtenCarac)
+int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	if (!value)
-		value = "(null)";
-	while (value[i] != '\0')
+	len = 0;
+	while (lst != NULL)
 	{
-		ft_print_char(value[i]);
-		writtenCarac++;
-		i++;
+		len++;
+		lst = lst->next;
 	}
-	return (1);
+	return (len);
 }
+/*#include <stdio.h>
+int	main(void)
+{
+	t_list  *node;
+	char    *str;
+
+	str = "lol";
+	node = ft_lstnew((void *)str);
+	printf("%s", (char *)node->content);
+	printf("\n%d", ft_lstsize(node));
+}*/
+/*donne la taille d'une chaine; cobien de maillon elle contient*/

@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str.c                                     :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:26:03 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/06 13:25:38 by daavril          ###   ########.fr       */
+/*   Created: 2024/04/24 16:57:09 by terijo            #+#    #+#             */
+/*   Updated: 2024/05/27 16:03:17 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "libft.h"
 
-int	ft_print_str(char *value, int *writtenCarac)
+size_t	ft_strlen(char const *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	if (!value)
-		value = "(null)";
-	while (value[i] != '\0')
-	{
-		ft_print_char(value[i]);
-		writtenCarac++;
+	while (str[i])
 		i++;
-	}
-	return (1);
+	return (i);
 }
+/*#include <stdio.h>
+int	main(void)
+{
+	char    str[] = "Bonjour";
+	printf("%d", ft_strlen(str));
+	return (0);
+}*/
+// fini !!

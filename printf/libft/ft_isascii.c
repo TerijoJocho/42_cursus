@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str.c                                     :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:26:03 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/06 13:25:38 by daavril          ###   ########.fr       */
+/*   Created: 2024/04/24 16:56:18 by terijo            #+#    #+#             */
+/*   Updated: 2024/05/27 16:00:14 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "libft.h"
 
-int	ft_print_str(char *value, int *writtenCarac)
+int	ft_isascii(int c)
 {
-	int	i;
-
-	i = 0;
-	if (!value)
-		value = "(null)";
-	while (value[i] != '\0')
-	{
-		ft_print_char(value[i]);
-		writtenCarac++;
-		i++;
-	}
-	return (1);
+	if (c >= 0 && c <= 127)
+		return (1);
+	return (0);
 }
+/*#include <stdio.h>
+#include <ctype.h>
+
+int	main(void)
+{
+	int c;
+
+	c = -6;
+	printf(" moi : %d\n", ft_isascii(c));
+	printf("vrai : %d", isascii(c));
+}*/

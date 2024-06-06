@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str.c                                     :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 18:26:03 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/06 13:25:38 by daavril          ###   ########.fr       */
+/*   Created: 2024/05/30 18:40:29 by daavril           #+#    #+#             */
+/*   Updated: 2024/05/30 19:45:18 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "libft.h"
 
-int	ft_print_str(char *value, int *writtenCarac)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	int	i;
+	t_list	*next_node;
 
-	i = 0;
-	if (!value)
-		value = "(null)";
-	while (value[i] != '\0')
+	if (!*lst || !lst)
+		return ;
+	while (*lst)
 	{
-		ft_print_char(value[i]);
-		writtenCarac++;
-		i++;
+		next_node = (*lst)->next;
+		if (del)
+			del((*lst)->content);
+		free(*lst);
+		*lst = next_node;
 	}
-	return (1);
+	*lst = NULL;
 }
+/*supp la lst jusqua la fn et l'initialise a NULL
+pas de current car on veut vraiment tt effacer*/
