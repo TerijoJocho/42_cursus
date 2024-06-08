@@ -6,42 +6,75 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/03 12:32:20 by daavril           #+#    #+#              #
-#    Updated: 2024/06/06 13:51:01 by daavril          ###   ########.fr        #
+#    Updated: 2024/06/07 16:43:16 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-INCLUDES = ./includes/
-CC = cc
-AR = ar -rcs
-CFLAGS = -Wall -Wextra -Werror
+CC            = cc
+CFLAGS        = -Wall -Wextra -Werror 
+INCLUDE        =    -I include\
+                -I libft
 
-SRCS = ft_printf.c ft_print_char.c ft_print_id.c ft_print_p.c ft_print_str.c \
-		ft_printf_hexa.c ft_printf_undec.c main.c \
+OBJS_DIR    =    obj/
+OBJ            =    $(SRC_FILES:.c=.o)
+OBJS        =    $(addprefix $(OBJS_DIR), $(OBJ))
 
-OBJS = ${SRCS:.c=.o}
+SRCS_DIR    =    src/
+SRC_FILES    =    main.c \
+                ft_print_char.c \
+                ft_print_p.c \
+                ft_print_id.c \
+                ft_print_str.c \
+                ft_print_hexa.c \
+                ft_print_undec.c \
+                ft_printf.c
+SRCS        =    $(addprefix $(SRCS_DIR), $(SRC_FILES))
 
-all: ${NAME}
 
-.c.o:
-	${CC} ${CFLAGS} -c -I $(INCLUDES) $< -o ${<:.c=.o}
+LIBFT_PATH     = libft/
+LIBFT_NAME    = libft.a
+LIBFT        = $(LIBFT_PATH)$(LIBFT_NAME)
 
-${NAME}: ${OBJS}
-	@make -C libft
-	@cp libft/libft.a .
-	@mv libft.a ${NAME}
-	${AR} ${NAME} ${OBJS}
-	@ranlib ${NAME}
+NORME_ME    =    norminette -R CheckForbiddenSourceHeader
+
+# RAINBOOOW
+
+DEF_COLOR = \033[0;39m
+GRAY = \033[0;90m
+RED = \033[0;91m
+GREEN = \033[0;92m
+YELLOW = \033[0;93m
+BLUE = \033[0;94m
+MAGENTA = \033[0;95m
+CYAN = \033[0;96m
+WHITE = \033[0;97m
+
+all:        $(LIBFT) $(NAME)
+
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c 
+			@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
+
+$(OBJS): $(OBJS_DIR)
+
+$(OBJS_DIR): 
+		@mkdir $(OBJS_DIR)
+
+$(LIBFT):
+			@make -sC $(LIBFT_PATH) --no-print-directory
+			@echo "Libft \033[1;32mOK\033[m"
+
+$(NAME):    $(OBJS)
+			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(INCLUDE) 
+			@echo "$(GREEN)My Printf compiled!$(DEF_COLOR)"
 
 clean:
-	@make clean -C libft
-	rm -f ${OBJS}
+			@rm -rf $(OBJS_DIR)
+			@make clean -C $(LIBFT_PATH) --no-print-directory
 
 fclean:        clean
-	rm -f libft/libft.a
-	rm -f ${NAME}
+			@rm -rf $(NAME)
+			@rm -rf $(LIBFT_PATH)$(LIBFT_NAME)
 
-re:    fclean all
-
-.PHONY: all clean fclean re libft
-
+re:         fclean all
+			@echo "$(GREEN)Cleaned and rebuilt everything for ft_printf!$(DEF_COLOR)"

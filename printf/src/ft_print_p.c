@@ -6,11 +6,11 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:42:49 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/06 13:31:27 by daavril          ###   ########.fr       */
+/*   Updated: 2024/06/08 05:10:17 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "../include/ft_printf.h"
 #include <stdint.h>
 
 static size_t	ft_ptrlen(uintptr_t value)
@@ -50,7 +50,7 @@ void	ft_print_p(unsigned long long value, int *writtenCarac)
 	else
 	{
 		ft_putptr(value);
-		(*writtenCarac) = ft_ptrlen(value);
+		(*writtenCarac) += ft_ptrlen(value);
 	}
 }
 /*static size_t ft_len(char *value)
