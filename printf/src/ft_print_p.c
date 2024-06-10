@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:42:49 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/08 05:10:17 by daavril          ###   ########.fr       */
+/*   Updated: 2024/06/10 13:49:30 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ static void	ft_putptr(uintptr_t num)
 	}
 }
 
-void	ft_print_p(unsigned long long value, int *writtenCarac)
+void	ft_print_p(unsigned long long value, int *written_carac)
 {
-	(*writtenCarac) += write(1, "0x", 2);
 	if (value == 0)
-		(*writtenCarac) += write(1, "0", 1);
+		(*written_carac) += write(1, "(nil)", 5);
 	else
 	{
+		(*written_carac) += write(1, "0x", 2);
 		ft_putptr(value);
-		(*writtenCarac) += ft_ptrlen(value);
+		(*written_carac) += ft_ptrlen(value);
 	}
 }
 /*static size_t ft_len(char *value)

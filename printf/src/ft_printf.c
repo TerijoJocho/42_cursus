@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:22:28 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/08 04:10:36 by daavril          ###   ########.fr       */
+/*   Updated: 2024/06/10 14:48:42 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,28 @@ void	ft_type(char c, va_list value, int *writtenCarac)
 	else if (c == '%')
 	{
 		ft_putchar_fd(c, 1);
+		(*writtenCarac)++;
 	}
 }
 
 int	ft_printf(const char *str, ...)
 {
-	int		writtenCarac;
+	int		written_carac;
 	va_list	args;
 
-	writtenCarac = 0;
+	written_carac = 0;
 	va_start(args, str);
 	while (*str)
 	{
 		if (*str != '%')
 		{
 			ft_print_char(str[0]);
-			writtenCarac++;
+			written_carac++;
 		}
 		else
-			ft_type(*++str, args, &writtenCarac);
+			ft_type(*++str, args, &written_carac);
 		str++;
 	}
 	va_end(args);
-	return (writtenCarac);
+	return (written_carac);
 }
