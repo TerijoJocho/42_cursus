@@ -1,49 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/13 10:58:17 by daavril           #+#    #+#             */
+/*   Updated: 2024/06/13 18:52:52 by daavril          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int ft_check_end_line(char *stash)
+#include "get_next_line.h"
+
+char	*get_next_line(int fd)
 {
-    while (*stash)
-    {
-        if (*stash == '\n')
-            return (1);
-        *stash++;
-    }
-    return (0);
+	int			bytes_read;
+	static char	*stash;
+	char		*buffer;
+	char		*line;
+
+	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (fd < 0 || BUFFER_SIZE <= 0 || !(buffer))
+		return (NULL);
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
+	{
+		buffer[bytes_read] = '\0';
+		stash = ft_put_buf_in_stash(buffer, stash);
+		if (ft_clean_stash(stash) == 1)
+		{
+			free(buffer);
+			return (ft_line(stash));
+		}
+		free(buffer);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+	}
+	if (bytes_read <= 0)
+		return (free(buffer), NULL);
+	return (line = ft_line(stash));
 }
 
-char *ft_enleve_le_n_et_renvoie_la_ligne(char *stash)
-{
-    char *line;
-
-    while (*stash != '\n')
-        *line++ = *stash++;
-    return (line);
-}
-
-char    *get_next_line(int fd)
-{
-    static char *stash;
-    static t_list *stash;
-    char    *buf;
-    char    *line;
-    int res_read;
-
-    res_read = read(fichier.txt, buf, buf_size);
-    if (res_read == 0)
-        return (NULL);
-    line = malloc(buf_size * sizeof(char));
-    if (!line)
-        return (NULL);  
-    while (res_read != 0)
-    {
-        stash = ft_stock_dans_stash(buf);
-        if (ft_check_end_line(stash) == 1)
-        {
-            line = ft_enleve_le_n_et_renvoie_la_ligne(stash);
-            return (line); //s'arrete nan?
-        }
-        res_read = read(fichier.txt, buf, buf_size);
-    }
-}
-NB : si on a buf_size = 9999, il faut donc que mon ft_check_end_line
-        regarde combien de \n il y a dans mon buffer et que mon 
-        ft_enleve_le_n_et_renvoie_la_ligne ???
+/*NB : si on a buf_size = 9999, il faut donc que mon ft_check_end_line
+		regarde combien de \n il y a dans mon buffer et que mon
+		ft_enleve_le_n_et_renvoie_la_ligne ???*/
