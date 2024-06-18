@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 15:46:48 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/17 21:56:06 by daavril          ###   ########.fr       */
+/*   Created: 2024/06/18 00:44:53 by daavril           #+#    #+#             */
+/*   Updated: 2024/06/18 01:00:12 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 3
+# endif
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 777
 # endif
 
 char	*get_next_line(int fd);

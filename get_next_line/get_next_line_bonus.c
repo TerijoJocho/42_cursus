@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/13 10:58:17 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/18 00:22:42 by daavril          ###   ########.fr       */
+/*   Created: 2024/06/18 00:44:47 by daavril           #+#    #+#             */
+/*   Updated: 2024/06/18 00:55:09 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_new_stash_and_right_line(char *line)
 {
@@ -62,28 +62,28 @@ char	*read_and_stash(int fd, char *stash, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[OPEN_MAX];
 	char		*line;
 	char		*buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 	{
-		if (stash)
-			free(stash);
+		if (stash[fd])
+			free(stash[fd]);
 		return (NULL);
 	}
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer || read(fd, buffer, 0) < 0)
 	{
-		free(stash);
+		free(stash[fd]);
 		free(buffer);
-		stash = NULL;
+		stash[fd] = NULL;
 		return (NULL);
 	}
-	line = read_and_stash(fd, stash, buffer);
+	line = read_and_stash(fd, stash[fd], buffer);
 	free(buffer);
 	if (!line)
 		return (NULL);
-	stash = get_new_stash_and_right_line(line);
+	stash[fd] = get_new_stash_and_right_line(line);
 	return (line);
 }
