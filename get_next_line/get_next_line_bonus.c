@@ -6,11 +6,16 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 00:44:47 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/18 00:55:09 by daavril          ###   ########.fr       */
+/*   Updated: 2024/06/20 15:17:49 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+void	ft_free(void)
+{
+	get_next_line(-42);
+}
 
 char	*get_new_stash_and_right_line(char *line)
 {
@@ -66,9 +71,9 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 
-	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE <= 0)
 	{
-		if (stash[fd])
+		if (stash[fd] && fd >= 0 && fd < OPEN_MAX)
 			free(stash[fd]);
 		return (NULL);
 	}

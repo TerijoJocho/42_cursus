@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 00:44:53 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/18 01:00:12 by daavril          ###   ########.fr       */
+/*   Updated: 2024/06/20 17:44:53 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 10
 # endif
 
 # ifndef OPEN_MAX
-#  define OPEN_MAX 777
+#  define OPEN_MAX 1024
 # endif
 
 char	*get_next_line(int fd);
@@ -35,5 +35,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(char const *str);
+void	ft_free(void)__attribute__((destructor));
 
 #endif

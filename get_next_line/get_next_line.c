@@ -6,11 +6,16 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:58:17 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/18 00:22:42 by daavril          ###   ########.fr       */
+/*   Updated: 2024/06/20 17:25:32 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	ft_free(void)
+{
+	get_next_line(-42);
+}
 
 char	*get_new_stash_and_right_line(char *line)
 {
