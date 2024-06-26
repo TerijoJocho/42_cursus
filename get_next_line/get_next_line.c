@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:58:17 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/20 17:25:32 by daavril          ###   ########.fr       */
+/*   Updated: 2024/06/26 13:03:20 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_new_stash_and_right_line(char *line)
 		i++;
 	if (line[i] == '\0')
 		return (NULL);
-	new_stash = ft_substr(line, i + 1, ft_strlen(line) - (i + 1));
+	new_stash = ft_substr(line, i + 1, ft_strlen(line) - (i + 1));//- i plutot non?
 	if (*new_stash == '\0')
 	{
 		free(new_stash);
