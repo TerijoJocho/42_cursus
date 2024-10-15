@@ -6,35 +6,16 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:01:08 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/01 18:06:53 by daavril          ###   ########.fr       */
+/*   Updated: 2024/10/15 15:39:34 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	error_mes(char *str)
-{
-	ft_printf("Error.\n%s",str);
-	exit(EXIT_FAILURE);
-}
-
-int	is_num(char *str)
-{
-	while(*str)
-	{
-		/*if (*str == '-' || *str == '+')
-			str++;*/
-		if (*str > '9' || *str < '0')
-			return (0);
-		str++;
-	}
-	return (1);
-}
-
 int	is_int(char *str)
 {
 	long long	res;
-	int	sign;
+	int			sign;
 
 	res = 0;
 	sign = 1;
@@ -44,48 +25,61 @@ int	is_int(char *str)
 			sign = -1;
 		str++;
 	}
-	while(*str)
+	while (*str)
 	{
-		res = res * 10 + (*str + '0');
-		ft_printf("prout :%d\n",res);
-		if ((sign == 1 && res > 2147483647) || (sign == -1 && res < -2147483648))
-				return (0);
+		if (*str < '0' || *str > '9')
+			return (0);
+		res = res * 10 + (*str - '0');
+		if ((sign == 1 && res > 2147483647))
+			return (0);
+		if ((sign == -1 && res > 2147483648))
+			return (0);
 		str++;
 	}
 	return (1);
 }
 
+void	check_param(char *str, t_list **pile_a)
+{
+	if (!is_int(str))
+		error_mes("Parameter aren't integer or a number.\n");
+	init_lst(str, pile_a);
+}
+
 int	main(int argc, char **argv)
 {
-	int	i;
+	char	**tab;
 	t_list	*pile_a;
 	t_list	*pile_b;
+	int		i;
 
-	i = 1;
-	(void)argc;
-	pile_a = ft_lstnew((void *)(__intptr_t)ft_atoi(argv[i]));
-	while (argv[++i])
-	{
-		/*if (!is_num(argv[i]))
-			error_mes("Parameter aren't numbers.\n");
-		if (!is_int(argv[i]))
-			error_mes("Parameter aren't integer.\n");
-		if(is_double(argv[i]))
-			error_mes("There is a parameter twice.");*/
-		init_lst(argv[i], pile_a);
-	}
+	i = 0;
+	pile_a = NULL;
 	pile_b = NULL;
-	swap_a(&pile_a);
-	push_b(&pile_a, &pile_b);
-	while (pile_a)
+	tab = NULL;
+	if (argc == 2)
 	{
-		ft_printf("Value a: %d\n", (int)(__intptr_t)pile_a->content);
-		pile_a = pile_a->next;
+		tab = ft_split(argv[1], ' ');
+		while (tab[i])
+			check_param(tab[i++], &pile_a);
 	}
-	while (pile_b)
+	else if (argc > 2)
 	{
-		ft_printf("Value b: %d\n", (int)(__intptr_t)pile_b->content);
-		pile_b = pile_b->next;
+		while (argv[++i])
+			check_param(argv[i], &pile_a);
 	}
+	push_swap(&pile_a, &pile_b);
+	free_all(tab, &pile_a, &pile_b, argc);
 	return (0);
 }
+
+/*affiche la pile a et b
+
+	while (pile_a && pile_b)
+	{
+		ft_printf("Value a: %d  -", (int)(__intptr_t)pile_a->content);
+		ft_printf("  Value b: %d\n", (int)(__intptr_t)pile_b->content);
+		pile_a = pile_a->next;
+		pile_b = pile_b->next;
+	}
+-----------------------*/
