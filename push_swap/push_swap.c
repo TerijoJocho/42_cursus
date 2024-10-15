@@ -6,17 +6,17 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 23:15:23 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/15 15:25:46 by daavril          ###   ########.fr       */
+/*   Updated: 2024/10/15 19:16:02 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ps_two(t_list **pile_a)
+void	ps_two(t_data **pile_a)
 {
 	int	first;
 	int	last;
-	t_list	*temp;
+	t_data	*temp;
 
 	temp= (*pile_a);
 	first = (int)(__intptr_t)(temp->content);
@@ -26,7 +26,7 @@ void	ps_two(t_list **pile_a)
 		swap_a(pile_a, 0);
 }
 
-void	ps_three(t_list **pile_a)
+void	ps_three(t_data **pile_a)
 {
 	int	first;
 	int	last;
@@ -54,14 +54,14 @@ void	ps_three(t_list **pile_a)
 	return ;
 }
 
-void	ps_more(t_list **pile_a, t_list **pile_b)
+void	ps_more(t_data **pile_a, t_data **pile_b)
 {
+	init_index(pile_a);
 	push_b(pile_a,pile_b);
 	push_b(pile_a,pile_b);
-	//find_the_cheapest(pile_a, pile_b);
 }
 
-void	push_swap(t_list **pile_a, t_list **pile_b)
+void	push_swap(t_data **pile_a, t_data **pile_b)
 {
 	int	len;
 

@@ -6,7 +6,7 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 11:44:25 by daavril           #+#    #+#              #
-#    Updated: 2024/10/15 15:51:28 by daavril          ###   ########.fr        #
+#    Updated: 2024/10/15 19:01:22 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 AR = ar
 ARFLAGS = rcs
 HEADER = push_swap.h
-SRCS = error_and_end.c main.c init_lst.c swap.c push.c rotate.c reverse_rot.c push_swap.c find_the_cheapest.c\
+SRCS = error_and_end.c main.c init_lst.c swap.c push.c rotate.c reverse_rot.c push_swap.c utils.c\
 
 OBJS = $(SRCS:.c=.o)
 

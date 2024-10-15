@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:38:53 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/15 15:50:27 by daavril          ###   ########.fr       */
+/*   Updated: 2024/10/15 19:15:32 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	error_mes(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	free_lst(t_list **pile)
+void	free_lst(t_data **pile)
 {
-	t_list	*temp;
+	t_data	*temp;
 
 	while (*pile)
 	{
@@ -32,7 +32,7 @@ void	free_lst(t_list **pile)
 	temp = NULL;
 }
 
-void	free_all(char **tab, t_list **pile_a, t_list **pile_b, int argc)
+void	free_all(char **tab, t_data **pile_a, t_data **pile_b, int argc)
 {
 	int		i;
 

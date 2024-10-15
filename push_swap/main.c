@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:01:08 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/15 15:39:34 by daavril          ###   ########.fr       */
+/*   Updated: 2024/10/15 19:15:51 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	is_int(char *str)
 	return (1);
 }
 
-void	check_param(char *str, t_list **pile_a)
+void	check_param(char *str, t_data **pile_a)
 {
 	if (!is_int(str))
 		error_mes("Parameter aren't integer or a number.\n");
@@ -49,8 +49,8 @@ void	check_param(char *str, t_list **pile_a)
 int	main(int argc, char **argv)
 {
 	char	**tab;
-	t_list	*pile_a;
-	t_list	*pile_b;
+	t_data	*pile_a;
+	t_data	*pile_b;
 	int		i;
 
 	i = 0;
