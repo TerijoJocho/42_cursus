@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:33:52 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/03 21:21:06 by daavril          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:45:15 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ void	swap_a(t_list **pile_a, int flag)
 
 	if (!(*pile_a) || !(*pile_a)->next)
 		return ;
-	temp = (*pile_a)->next;       // on stock le 2nd noeud
-	(*pile_a)->next = temp->next; // le 1er noeud pointe vers le 3e (ou NULL)
+	temp = (*pile_a)->next;
+	(*pile_a)->next = temp->next;
 	temp->next = (*pile_a);
-		// le 2e noeud devient le 1er noeud en pointant vers l'ancien premier
-	(*pile_a) = temp;             // le 2e deient le 1er
+	(*pile_a) = temp;
 	if (flag == 0)
 		ft_printf("sa\n");
 }
@@ -33,11 +32,9 @@ void	swap_b(t_list **pile_b, int flag)
 
 	if (!(*pile_b) || !(*pile_b)->next)
 		return ;
-	temp = (*pile_b)->next;       // on stock le 2nd noeud
-	(*pile_b)->next = temp->next; // le 1er noeud pointe vers le 3e (ou NULL)
+	temp = (*pile_b)->next;
+	(*pile_b)->next = temp->next;
 	temp->next = (*pile_b);
-		// le 2e noeud devient le 1er noeud en pointant vers l'ancien premier
-	(*pile_b) = temp;             // le 2e deient le 1er
 	if (flag == 0)
 		ft_printf("sb\n");
 }

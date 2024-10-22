@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:58:05 by daavril           #+#    #+#             */
-/*   Updated: 2024/09/12 14:14:52 by daavril          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:55:33 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ t_list	*ft_lstnew(void *content)
 	lst->next = NULL;
 	return (lst);
 }
+/*
+for push_swap, ligne 23-27
+if (lst->content == NULL)
+	return (NULL);
+*/
 /*#include <stdio.h>
 
 int	main(void)

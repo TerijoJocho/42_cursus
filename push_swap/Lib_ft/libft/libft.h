@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:09 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/04 16:38:10 by daavril          ###   ########.fr       */
+/*   Updated: 2024/10/21 19:08:56 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void				ft_putnbr_fd(int n, int fd);
 typedef struct s_list
 {
 	void			*content;
+	int				index;
 	struct s_list	*next;
 }					t_list;
 t_list				*ft_lstnew(void *content);

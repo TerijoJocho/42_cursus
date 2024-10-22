@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:59:11 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/16 16:04:48 by terijo           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:45:21 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	index_zero(t_data **pile)
+void	index_zero(t_list **pile)
 {
-	t_data	*temp;
-	
+	t_list	*temp;
+
 	temp = *pile;
-	while(temp)
+	while (temp)
 	{
 		temp->index = 0;
 		temp = temp->next;
 	}
 }
 
-void	init_index(t_data **pile_a, int len)
+void	init_index(t_list **pile_a, int len)
 {
-	t_data	*temp;
-	t_data	*current;
-	int	min;
-	int	i;
-	
+	t_list	*temp;
+	t_list	*current;
+	int		min;
+	int		i;
+
 	index_zero(pile_a);
 	i = 1;
 	while (len > 0)
@@ -39,9 +39,9 @@ void	init_index(t_data **pile_a, int len)
 		current = *pile_a;
 		while (current)
 		{
-			if (current->content < min && temp->index == 0)
+			if ((int)(__intptr_t)current->content < min && current->index == 0)
 			{
-				min = current->content;
+				min = (int)(__intptr_t)current->content;
 				temp = current;
 			}
 			current = current->next;
@@ -52,10 +52,31 @@ void	init_index(t_data **pile_a, int len)
 	}
 }
 
-t_data	*find_max(t_data **pile)
+t_list	*find_min(t_list **pile)
 {
-	t_data	*temp;
-	t_data	*max_node;
+	t_list	*temp;
+	t_list	*min_node;
+	int		min;
+
+	min = INT32_MAX;
+	temp = *pile;
+	min_node = NULL;
+	while (temp)
+	{
+		if ((int)(__intptr_t)temp->content < min)
+		{
+			min = (int)(__intptr_t)temp->content;
+			min_node = temp;
+		}
+		temp = temp->next;
+	}
+	return (min_node);
+}
+
+t_list	*find_max(t_list **pile)
+{
+	t_list	*temp;
+	t_list	*max_node;
 	int		max;
 
 	max = INT32_MIN;
@@ -63,9 +84,9 @@ t_data	*find_max(t_data **pile)
 	max_node = NULL;
 	while (temp)
 	{
-		if (temp->content > max)
+		if ((int)(__intptr_t)temp->content > max)
 		{
-			max = temp->content;
+			max = (int)(__intptr_t)temp->content;
 			max_node = temp;
 		}
 		temp = temp->next;
@@ -73,14 +94,14 @@ t_data	*find_max(t_data **pile)
 	return (max_node);
 }
 
-int		find_half(t_data **pile, int max, int len)
+int	find_half(t_list **pile, int max, int len)
 {
-	t_data	*current;
+	t_list	*current;
 
 	current = *pile;
 	while (len > 0 && current)
 	{
-		if (current->content == max)
+		if ((int)(__intptr_t)current->content == max)
 			return (1);
 		current = current->next;
 		len--;
