@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:08 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/30 13:28:53 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/03 14:43:46 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	signal_handler(int signum)
 
 int	main(int argc, char **argv)
 {
-	__pid_t				pid;
+	// __pid_t				pid;
+	int					pid;
 	struct sigaction	sa;
 	int					i;
 

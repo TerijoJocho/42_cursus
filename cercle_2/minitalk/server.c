@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:13:21 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/30 13:15:48 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/03 15:35:19 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,54 @@ void	binary_to_char(int signum, char *binary)
 		*binary = *binary << 1;
 }
 
+void	handle_lst(t_list **lst, char c)
+{
+	char	*char_ptr;
+	t_list	*new_node;
+
+	char_ptr  = malloc(sizeof(char));
+	if (!char_ptr)
+		return ;
+	*char_ptr = c;
+	new_node = ft_lstnew(char_ptr);
+	if (!new_node)
+	{
+		free(char_ptr);
+		return ;
+	}
+	if (*lst == NULL)
+			*lst = new_node;
+	else
+		ft_lstadd_back(lst, new_node);	
+}
+
+void	display(t_list *string)
+{
+	while (string)
+	{
+		ft_printf("%c", *(char *)string->content);
+		string = string->next;
+	}
+}
+
+void	free_lst(t_list **lst)
+{
+	t_list	*temp;
+		
+	while(*lst)
+	{
+		temp = (*lst)->next;
+		ft_lstdelone(*lst, free);
+		*lst = temp;	
+	}
+}
+
 void	signal_handler(int signum, siginfo_t *info, void *context)
 {
-	static int	pid;
-	static int	i;
-	static char	c;
+	static int		pid;
+	static int		i;
+	static char		c;
+	static t_list	*string;
 
 	(void)context;
 	if (pid == 0)
@@ -37,9 +80,12 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 		{
 			kill(pid, SIGUSR1);
 			pid = 0;
+			display(string);
+			free_lst(&string);
+			write(1, "\n", 1);
 			return ;
 		}
-		ft_printf("%c", c);
+		handle_lst(&string, c);
 		c = 0;
 	}
 	kill(pid, SIGUSR2);
