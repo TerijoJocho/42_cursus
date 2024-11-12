@@ -6,7 +6,7 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 10:55:35 by daavril           #+#    #+#              #
-#    Updated: 2024/10/28 19:19:06 by daavril          ###   ########.fr        #
+#    Updated: 2024/11/04 15:19:03 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CLIENT = client
 SERVER = server
 
 SRCS_CLIENT = client.c
-SRCS_SERVER = server.c
+SRCS_SERVER = server.c utils.c 
 
 OBJS_SERVER = $(SRCS_SERVER:.c=.o)
 OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)

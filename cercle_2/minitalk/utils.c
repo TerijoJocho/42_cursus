@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ft.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 00:49:53 by terijo            #+#    #+#             */
-/*   Updated: 2024/05/14 15:48:29 by daavril          ###   ########.fr       */
+/*   Created: 2024/11/04 13:25:12 by daavril           #+#    #+#             */
+/*   Updated: 2024/11/04 13:25:34 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
+#include "minitalk.h"
 
-void	ft_ft(int *nbr)
+void	free_lst(t_list **lst)
 {
-	*nbr = 42;
+	t_list	*temp;
+
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		ft_lstdelone(*lst, free);
+		*lst = temp;
+	}
 }
-/*int     main(void)
-{
-	int     x;
-	int    *nbr;
-
-	x = 24222;
-	nbr = &x;
-	ft_ft(nbr);
-	return (0);
-}*/

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:08 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/03 14:43:46 by terijo           ###   ########.fr       */
+/*   Updated: 2024/11/04 16:31:37 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static int	sig_received;
+static int	g_sig_received;
 
 int	char_to_binary(char c, int pid)
 {
@@ -29,13 +29,13 @@ int	char_to_binary(char c, int pid)
 			kill(pid, SIGUSR2);
 		while (sig_received == 0)
 		{
-			if (i == 50)
+			if (i == 100)
 			{
 				ft_printf("No signal received.\nExit.\n");
 				exit(1);
 			}
 			i++;
-			usleep(100);
+			usleep(1000);
 		}
 		sig_received = 0;
 		bit_index--;
@@ -56,7 +56,6 @@ void	signal_handler(int signum)
 
 int	main(int argc, char **argv)
 {
-	// __pid_t				pid;
 	int					pid;
 	struct sigaction	sa;
 	int					i;

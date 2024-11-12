@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:13:21 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/03 15:35:19 by terijo           ###   ########.fr       */
+/*   Updated: 2024/11/04 13:26:08 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_lst(t_list **lst, char c)
 	char	*char_ptr;
 	t_list	*new_node;
 
-	char_ptr  = malloc(sizeof(char));
+	char_ptr = malloc(sizeof(char));
 	if (!char_ptr)
 		return ;
 	*char_ptr = c;
@@ -36,9 +36,9 @@ void	handle_lst(t_list **lst, char c)
 		return ;
 	}
 	if (*lst == NULL)
-			*lst = new_node;
+		*lst = new_node;
 	else
-		ft_lstadd_back(lst, new_node);	
+		ft_lstadd_back(lst, new_node);
 }
 
 void	display(t_list *string)
@@ -47,18 +47,6 @@ void	display(t_list *string)
 	{
 		ft_printf("%c", *(char *)string->content);
 		string = string->next;
-	}
-}
-
-void	free_lst(t_list **lst)
-{
-	t_list	*temp;
-		
-	while(*lst)
-	{
-		temp = (*lst)->next;
-		ft_lstdelone(*lst, free);
-		*lst = temp;	
 	}
 }
 

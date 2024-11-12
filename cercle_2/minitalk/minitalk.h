@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:47:50 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/03 14:47:19 by terijo           ###   ########.fr       */
+/*   Updated: 2024/11/04 13:25:50 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+void	free_lst(t_list **lst);
 
 // #include <bits/sigaction.h>
 // #include <asm-generic/signal-defs.h>
