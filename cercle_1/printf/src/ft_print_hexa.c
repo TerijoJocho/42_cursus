@@ -6,12 +6,12 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:43:09 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/10 14:42:19 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/12 16:25:35 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
-#include "../libft/libft.h"
+#include "../libft/header/libft.h"
 
 static int	ft_len(unsigned int xXvalue)
 {

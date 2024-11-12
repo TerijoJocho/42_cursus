@@ -6,14 +6,14 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:16:32 by daavril           #+#    #+#             */
-/*   Updated: 2024/06/10 13:05:57 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/12 16:26:04 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "../libft/libft.h"
+# include "../libft/header/libft.h"
 # include <assert.h>
 # include <stdarg.h>
 # include <stdint.h>
