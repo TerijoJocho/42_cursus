@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 18:16:13 by terijo            #+#    #+#             */
-/*   Updated: 2024/11/18 15:08:22 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/19 17:36:12 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_philo
 	pthread_mutex_t	*write_lock;
 	pthread_mutex_t	*dead_lock;
 	pthread_mutex_t	*meal_lock;
+	pthread_mutex_t	test;
 }					t_philo;
 
 typedef struct s_program
@@ -59,18 +60,29 @@ void				parsing(char *argv);
 void				init_prog(t_program *prog, t_philo *philo);
 void				init_struct(char **argv, t_philo *philo,
 						pthread_mutex_t *forks, t_program *prog);
-void	init_fork(pthread_mutex_t *forks, int philos_num);
+void				init_fork(pthread_mutex_t *forks, int philos_num);
+
+// thread
+void				init_thread(t_program *prog, int philo_num);
+void				*philo_routine(void *arg);
+void				*monitor_routine();
+int	is_dead(t_philo *philo);
+
+//routine
+void	philo_think(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+void	philo_eat(t_philo *philo);
 
 
-// routine threrad
-void	init_thread(t_philo *philo);
-void				*routine(void *arg);
 
-//time
-size_t	get_current_time(void);
-int	ft_usleep(size_t millisecinds);
+//monitor
+void	ft_message(char *str, t_philo *philo, int id);
 
-//end
-void	ft_error(char *str);
+// time
+size_t				get_current_time(void);
+int					ft_usleep(size_t millisecinds);
+
+// end
+void				ft_error(char *str);
 
 #endif

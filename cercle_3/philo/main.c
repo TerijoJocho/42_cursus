@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:22:24 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/18 15:22:56 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/19 15:44:41 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char *argv[])
 	init_prog(&program, philo);
 	init_fork(forks, ft_atoi(argv[1]));
 	init_struct(argv, philo, forks, &program);
-	printf("eating %d\n", philo[1].eating);
+	init_thread(&program, ft_atoi(argv[1]));
+	// printf("eating %d\n", philo[1].eating);
 	return (0);
 }

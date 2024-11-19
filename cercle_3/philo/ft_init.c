@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:40:01 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/18 15:29:06 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/19 14:59:32 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	init_struct(char **argv, t_philo *philo, pthread_mutex_t *forks, t_program 
 	i = 0;
 	while (i < ft_atoi(argv[1]))
 	{
-		init_thread(&philo[i]);
 		philo[i].id = i + 1;
 		init_from_param(argv, &philo[i]);
 		philo[i].start = get_current_time();
@@ -47,18 +46,6 @@ void	init_struct(char **argv, t_philo *philo, pthread_mutex_t *forks, t_program 
 		philo[i].write_lock = &prog->write_lock;
 		philo[i].dead_lock = &prog->dead_lock;
 		philo[i].meal_lock = &prog->meal_lock;
-		/*----------VERIF----------*/
-		// printf("\nphilo %d\n", philo[i].id);
-		// printf("time to think %zu\n", philo->time_to_die);
-		// printf("time to eat %zu\n", philo->time_to_eat);
-		// printf("time to sleep %zu\n", philo->time_to_sleep);
-		// printf("number_times_to_eat %d\n", philo->number_times_to_eat);
-		// printf("start %zu\n", philo[i].start);
-		// printf("last meal %zu\n", philo[i].last_meal);
-		// printf("eating %d\n", philo[i].eating);
-		// printf("meals eaten %d\n", philo[i].meals_eaten);
-		// printf("dead %d\n", *(int *)philo[i].dead);
-		/*--------------------------*/
 		i++;
 	}
 }
