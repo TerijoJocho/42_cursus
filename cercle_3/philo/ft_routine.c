@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:03:19 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/19 17:52:42 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/20 17:27:40 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,3 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
 }
-
-
-	/*----------VERIF----------*/
-	// printf("\nphilo %d\n", philo->id);
-	// printf("time to think %zu\n", philo->time_to_die);
-	// printf("time to eat %zu\n", philo->time_to_eat);
-	// printf("time to sleep %zu\n", philo->time_to_sleep);
-	// printf("number_times_to_eat %d\n", philo->number_times_to_eat);
-	// printf("start %zu\n", philo->start);
-	// printf("last meal %zu\n", philo->last_meal);
-	// printf("eating %d\n", philo->eating);
-	// printf("meals eaten %d\n", philo->meals_eaten);
-	// printf("dead %d\n", *(int *)philo->dead);
-	/*--------------------------*/

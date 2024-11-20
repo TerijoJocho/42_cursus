@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:42:37 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/18 13:59:31 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/20 17:01:10 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_usleep(size_t millisecinds)
 		usleep(500);
 	return(0);
 }
+
 
 int	ft_atoi(const char *str)
 {
@@ -55,5 +56,27 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (nb * sign);
+}
+
+void	ft_error(char *str)
+{
+	printf("%s", str);
+	/*free something here*/
+	exit(1);
+}
+
+void	destroy_all(t_program *prog)
+{
+	int	i;
+
+	pthread_mutex_destroy(&prog->dead_lock);
+	pthread_mutex_destroy(&prog->meal_lock);
+	pthread_mutex_destroy(&prog->write_lock);
+	i = 0;
+	while (i < prog->philo[0].number_of_philos)
+	{
+		pthread_mutex_destroy(prog->philo[i].r_fork);
+		i++;
+	}
 }
 

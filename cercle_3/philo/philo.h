@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 18:16:13 by terijo            #+#    #+#             */
-/*   Updated: 2024/11/19 17:36:12 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/20 17:01:55 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,12 @@ void	philo_think(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_eat(t_philo *philo);
 
-
-
 //monitor
 void	ft_message(char *str, t_philo *philo, int id);
+void	*monitor_routine(void *arg);
+
+//destroy
+void	destroy_all(t_program *prog);
 
 // time
 size_t				get_current_time(void);
