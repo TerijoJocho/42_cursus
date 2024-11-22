@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 18:16:13 by terijo            #+#    #+#             */
-/*   Updated: 2024/11/20 17:01:55 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/22 16:50:44 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <string.h>
 
 # define PHILO_MAX 300
 

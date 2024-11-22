@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:42:37 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/20 17:01:10 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/22 16:28:58 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_usleep(size_t millisecinds)
 
 	start = get_current_time();
 	while ((get_current_time() - start) < millisecinds)
-		usleep(500);
+		usleep(100);
 	return(0);
 }
 

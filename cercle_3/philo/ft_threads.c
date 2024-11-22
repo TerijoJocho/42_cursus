@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 13:28:58 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/20 17:18:02 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/22 17:51:48 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int	is_dead(t_philo *philo)
 {
+	int	dead_status;
+
 	pthread_mutex_lock(philo->dead_lock);
-	if (*philo->dead == 1)
-		return(pthread_mutex_unlock(philo->dead_lock), 1);
+	dead_status = *philo->dead;
+	printf("dead_flag = %d of %d\n", *philo->dead, philo->id);
 	pthread_mutex_unlock(philo->dead_lock);
-	return (0);
+	return (dead_status);
 }
 
 void	*philo_routine(void *arg)
@@ -28,7 +30,7 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(1);
-	while (!is_dead(philo))
+	while (is_dead(philo) == 0)
 	{
 		philo_eat(philo);
 		philo_sleep(philo);
