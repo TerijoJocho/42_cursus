@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:39:16 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/18 10:40:26 by daavril          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:58:47 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,23 @@
 
 int	is_integer(char *str)
 {
-	long long	res;
+	int	i;
 
-	res = 0;
-	if (*str == '-' || *str == '+')
-		return (0);
-	while (*str)
+	i = 0;
+	while (str[i])
 	{
-		if (*str < '0' || *str > '9')
-			return (0);
-		res = res * 10 + (*str - '0');
-		if (res >= 2147483648)
-			return (0);
-		str++;
+		if (str[i] < '0' || str[i] > '9')
+			return (1);
+		i++;
 	}
-	return (1);
+	if (ft_atoi(str) < 1 || ft_atoi(str) > 2147483647)
+		return (1);
+	return (0);
 }
 
-void	parsing(char *argv)
+int	parsing(char *argv)
 {
-	if (!(is_integer(argv)))
-		ft_error("One of the parameters is not an integer.\n");
+	if (is_integer(argv) == 1)
+		return (1);
+	return (0);
 }

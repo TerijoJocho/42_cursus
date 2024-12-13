@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:42:37 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/22 16:28:58 by daavril          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:54:48 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,18 @@ size_t	get_current_time(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
-		write(1, "gettimeof() error\n", 22);
+		ft_error("gettimeof() error\n");
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int	ft_usleep(size_t millisecinds)
+void	ft_usleep(size_t ms)
 {
 	size_t	start;
 
 	start = get_current_time();
-	while ((get_current_time() - start) < millisecinds)
+	while ((get_current_time() - start) < ms)
 		usleep(100);
-	return(0);
 }
-
 
 int	ft_atoi(const char *str)
 {
@@ -61,22 +59,22 @@ int	ft_atoi(const char *str)
 void	ft_error(char *str)
 {
 	printf("%s", str);
-	/*free something here*/
-	exit(1);
+	return ;
 }
 
-void	destroy_all(t_program *prog)
+void	ft_destroy(char *str, t_program *prog, pthread_mutex_t *forks)
 {
 	int	i;
 
+	printf("%s", str);
 	pthread_mutex_destroy(&prog->dead_lock);
 	pthread_mutex_destroy(&prog->meal_lock);
 	pthread_mutex_destroy(&prog->write_lock);
 	i = 0;
 	while (i < prog->philo[0].number_of_philos)
 	{
-		pthread_mutex_destroy(prog->philo[i].r_fork);
+		pthread_mutex_destroy(&forks[i]);
 		i++;
 	}
+	return ;
 }
-

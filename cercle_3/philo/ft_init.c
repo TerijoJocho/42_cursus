@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:40:01 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/19 14:59:32 by daavril          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:42:50 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	init_from_param(char **argv, t_philo *philo)
 		philo->number_times_to_eat = -1;
 }
 
-void	init_struct(char **argv, t_philo *philo, pthread_mutex_t *forks, t_program *prog)
+void	init_struct(char **argv, t_philo *philo, pthread_mutex_t *forks,
+		t_program *prog)
 {
 	int	i;
 
