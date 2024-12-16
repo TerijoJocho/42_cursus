@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:08 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/04 16:31:37 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/05 14:34:32 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	char_to_binary(char c, int pid)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		while (sig_received == 0)
+		while (g_sig_received == 0)
 		{
 			if (i == 100)
 			{
@@ -37,7 +37,7 @@ int	char_to_binary(char c, int pid)
 			i++;
 			usleep(1000);
 		}
-		sig_received = 0;
+		g_sig_received = 0;
 		bit_index--;
 	}
 	return (0);
@@ -47,11 +47,11 @@ void	signal_handler(int signum)
 {
 	static int	i;
 
-	sig_received = 1;
+	g_sig_received = 1;
 	if (signum == SIGUSR2)
 		i++;
 	else if (signum == SIGUSR1)
-		ft_printf("Number of bytes received : %d\n", i / 8);
+		ft_printf("Number of octet received : %d\n", i / 8);
 }
 
 int	main(int argc, char **argv)

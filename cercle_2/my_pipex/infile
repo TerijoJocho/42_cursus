@@ -1,4 +1,5 @@
 bonjour
-comment 
+comment
 ca va?
+a
  < infile.txt grep a | wc -w > outfile.txt

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:13:21 by daavril           #+#    #+#             */
-/*   Updated: 2024/11/04 13:26:08 by daavril          ###   ########.fr       */
+/*   Updated: 2024/11/05 15:17:03 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,26 @@ void	binary_to_char(int signum, char *binary)
 		*binary = *binary << 1;
 }
 
-void	handle_lst(t_list **lst, char c)
+int	handle_lst(t_list **lst, char c)
 {
 	char	*char_ptr;
 	t_list	*new_node;
 
 	char_ptr = malloc(sizeof(char));
 	if (!char_ptr)
-		return ;
+		return (free_lst(lst), ft_printf("Malloc error.\n"), 0);
 	*char_ptr = c;
 	new_node = ft_lstnew(char_ptr);
 	if (!new_node)
 	{
 		free(char_ptr);
-		return ;
+		return (free_lst(lst), ft_printf("Malloc error.\n"), 0);
 	}
 	if (*lst == NULL)
 		*lst = new_node;
 	else
 		ft_lstadd_back(lst, new_node);
+	return (1);
 }
 
 void	display(t_list *string)
@@ -48,6 +49,7 @@ void	display(t_list *string)
 		ft_printf("%c", *(char *)string->content);
 		string = string->next;
 	}
+	write(1, "\n", 1);
 }
 
 void	signal_handler(int signum, siginfo_t *info, void *context)
@@ -70,10 +72,10 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 			pid = 0;
 			display(string);
 			free_lst(&string);
-			write(1, "\n", 1);
 			return ;
 		}
-		handle_lst(&string, c);
+		if (!(handle_lst(&string, c)))
+			return ;
 		c = 0;
 	}
 	kill(pid, SIGUSR2);

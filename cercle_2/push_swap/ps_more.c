@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 18:02:05 by daavril           #+#    #+#             */
-/*   Updated: 2024/10/22 15:44:07 by daavril          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:35:56 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	sorted(t_list **pile)
 {
 	t_list	*cu;
 
-	if (!pile ||!(*pile) || !(*pile)->next)
+	if (!pile || !(*pile) || !(*pile)->next)
 		return (1);
 	cu = (*pile);
 	while ((int)(__intptr_t)cu->content < (int)(__intptr_t)cu->next->content)
@@ -37,8 +37,9 @@ void	push_next(t_list **a, t_list **b)
 	while (*b)
 	{
 		t = find_max(b);
-		half = find_half(b, (int)(__intptr_t)t->content,
-				(ft_lstsize(*b) / 2));
+		if (!t)
+			return ;
+		half = find_half(b, (int)(__intptr_t)t->content, (ft_lstsize(*b) / 2));
 		while ((int)(__intptr_t)(*b)->content != (int)(__intptr_t)t->content)
 		{
 			if (half == 1)
