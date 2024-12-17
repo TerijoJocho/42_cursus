@@ -2,7 +2,7 @@
 
 void	ft_init_pipex(char **argv, int argc, t_pipex *data)
 {
-	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	if (ft_strncmp(argv[1], "here_doc", 7) == 0)
 	{
 		data->here_doc = true;
 		data->in_fd = -1;
@@ -38,4 +38,5 @@ void	ft_init_pipex(char **argv, int argc, t_pipex *data)
 	ft_printf("here_doc = %d\n", data->here_doc);
 	ft_printf("is_invalid_infile = %d\n", data->is_invalid_infile);
 	ft_printf("cmd_count = %d\n", data->cmd_count);
+	/*-------------------------------------*/
 }
