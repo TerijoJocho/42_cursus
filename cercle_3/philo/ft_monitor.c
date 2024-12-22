@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_monitor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:13:20 by daavril           #+#    #+#             */
-/*   Updated: 2024/12/10 19:06:03 by daavril          ###   ########.fr       */
+/*   Updated: 2024/12/22 10:25:22 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	*monitor_routine(void *arg)
 	{
 		if (philo_has_died(philo) == 1 || philos_has_eaten(philo) == 1)
 			break ;
+		usleep(1000);
 	}
 	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_threads.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 13:28:58 by daavril           #+#    #+#             */
-/*   Updated: 2024/12/13 17:51:55 by daavril          ###   ########.fr       */
+/*   Updated: 2024/12/22 10:24:53 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ int	init_thread(t_program *prog, pthread_mutex_t *forks)
 	{
 		if (pthread_create(&prog->philo[i].thread, NULL, &philo_routine,
 				&prog->philo[i]) != 0)
-			return (printf("Error/n"), 1);
+			ft_destroy("Error\n", prog, forks);
 		i++;
 	}
 	if (pthread_join(monitor, NULL) != 0)
-		return (printf("Error/n"), 1);
+		ft_destroy("Error\n", prog, forks);
 	i = 0;
 	while (i < prog->philo[0].number_of_philos)
 	{
 		if (pthread_join(prog->philo[i].thread, NULL) != 0)
-			return (printf("Error/n"), 1);
+			ft_destroy("Error\n", prog, forks);
 		i++;
 	}
 	return (0);
