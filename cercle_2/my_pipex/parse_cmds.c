@@ -32,7 +32,7 @@ void	ft_parse_cmds(t_pipex *data, char **argv, char **envp)
 	data->cmd_paths = malloc(sizeof(char *) * data->cmd_count);
 	if (!data->cmd_paths)
 	{
-		free_cmd_paths(data->cmd_paths);
+		//free_cmd_paths(data->cmd_paths);
 		perror("Malloc cmd_paths");
 		exit(EXIT_FAILURE);
 	}

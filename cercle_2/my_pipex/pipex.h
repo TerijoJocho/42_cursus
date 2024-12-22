@@ -30,5 +30,8 @@ void		ft_init_pipex(char **argv, int argc, t_pipex *data);
 void		ft_check_args(int argc, char **argv);
 void		ft_parse_args(t_pipex *data, char **argv);
 void		ft_parse_cmds(t_pipex *data, char **argv, char **envp);
+void		free_cmd_args(char ***cmd_args, int cmd_count);
+
+
 
 #endif

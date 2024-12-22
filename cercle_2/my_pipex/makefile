@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
+#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 10:55:35 by daavril           #+#    #+#              #
-#    Updated: 2024/12/17 16:08:08 by daavril          ###   ########.fr        #
+#    Updated: 2024/12/22 10:52:47 by terijo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = pipex
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 HEADER = pipex.h
-SRCS = main.c init_pipex.c check_args.c parse_args.c
+SRCS = main.c init_pipex.c parse_args.c ft_cleanup.c 
 OBJS = $(SRCS:.c=.o)
 
 # Inclure ft_printf
