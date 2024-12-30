@@ -6,7 +6,7 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 16:56:36 by terijo            #+#    #+#             */
-/*   Updated: 2024/12/22 12:03:43 by terijo           ###   ########.fr       */
+/*   Updated: 2024/12/27 15:38:10 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,6 @@ char	**ft_split(char const *s, char c)
 	char	**tab;
 
 	wc = ft_word_count(s, c);
-	//verif
-	printf("ft_split: String to split = '%s', word count = %d\n", s, wc);
-	//verif
 	tab = (char **)malloc(sizeof(char *) * (wc + 1));
 	if (tab == NULL)
 		return (NULL);
@@ -89,41 +86,61 @@ char	**ft_split(char const *s, char c)
 	while (i < wc)
 	{
 		tab[i] = ft_word(s, &index, c);
-		//verif
-		printf("ft_split: Allocated word[%d] = '%s'\n", i, tab[i]);
-		//verif
 		if (tab[i] == NULL)
 			return (malloc_error(tab));
 		i++;
 	}
 	tab[i] = 0;
-	//verif
-	for (int i = 0; tab[i] != NULL; i++)
-    	printf("result[%d]: %s\n", i, tab[i]);
-	//verif
 	return (tab);
 }
 // #include <stdio.h>
 // #include <stdlib.h>
 
-// int main(void)
+// int main(int argc, char **argv)
 // {
-// 	char **result = ft_split("grep a1 ca ca caca", ' ');
+//     char    ***tab;
+//     int     i;
+//     int     j;
 
-// 	if (!result)
-// 	{
-// 		printf("Erreur : ft_split a retourné NULL.\n");
-// 		return (1);
-// 	}
+//     if (argc < 2)
+//     {
+//         printf("Usage: ./a.out <command1> <command2> ...\n");
+//         return (1);
+//     }
 
-// 	for (int i = 0; result[i]; i++)
-// 		printf("arg[%d]: %s\n", i, result[i]);
+//     tab = malloc(sizeof(char **) * (argc - 1));
+//     if (!tab)
+//     {
+//         perror("malloc");
+//         return (1);
+//     }
 
-// 	// Libérer la mémoire
-// 	for (int i = 0; result[i]; i++)
-// 		free(result[i]);
-// 	free(result);
+//     i = 0;
+//     while (i < argc - 1)
+//     {
+//         j = 0; // Réinitialiser j pour chaque commande
+//         tab[i] = ft_split(argv[i + 1], ' '); // Décale argv de 1 (argv[0] est ./a.out)
+//         if (!tab[i])
+//         {
+//             printf("Erreur : ft_split a retourné NULL.\n");
+//             return (1);
+//         }
+//         while (tab[i][j])
+//         {
+//             printf("tab[%d][%d] = %s\n", i, j, tab[i][j]);
+//             j++;
+//         }
+//         i++;
+//     }
+//     // Libérer la mémoire
+//     for (int i = 0; i < argc - 1; i++)
+//     {
+//         for (int j = 0; tab[i][j]; j++)
+//             free(tab[i][j]);
+//         free(tab[i]);
+//     }
+//     free(tab);
 
-// 	return (0);
+//     return (0);
 // }
 // fini !
