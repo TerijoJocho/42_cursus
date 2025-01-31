@@ -3,33 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:30:55 by abastian          #+#    #+#             */
-/*   Updated: 2025/01/28 15:33:50 by abastian         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:15:50 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 # include <stdio.h>
 
 typedef enum e_real
 {
-	WORD = 1,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	APPEND,
-	HEREDOC,
-	STRING
+	ARG = 1,
+	ECHO = 2,
+	CD = 3,
+	PWD = 4,
+	EXPORT = 5,
+	UNSET = 6,
+	ENV = 7,
+	EXIT = 8,
+	PIPE = 9,
+	REDIR_IN = 10,
+	REDIR_OUT = 11,
+	APPEND = 12,
+	HEREDOC = 13,
+	STRING = 14
 }		t_real;
 
 typedef struct s_token
 {
 	char			*value;
 	int				type;
+	int				is_expand;
 	t_real			real;
 	struct s_token	*prev;
 	struct s_token	*next;

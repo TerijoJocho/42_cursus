@@ -3,6 +3,8 @@
 #include "lexer.h"
 
 // cc lexer.c -I../libft -L../libft -lft -lreadline
+//gcc -Wall -Wextra -Werror -I. -I../../libft *.c -L../../libft -lft -lreadline -o minishell
+
 
 int main(void)
 {
@@ -28,9 +30,8 @@ int main(void)
 		t_token *current = token_list;
 		while (current)
 		{
-			// printf("Type: %d, Value: %s, Real: %d\n", current->type, current->value, current->real);
-			// if (current->prev != NULL)
-			printf("Current value: %p, Prev value: %p\n", current, current->prev);
+			// printf("Current value: %p, Prev value: %p\n", current, current->prev);
+			printf("Type: %d, Real: %d, Value: %s, Is Expand:%d\n", current->type, current->real, current->value, current->is_expand);
 			current = current->next;
 		}
 
