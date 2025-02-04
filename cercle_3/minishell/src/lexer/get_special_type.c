@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_special_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:20 by abastian          #+#    #+#             */
-/*   Updated: 2025/01/31 14:58:11 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/04 17:20:55 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,37 +48,29 @@ void	find_word(char *value, t_real *real)
 
 int	is_ok(char c)
 {
-	if (c >= 'A' && c <= 'Z')
+	if ((c >= 'A' && c <= 'Z') || c == '?')
 		return (0);
 	return (1);
 }
 
-void	check_expand(t_token **token_list, int	i)
+void	check_expand(t_token **token_list)
 {
 	t_token	*current;
+	int	i;
 
 	current = *token_list;
-	while (current->next)
+	while (current)
 	{
-		if (current->real == ARG && current->value[0] == '$'/*|| current->real == STRING*/)
+		current->is_expand = 0;
+		if ((current->real == ARG || current->real == STRING) && current->value[0] == '$')
 		{
 			i = 1;
-			while (current->value[i])
-			{
-				if (is_ok(current->value[i]) == 0)
-				{
-					i++;
-					current->is_expand = 1;
-				}
-				else
-				{
-					current->is_expand = 0;
-					break ;
-				}
-			}
+			while (current->value[i] && is_ok(current->value[i]) == 0)
+				i++;
+			if (!current->value[i])
+				current->is_expand = 1;
 		}
-		else 
-			current->is_expand = 0;
+		current = current->next;
 	}
 }
 
@@ -97,5 +89,5 @@ void	get_special_type(t_token **token_list)
 			current->real = STRING;
 		current = current->next;
 	}
-	//check_expand(token_list, 0);
+	check_expand(token_list);
 }
