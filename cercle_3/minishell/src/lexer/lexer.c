@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:10:37 by daavril           #+#    #+#             */
-/*   Updated: 2025/01/28 15:27:42 by abastian         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:14:46 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	add_token_list(t_token **token_list, int type, char *value)
 	}
 	new_token->value = value;
 	new_token->type = type;
+	new_token->quote_flag = 0;
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	if (!new_token)
@@ -103,7 +104,7 @@ int	lexer(char *input, t_token **token_list)
 		{
 			add_token_list(token_list, 3,
 				extract_quoted_string(&input[i], input[i]));
-			i += quoted_string_len(&input[i]);
+			i += quoted_string_len(&input[i], token_list);
 		}
 		else
 		{

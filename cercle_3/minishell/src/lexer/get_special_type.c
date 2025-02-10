@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_special_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:20 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/04 17:20:55 by terijo           ###   ########.fr       */
+/*   Updated: 2025/02/10 14:35:56 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,6 @@ void	find_word(char *value, t_real *real)
 		*real = ARG;
 }
 
-int	is_ok(char c)
-{
-	if ((c >= 'A' && c <= 'Z') || c == '?')
-		return (0);
-	return (1);
-}
-
 void	check_expand(t_token **token_list)
 {
 	t_token	*current;
@@ -62,12 +55,20 @@ void	check_expand(t_token **token_list)
 	while (current)
 	{
 		current->is_expand = 0;
-		if ((current->real == ARG || current->real == STRING) && current->value[0] == '$')
+		if (current->real == ARG && current->value[0] == '$')
 		{
 			i = 1;
-			while (current->value[i] && is_ok(current->value[i]) == 0)
+			while (current->value[i])
 				i++;
-			if (!current->value[i])
+			if (i != 1)
+				current->is_expand = 1;
+		}
+		if (current->real == STRING && current->quote_flag == 0)
+		{
+			i = 0;
+			while (current->value[i] != '$' && current->value[i])
+				i++;
+			if (current->value[i] == '$' && current->value[i+1])
 				current->is_expand = 1;
 		}
 		current = current->next;

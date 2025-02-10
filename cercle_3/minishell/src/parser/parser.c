@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/10 16:37:06 by daavril          ###   ########.fr       */
+/*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
+/*   Updated: 2025/02/10 15:50:38 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef MINISHELL_H
-#define MINISHELL_H
-
-#include "../src/lexer/lexer.h"
-#include "../src/prompt_main/prompt.h"
-#include "../src/lexer/lexer.h"
+int parser()
 
 
-
-/*Struct of minishell*/
-typedef struct s_master
-{
-	t_token	*token_list;
-	t_clone	*env_clone;
-}		t_master;
-
-#endif
+char *expand_variable(char *var_name) {
+    char *value = getenv(var_name);
+    if (value)
+        return ft_strdup(value);  // Si défini, retourner la valeur
+    return ft_strdup("");         // Sinon, retourner une string vide
+}

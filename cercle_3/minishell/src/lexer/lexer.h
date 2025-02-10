@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:30:55 by abastian          #+#    #+#             */
-/*   Updated: 2025/01/31 13:15:50 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/10 14:17:10 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_token
 	char			*value;
 	int				type;
 	int				is_expand;
+	int				quote_flag;
 	t_real			real;
 	struct s_token	*prev;
 	struct s_token	*next;
@@ -60,7 +61,7 @@ char	*extract_special_char(char *input);
 int		is_sequence(char *input, char *sequence);
 int		special_char_len(char *input);
 char	*extract_quoted_string(char *input, char quote);
-int		quoted_string_len(char *input);
+int		quoted_string_len(char *input, t_token **token_list);
 char	*extract_word(char *input);
 int		word_len(char *input);
 void	get_special_type(t_token **token_list);

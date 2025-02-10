@@ -6,5 +6,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*clone envp*/
+typedef struct s_clone
+{
+	char			*value;
+	struct s_clone	*prev;
+	struct s_clone	*next;
+}		t_clone;
 
 #endif
