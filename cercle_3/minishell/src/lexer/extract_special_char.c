@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_special_char.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:10 by abastian          #+#    #+#             */
-/*   Updated: 2025/01/28 15:28:44 by abastian         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:33:47 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,25 @@ char	*extract_special_char(char *input)
 	return (value);
 }
 
-int	special_char_len(char *input)
+int	special_char_len(char *input, t_token **token_list)
 {
-	if (is_sequence(input, "<<") || is_sequence(input, ">>"))
-		return (2);
-	return (1);
+	int		i;
+	char	c;
+	t_token	*current;
+
+	current = *token_list;
+	i = 0;
+	c = input[i];
+	while (current->next)
+		current = current->next;
+	if (c == '|')
+		i++;
+	else
+	{
+		while (input[i] && input[i] == c && i <= 2)
+			i++;
+	}
+	if (input[i] == ' ')
+		current->space = 1;
+	return (i);
 }

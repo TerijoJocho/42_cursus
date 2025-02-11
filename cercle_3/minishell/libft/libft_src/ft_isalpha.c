@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:56:07 by terijo            #+#    #+#             */
-/*   Updated: 2024/09/12 14:14:12 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/11 13:07:13 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_isalpha(int c)
 	if (c >= 'A' && c <= 'Z')
 		return (1);
 	if (c >= 'a' && c <= 'z')
+		return (1);
+	if (c == '?')
 		return (1);
 	return (0);
 }

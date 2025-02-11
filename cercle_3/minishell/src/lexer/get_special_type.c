@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:20 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/10 14:35:56 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:36:10 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	find_word(char *value, t_real *real)
 
 void	check_expand(t_token **token_list)
 {
+	int		i;
 	t_token	*current;
-	int	i;
 
 	current = *token_list;
 	while (current)
@@ -58,7 +58,7 @@ void	check_expand(t_token **token_list)
 		if (current->real == ARG && current->value[0] == '$')
 		{
 			i = 1;
-			while (current->value[i])
+			while (current->value[i] && ft_isalpha(current->value[i]))
 				i++;
 			if (i != 1)
 				current->is_expand = 1;
@@ -68,7 +68,7 @@ void	check_expand(t_token **token_list)
 			i = 0;
 			while (current->value[i] != '$' && current->value[i])
 				i++;
-			if (current->value[i] == '$' && current->value[i+1])
+			if (current->value[i] == '$' && ft_isalpha(current->value[i + 1]))
 				current->is_expand = 1;
 		}
 		current = current->next;

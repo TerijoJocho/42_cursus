@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:10:37 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/10 15:14:46 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/11 14:38:40 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	add_token_list(t_token **token_list, int type, char *value)
 	new_token->value = value;
 	new_token->type = type;
 	new_token->quote_flag = 0;
+	new_token->space = 0;
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	if (!new_token)
@@ -48,7 +49,7 @@ int	is_whitespace(char c)
 
 int	is_special_char(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '&')
+	if (c == '|' || c == '<' || c == '>')
 		return (1);
 	else
 		return (0);
@@ -98,7 +99,7 @@ int	lexer(char *input, t_token **token_list)
 				&& !ft_isalpha((char)input[i + 1]))
 				return (1);
 			add_token_list(token_list, 2, extract_special_char(&input[i]));
-			i += special_char_len(&input[i]);
+			i += special_char_len(&input[i], token_list);
 		}
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
@@ -109,7 +110,7 @@ int	lexer(char *input, t_token **token_list)
 		else
 		{
 			add_token_list(token_list, 1, extract_word(&input[i]));
-			i += word_len(&input[i]);
+			i += word_len(&input[i], token_list);
 		}
 	}
 	get_special_type(token_list);

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:03 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/10 14:23:35 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:32:48 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*extract_quoted_string(char *input, char quote)
 
 int	quoted_string_len(char *input, t_token **token_list)
 {
-	int	i;
+	int		i;
 	t_token	*current;
 
 	i = 1;
@@ -44,5 +44,7 @@ int	quoted_string_len(char *input, t_token **token_list)
 		i++;
 	if (input[i] == input[0])
 		i++;
+	if (input[i] == ' ')
+		current->space = 1;
 	return (i);
 }
