@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/18 13:23:12 by abastian         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:49:14 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ int	main(int argc, char **argv, char **envp)
 	master->env_clone = NULL;
 	master->token_list = NULL;
 	clone_envp(&master->env_clone, envp);
+	/*signal*/
+	setup_signal()
+	/*------*/
 	while (1)
 	{
 		input = readline("minishell$ ");
