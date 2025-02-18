@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   extract_special_char.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:10 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/11 15:33:47 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:23:57 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+# include "../../includes/minishell.h"
 
 int	is_sequence(char *input, char *sequence)
 {

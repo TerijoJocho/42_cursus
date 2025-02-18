@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:10:37 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/11 14:38:40 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:24:15 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+# include "../../includes/minishell.h"
 
 void	add_token_list(t_token **token_list, int type, char *value)
 {
@@ -25,6 +25,7 @@ void	add_token_list(t_token **token_list, int type, char *value)
 		return ;
 	}
 	new_token->value = value;
+	new_token->value_2 = NULL;
 	new_token->type = type;
 	new_token->quote_flag = 0;
 	new_token->space = 0;

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/11 15:41:20 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:23:12 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "prompt.h"
-#include "../../includes/minishell.h"
+# include "../../includes/minishell.h"
 
 // cc lexer.c -I../libft -L../libft -lft -lreadline
 //gcc -Wall -Wextra -Werror -I. -I../../libft prompt.c ../lexer/*.c -L../../libft -lft -lreadline -o minishell
@@ -71,6 +70,10 @@ int	main(int argc, char **argv, char **envp)
 		master->token_list = NULL;
 		if (lexer(input, &master->token_list) == 1)
 			printf("Error lexer\n");
+		else if (syntax_check(&master->token_list) == 1) // else if car sinon segfault apres erreur de lexer
+			printf("Command line syntax error\n");
+		else if (parser(master) == 1)
+			printf("Error during paring\n"); // je pense qu'il faut qu'on trouve une meilleure maniere detaillee de renvoyer une erreur que ca
 		// else if (parsing(&master->token_list) == 1)
 		//     printf("Error parsing\n");
 		// else
@@ -80,7 +83,7 @@ int	main(int argc, char **argv, char **envp)
 		while (current)
 		{
 			// printf("Current value: %p, Prev value: %p\n", current, current->prev);
-			printf("Real: %d, Value: %s, Is Expand: %d, single quote: %d, space flag : %d\n", current->real, current->value, current->is_expand, current->quote_flag, current->space);
+			printf("Type : %d, Real: %d, Value: %s, Is Expand: %d, single quote: %d, space flag : %d\n", current->type, current->real, current->value, current->is_expand, current->quote_flag, current->space);
 			current = current->next;
 		}
 		// t_clone *current = master->env_clone;

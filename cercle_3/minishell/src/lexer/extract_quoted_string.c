@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   extract_quoted_string.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:03 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/11 15:32:48 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:23:54 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+# include "../../includes/minishell.h"
 
 char	*extract_quoted_string(char *input, char quote)
 {

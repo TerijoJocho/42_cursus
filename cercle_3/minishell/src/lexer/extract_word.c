@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   extract_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:14 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/11 15:34:29 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:24:01 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+# include "../../includes/minishell.h"
 
 char	*extract_word(char *input)
 {

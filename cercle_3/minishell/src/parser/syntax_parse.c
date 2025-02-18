@@ -1,53 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_token.c                                      :+:      :+:    :+:   */
+/*   syntax_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 15:20:29 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/18 13:24:21 by abastian         ###   ########.fr       */
+/*   Created: 2025/02/13 12:23:17 by abastian          #+#    #+#             */
+/*   Updated: 2025/02/18 13:24:31 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
 
-int	is_quote(char c)
-{
-	if (c == '\'' || c == '\"')
-		return (1);
-	return (0);
-}
-
-void	add_token_back(t_token **lst, t_token *new)
+int	syntax_check(t_token **token_list)
 {
 	t_token	*current;
 
-	if (new == NULL)
-		return ;
-	if (*lst == NULL)
+	current = *token_list;
+	if (current->type == 2)
+		return (1); // caractere special en debut de string = KO
+	while (current->next)
 	{
-		*lst = new;
-		return ;
-	}
-	current = *lst;
-	while (current->next != NULL)
+		if (current->type == 2 &&
+			current->next->real != ARG && current->next->real != STRING)
+			return (1); //operateur non suivi d'un mot = KO
 		current = current->next;
-	current->next = new;
-	new->prev = current;
-}
-
-void	token_clear(t_token **lst)
-{
-	t_token	*next_node;
-
-	if (!*lst || !lst)
-		return ;
-	while (*lst)
-	{
-		next_node = (*lst)->next;
-		free(*lst);
-		*lst = next_node;
 	}
-	*lst = NULL;
+	if (!current->next && current->type == 2)
+		return (1); // caractere special en fin de string = KO
+	return (0);
 }
+
