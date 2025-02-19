@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
+#    By: abastian <abastian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/28 15:23:41 by daavril           #+#    #+#              #
-#    Updated: 2024/09/12 16:01:47 by daavril          ###   ########.fr        #
+#    Updated: 2025/02/19 11:33:41 by abastian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -fPIC
 AR = ar
 ARFLAGS = rcs
 SRCS = libft_src/

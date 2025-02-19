@@ -6,7 +6,7 @@
 /*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/18 13:23:29 by abastian         ###   ########.fr       */
+/*   Updated: 2025/02/19 11:06:03 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	choose_real(char *value, t_real *real);
 /*Parser's prototype*/
 int	parser(t_master *master);
 int	syntax_check(t_token **token_list);
+int	expand_arg(t_token *token, t_clone **env);
+int	expand_string(t_token *token, t_clone **env);
 
 /*------------------*/
 

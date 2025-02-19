@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/18 16:49:14 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/19 15:15:12 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	master->token_list = NULL;
 	clone_envp(&master->env_clone, envp);
 	/*signal*/
-	setup_signal()
+	setup_signal();
 	/*------*/
 	while (1)
 	{
