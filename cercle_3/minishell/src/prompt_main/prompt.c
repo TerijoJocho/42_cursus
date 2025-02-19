@@ -6,14 +6,14 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/19 15:15:12 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/19 15:40:30 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
 
 // cc lexer.c -I../libft -L../libft -lft -lreadline
-//gcc -Wall -Wextra -Werror -I. -I../../libft prompt.c ../lexer/*.c -L../../libft -lft -lreadline -o minishell
+// gcc -Wall -Wextra -Werror -I. -I../../libft prompt.c ../lexer/*.c -L../../libft -lft -lreadline -o minishell
 
 void	clone_envp(t_clone  **env_clone, char **envp)
 {
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	master->token_list = NULL;
 	clone_envp(&master->env_clone, envp);
 	/*signal*/
-	setup_signal();
+	// setup_signal();
 	/*------*/
 	while (1)
 	{

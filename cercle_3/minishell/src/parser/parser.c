@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/18 15:09:37 by abastian         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:20:04 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,8 @@ int	check_is_expand(t_token **token_list, t_clone **env)
 	{
 		if (current->is_expand == 1)
 		{
-			if (current->real == ARG)
-			{
-				if (!expand_arg(current, env))
-					return (1);
-			}
-			else if (current->real == STRING)
-			{
-				if (!expand_string(current, env))
-					return (1);
-			}
+			if (!expand_string(current, env))
+				return (1);
 		}
 		current = current->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_special_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:20 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/18 13:24:08 by abastian         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:09:22 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	check_expand(t_token **token_list)
 	while (current)
 	{
 		current->is_expand = 0;
-		if (current->real == ARG && current->value[0] == '$')
+		if (current->real == ARG && (ft_strchr(current->value, '$'))) //MODIF
 		{
 			i = 1;
 			while (current->value[i] && ft_isalpha(current->value[i]))
