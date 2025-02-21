@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/19 15:40:30 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/21 16:38:06 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,14 @@ int	main(int argc, char **argv, char **envp)
 		{
 			// printf("Current value: %p, Prev value: %p\n", current, current->prev);
 			printf("Type : %d, Real: %d, Value: %s, Is Expand: %d, single quote: %d, space flag : %d\n", current->type, current->real, current->value, current->is_expand, current->quote_flag, current->space);
+			printf("value_2: %s\n", current->value_2);
 			current = current->next;
 		}
-		// t_clone *current = master->env_clone;
-		// int i = 0;
-		// while (current)
-		// {
-		//     printf("actuel : %d, contenu : %s\n", i, current->value);
-		//     i++;
-		//     current = current->next;
-		// }
 		/*----------------------------------------*/
-		token_clear(&master->token_list);
 		free(input);
+		free_all(master);
 	}
+	free(master);
 	printf("exit\n");
 	return (0);
 }

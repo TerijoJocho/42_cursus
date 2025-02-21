@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/19 16:20:04 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/21 13:38:18 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 int	check_is_expand(t_token **token_list, t_clone **env)
 {
 	t_token	*current;
+	char	*cpy;
 
 	current = *token_list;
 	while (current)
 	{
+		cpy = ft_strdup(current->value);
 		if (current->is_expand == 1)
 		{
-			if (!expand_string(current, env))
+			if (!expand_string(current, env, cpy))
 				return (1);
 		}
 		current = current->next;
+		free(cpy);
 	}
 	return (0); // des int partout ? je pense que je me perds
 }
