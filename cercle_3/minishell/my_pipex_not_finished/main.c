@@ -9,8 +9,8 @@ int	main(int argc, char **argv, char **envp)
 		// ft_check_args(argc, argv); /*j'sais ps si je garde */
 		ft_init_pipex(argv, argc, &data);
 		ft_parse_args(&data, argv);
-		(void)envp;
-		// ft_parse_cmds(&data, argv, envp);
+		// (void)envp;
+		ft_parse_cmds(&data, argv, envp);
 		// while (cmds)
 		// 	ft_exec();
 		// ft_cleanup();

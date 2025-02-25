@@ -34,6 +34,7 @@ void	ft_parse_args(t_pipex *data, char **argv)
 			ft_printf("cmd_args[%d][%d] = %s\n", j, k, data->cmd_args[j][k]);
 			k++;
 		}
+		printf("\n");
 		/*verif------------------------------------*/
 		i++;
 		j++;

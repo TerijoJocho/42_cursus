@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:07:53 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/21 17:04:21 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/24 13:16:17 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*extract_expand_2(char *str)
+char *extract_expand_2(char *str)
 {
-	char	*new_value;
-	int	i;
+	char *new_value;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -30,20 +30,18 @@ char	*extract_expand_2(char *str)
 		i++;
 	}
 	new_value[i] = '\0';
-	return (new_value);
+	return (new_value); // mdr c'est juste un strdup fdp
 }
 
-char	*take_var(char *value, t_clone **env)
+char *take_var(char *value, t_clone **env, int i)
 {
-	char	*var;
-	int	i;
-	t_clone	*cur_env;
+	char *var;
+	t_clone *cur_env;
 
-	i = 0;
 	cur_env = *env;
 	while (value[i] && value[i] != ' ' && value[i] != '$')
 		i++;
-	var = malloc(sizeof(char) * i + 2);
+	var = malloc(sizeof(char) * (i + 2));
 	i = 0;
 	while (value[i] && value[i] != ' ' && value[i] != '$')
 	{
@@ -56,40 +54,58 @@ char	*take_var(char *value, t_clone **env)
 	{
 		if (ft_strncmp(cur_env->value, var, i - 1) == 0)
 		{
-			var = extract_expand_2(&cur_env->value[i]);
-			return (var);
+			free(var);
+			return (extract_expand_2(&cur_env->value[i]));
 		}
 		cur_env = cur_env->next;
 	}
-	return (NULL);
+	return (free(var), NULL);
 }
 
-int	expand_string(t_token *token, t_clone **env, char *cpy)
+char *expand_variable(char *cpy, char *new_value, t_clone **env, int *i)
 {
-	int	i;
-	char	*new_value;
-	char	*tmp;
-	char	*var;
+	char *substr;
+	char *tmp;
+	char *var;
+
+	substr = ft_substr(cpy, 0, *i);
+	tmp = ft_strjoin(new_value, substr);
+	free(substr);
+	free(new_value);
+	if (!tmp)
+		return (NULL);
+	new_value = tmp;
+	(*i)++;
+	var = take_var(&cpy[*i], env, 0);
+	if (!var)
+		var = ft_strdup("");
+	tmp = ft_strjoin(new_value, var);
+	free(new_value);
+	free(var);
+	if (!tmp)
+		return (NULL);
+	new_value = tmp;
+	while (cpy[*i] && ft_isalnum(cpy[*i]))
+		(*i)++;
+	return (new_value);
+}
+
+int expand_string(t_token *token, t_clone **env, char *cpy)
+{
+	int i;
+	char *new_value;
 
 	i = 0;
 	new_value = ft_strdup("");
+	if (!new_value)
+		return (0);
 	while (cpy[i])
 	{
 		if (cpy[i] == '$')
 		{
-			tmp = ft_strjoin(new_value, ft_substr(cpy, 0, i));
-			free(new_value);
-			new_value = tmp;
-			i++;
-			var = take_var(&cpy[i], env);
-			if (!var)
-				var = ft_strdup("");
-			tmp = ft_strjoin(new_value, var);
-			free(new_value);
-			new_value = tmp;
-			free(var);
-			while (cpy[i] && (ft_isalnum(cpy[i])))
-				i++;
+			new_value = expand_variable(cpy, new_value, env, &i);
+			if (!new_value)
+				return (0);
 			cpy += i;
 			i = 0;
 		}
@@ -97,8 +113,58 @@ int	expand_string(t_token *token, t_clone **env, char *cpy)
 			i++;
 	}
 	token->value_2 = new_value;
-	if (token->value_2 == NULL)
-		return (0);
 	return (1);
 }
 
+// VERSION ORIGINALE
+// int	expand_string(t_token *token, t_clone **env, char *cpy)
+// {
+// 	int	i;
+// 	char	*new_value;
+// 	char	*tmp;
+// 	char	*var;
+// 	char	*substr;
+
+// 	i = 0;
+// 	new_value = ft_strdup("");
+// 	if (!new_value)
+// 		return (0);
+// 	printf("value before expand_2: %s\n", cpy);
+// 	while (cpy[i])
+// 	{
+// 		if (cpy[i] == '$')
+// 		{
+// 			substr = ft_substr(cpy, 0, i);
+// 			printf("substr : %s\n", substr);
+// 			tmp = ft_strjoin(new_value, substr);
+// 			printf("tmp first: %s\n", tmp);
+// 			free(substr);
+// 			free(new_value);
+// 			if (!tmp)
+// 				return (0);
+// 			new_value = tmp;
+// 			printf("new_value first: %s\n", new_value);
+// 			i++;
+// 			var = take_var(&cpy[i], env, 0);
+// 			if (!var)
+// 				var = ft_strdup("");
+// 			printf("VAR : %s\n", var);
+// 			tmp = ft_strjoin(new_value, var);
+// 			printf("tmp second : %s\n", tmp);
+// 			free(new_value);
+// 			free(var);
+// 			if (!tmp)
+// 				return (0);
+// 			new_value = tmp;
+// 			printf("new_value: %s\n", new_value);
+// 			while (cpy[i] && (ft_isalnum(cpy[i])))
+// 				i++;
+// 			cpy += i;
+// 			i = 0;
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	token->value_2 = new_value;
+// 	return (1);
+// }

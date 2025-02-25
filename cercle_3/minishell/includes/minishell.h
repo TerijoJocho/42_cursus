@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/21 15:25:20 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/25 16:01:45 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,25 @@ typedef struct s_token
 	struct s_token	*next;
 }		t_token;
 
+/*Struct of cmd*/
+typedef struct s_cmd
+{
+	char **args;
+	char *infile;
+	char *outfile;
+	char *path;
+	int  append;
+	struct s_cmd *next;
+}	t_cmd;
+
 /*Struct of minishell*/
 typedef struct s_master
 {
 	t_token	*token_list;
 	t_clone	*env_clone;
+	t_cmd	*cmd_list;
 }		t_master;
+
 
 /*Lexer's prototype*/
 int		is_special_char(char c);
@@ -97,6 +110,7 @@ int	parser(t_master *master);
 int	syntax_check(t_token **token_list);
 int	expand_arg(t_token *token, t_clone **env);
 int	expand_string(t_token *token, t_clone **env, char *cpy);
+void	parse_cmd(t_master **master);
 
 /*------------------*/
 

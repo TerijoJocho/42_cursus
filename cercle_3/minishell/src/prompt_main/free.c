@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/21 16:48:39 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/24 13:14:16 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void	free_all(t_master *master)
 {
 	clean_values(&master->token_list);
 	token_clear(&master->token_list); //pour liberer tous les neeouds
-	clean_env(&master->env_clone); //clean les neouds de l'env
+	//clean_env(&master->env_clone); //clean les neouds de l'env
 }

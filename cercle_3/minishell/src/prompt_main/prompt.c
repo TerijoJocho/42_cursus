@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/21 16:38:06 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/24 13:14:33 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error lexer\n");
 		else if (syntax_check(&master->token_list) == 1) // else if car sinon segfault apres erreur de lexer
 			printf("Command line syntax error\n");
-		else if (parser(master) == 1)
+		 else if (parser(master) == 1)
 			printf("Error during paring\n"); // je pense qu'il faut qu'on trouve une meilleure maniere detaillee de renvoyer une erreur que ca
 		// else if (parsing(&master->token_list) == 1)
 		//     printf("Error parsing\n");
@@ -95,6 +95,7 @@ int	main(int argc, char **argv, char **envp)
 		free_all(master);
 	}
 	free(master);
+	//clean_env a faire ICI
 	printf("exit\n");
 	return (0);
 }

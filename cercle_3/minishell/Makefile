@@ -6,10 +6,9 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 15:42:55 by daavril           #+#    #+#              #
-#    Updated: 2025/02/21 16:26:46 by daavril          ###   ########.fr        #
+#    Updated: 2025/02/25 16:12:58 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME		=	minishell
 
@@ -19,7 +18,7 @@ LDFLAGS		=	-lreadline
 
 C_FILE		=	lexer/extract_quoted_string.c lexer/extract_special_char.c lexer/extract_word.c lexer/get_special_type.c \
 				lexer/lexer.c lexer/utils_token.c parser/expand_arg.c parser/expand_string.c parser/parser.c parser/syntax_parse.c \
-				prompt_main/prompt.c prompt_main/free.c signals/signals.c
+				parser/parse_cmd.c prompt_main/prompt.c prompt_main/free.c signals/signals.c
 
 SRC_DIR		=	./src/
 SRC			=	$(addprefix $(SRC_DIR), $(C_FILE))
@@ -65,47 +64,4 @@ re: fclean all
 
 .PHONY: all clean fclean re
 
-
-# NAME		=	minishell
-
-# CC			=	gcc
-# FLAG		=	-Wall -Werror -Wextra -g3
-# LDFLAGS		=	-lreadline
-
-# C_FILE		=	lexer/extract_quoted_string.c lexer/extract_special_char.c lexer/extract_word.c lexer/get_special_type.c \
-# 				lexer/lexer.c lexer/utils_token.c parser/expand_arg.c parser/expand_string.c parser/parser.c parser/syntax_parse.c \
-# 				prompt_main/prompt.c signals/signals.c signals/builtins.c signals/executor.c signals/memory.c signals/utils.c
-
-# SRC_DIR		=	./src/
-# SRC			=	$(addprefix $(SRC_DIR), $(C_FILE))
-
-# OBJ_PATH	=	./obj/
-# OBJ			=	$(C_FILE:%.c=%.o)
-# OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))
-
-
-# $(OBJ_PATH)%.o: $(SRC_DIR)%.c
-# 	@mkdir -p $(dir $@)  # Crée les sous-dossiers dans obj/
-# 	$(CC) $(FLAG) -c $< -o $@
-
-# all: $(NAME)
-
-# $(NAME): $(OBJS)
-# 	@echo "\033[0;33m\nCOMPILING MINISHELL...\n"
-# 	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
-# 	@echo "\033[1;32m./minishell created\n"
-
-# clean:
-# 	@echo "\033[0;31mDeleting minishell object files...\n"
-# 	@rm -rf $(OBJ_PATH)
-# 	@echo "\033[1;32mDone\n"
-
-# fclean: clean
-# 	@echo "\033[0;31mDeleting minishell executable...\n"
-# 	@rm -f $(NAME)
-# 	@echo "\033[1;32mDone\n"
-
-# re: fclean all
-
-# .PHONY: all clean fclean re
 

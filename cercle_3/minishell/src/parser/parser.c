@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/21 13:38:18 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:01:37 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	check_is_expand(t_token **token_list, t_clone **env)
 	while (current)
 	{
 		cpy = ft_strdup(current->value);
+		printf("value before expand: %s\n", cpy);
 		if (current->is_expand == 1)
 		{
 			if (!expand_string(current, env, cpy))
@@ -36,6 +37,7 @@ int	parser(t_master *master)
 {
 	if (check_is_expand(&master->token_list, &master->env_clone) == 1)
 		return (printf("PROBLEME EXPAND\n"), 1);
+	parse_cmd(&master);
 	return (0);
 }
 
