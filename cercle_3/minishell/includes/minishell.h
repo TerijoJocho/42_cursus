@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/25 16:01:45 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/28 15:31:36 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	parse_cmd(t_master **master);
 
 /*free functions*/
 void	free_all(t_master *master);
-
+void	clean_env(t_clone **lst);
 /*------------------*/
 
 #endif

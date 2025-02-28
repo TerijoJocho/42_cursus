@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:03:14 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/25 16:35:55 by daavril          ###   ########.fr       */
+/*   Updated: 2025/02/28 16:41:44 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	is_intern(char *value, t_master **master)
 		full_path = ft_strjoin(full_path, value);
 		if (access(full_path, X_OK) == 0)
 		{
-			// printf("path[%d] = %s\n",i , path_dir[i]);
+			printf("path[%d] = %s\n",i , path_dir[i]);
 			free(full_path);
 			return (1);
 		}
@@ -68,20 +68,24 @@ Dans ta fonction init_cmd, tu vas initialiser une nouvelle commande en remplissa
     append : flag pour les redirections avec ou sans append (ajout à la fin du fichier).
     next : un pointeur vers la commande suivante si nécessaire (pour les pipes
 */
-void	init_cmd(t_master **master, t_token *cur_tok)
+void	init_cmd(t_master **master, t_token *cur_tok, t_cmd *cmd_list)
 {
-
+	cmd_list->args = cur_tok->value;
+	
 }
 
 void	parse_cmd(t_master **master)
 {
 	t_token	*current;
+	t_cmd	*cmd_list;
 
+	cmd_list = malloc(sizeof(t_cmd));
 	current = (*master)->token_list;
 	while (current)
 	{
 		if (is_intern(current->value, master))
-			init_cmd(master, current);
+			init_cmd(master, current, cmd_list);
+			// printf("yes\n");
 		current = current->next;
 	}
 }

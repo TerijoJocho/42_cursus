@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/24 13:14:16 by abastian         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:41:54 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,16 @@
 void	clean_env(t_clone **lst)
 {
 	t_clone	*current;
+	t_clone	*tmp;
 
 	current = *lst;
 	while (current)
 	{
-		if (current->value != NULL)
+		tmp = current->next;
+		if (current->value)
 			free(current->value);
-		current = current->next;
-	}
-	while (*lst)
-	{
-		current = (*lst)->next;
-		free(*lst);
-		*lst = current;
+		free(current);
+		current = tmp;
 	}
 	*lst = NULL;
 }

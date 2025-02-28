@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/24 13:14:33 by abastian         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:48:33 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,17 @@ void	clone_envp(t_clone  **env_clone, char **envp)
 		if (!new_node)
 		{
 			printf("Malloc error\n");
+			clean_env(env_clone);
 			return ;
 		}
 		new_node->value = ft_strdup(envp[i]);
+		if (!new_node->value)  // Vérification du strdup
+		{
+			free(new_node);
+			clean_env(env_clone);
+			printf("Malloc error\n");
+			return ;
+		}
 		new_node->next = NULL;
 		new_node->prev = last;
 		if (last)
@@ -60,6 +68,11 @@ int	main(int argc, char **argv, char **envp)
 	master->env_clone = NULL;
 	master->token_list = NULL;
 	clone_envp(&master->env_clone, envp);
+	if (!master->env_clone)  // Si clone_envp a échoué
+	{
+		free(master);
+		return (0);
+	}
 	/*signal*/
 	// setup_signal();
 	/*------*/
@@ -94,8 +107,9 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 		free_all(master);
 	}
+	clean_env(&master->env_clone);
 	free(master);
-	//clean_env a faire ICI
+	master = NULL;
 	printf("exit\n");
 	return (0);
 }
