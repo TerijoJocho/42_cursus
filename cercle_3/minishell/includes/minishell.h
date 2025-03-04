@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/28 15:31:36 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:36:09 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # include "../libft/libft.h"
 
@@ -56,6 +58,8 @@ typedef struct s_token
 	int				is_expand;
 	int				quote_flag;
 	int				space;
+	int				dir;
+	int				prog;
 	t_real			real;
 	struct s_token	*prev;
 	struct s_token	*next;
@@ -111,6 +115,7 @@ int	syntax_check(t_token **token_list);
 int	expand_arg(t_token *token, t_clone **env);
 int	expand_string(t_token *token, t_clone **env, char *cpy);
 void	parse_cmd(t_master **master);
+void	directory_check(t_token **token_list);
 
 /*------------------*/
 

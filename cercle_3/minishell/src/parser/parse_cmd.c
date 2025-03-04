@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:03:14 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/28 16:41:44 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/03 09:04:20 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,24 @@ Dans ta fonction init_cmd, tu vas initialiser une nouvelle commande en remplissa
     append : flag pour les redirections avec ou sans append (ajout à la fin du fichier).
     next : un pointeur vers la commande suivante si nécessaire (pour les pipes
 */
-void	init_cmd(t_master **master, t_token *cur_tok, t_cmd *cmd_list)
-{
-	cmd_list->args = cur_tok->value;
-	
-}
+// void	init_cmd(t_master **master, t_token *cur_tok, t_cmd *cmd_list)
+// {
+// 	cmd_list->args = cur_tok->value;
 
-void	parse_cmd(t_master **master)
-{
-	t_token	*current;
-	t_cmd	*cmd_list;
+// }
 
-	cmd_list = malloc(sizeof(t_cmd));
-	current = (*master)->token_list;
-	while (current)
-	{
-		if (is_intern(current->value, master))
-			init_cmd(master, current, cmd_list);
-			// printf("yes\n");
-		current = current->next;
-	}
-}
+// void	parse_cmd(t_master **master)
+// {
+// 	t_token	*current;
+// 	t_cmd	*cmd_list;
+
+// 	cmd_list = malloc(sizeof(t_cmd));
+// 	current = (*master)->token_list;
+// 	while (current)
+// 	{
+// 		if (is_intern(current->value, master))
+// 			init_cmd(master, current, cmd_list);
+// 			// printf("yes\n");
+// 		current = current->next;
+// 	}
+// }

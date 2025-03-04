@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/28 16:02:43 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/04 14:42:13 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,29 @@ int	check_is_expand(t_token **token_list, t_clone **env)
 void	do_merge(t_token **token_list, t_token *cur, char *va_prev, char *va)
 {
 	char	*new_value;
-	t_token	*previous_one;
+	t_token	*to_delete;
 
+	to_delete = cur->prev;
 	new_value = ft_strjoin(va, va_prev);
-	free(cur->prev->value);
+	free(to_delete->value);
 	free(cur->value);
-	if (cur->value_2)
+	if (cur->value_2 && cur->value_2 != to_delete->value_2) // refaire des tests de valgrind
 		free(cur->value_2);
-	if (cur->prev->value_2)
-		free(cur->prev->value_2);
+	if (to_delete->value_2)
+		free(to_delete->value_2);
 	cur->value = ft_strdup(new_value);
-	free(new_value);
-	if (cur->prev && cur->prev->prev)
-		previous_one = cur->prev->prev;
-	else
-		previous_one = NULL;
-	free(cur->prev);
-	cur->prev = previous_one;
-	if (cur->prev)
-		cur->prev->next = cur;
+	cur->value_2 = NULL;
+	if (to_delete->is_expand || cur->is_expand)
+		cur->is_expand = 1;
+	if (to_delete->prev)
+		to_delete->prev->next = cur;
 	else
 		*token_list = cur;
+	cur->prev = to_delete->prev;
+	free(to_delete);
+	free(new_value);
 }
+
 
 void	merge_token(t_token **token_list)
 {
@@ -80,19 +81,98 @@ void	merge_token(t_token **token_list)
 	}
 }
 
+void	cmd_add_back(t_master **master, t_cmd *node)
+{
+	t_cmd	**list;
+
+	list = &(*master)->cmd_list;
+	while (*list)
+		list = &(*list)->next;
+	*list = node;
+}
+
+void	init_cmd_list(t_master **master, int i)
+{
+	t_token	*cur;
+	t_cmd	*new_cmd;
+
+	cur = (*master)->token_list;
+	while (cur)
+	{
+		i = 1;
+		while(cur && cur->real != PIPE)
+		{
+			cur = cur->next;
+			i++;
+		}
+		if (cur)
+			cur = cur->next;
+		new_cmd = malloc(sizeof(t_cmd));
+		if (!new_cmd)
+			return ;
+		new_cmd->args = ft_calloc(i, sizeof(char *)); // ptet pas 1024 on god
+		new_cmd->infile = NULL;
+		new_cmd->outfile = NULL;
+		new_cmd->path = NULL;
+		new_cmd->append = 0;
+		new_cmd->next = NULL;
+		cmd_add_back(master, new_cmd);
+		}
+}
+
+void	add_cmd(t_cmd *node, char *va, int *i)
+{
+	node->args[*i] = ft_strdup(va);
+	(*i)++;
+}
+
+void	parse_cmd(t_master **master)
+{
+	int	i;
+	t_token	*cur;
+	t_cmd	*cmd_list;
+
+	i = 0;
+	cur = (*master)->token_list;
+	init_cmd_list(master, 0);
+	cmd_list = (*master)->cmd_list;
+	while (cur && cmd_list)
+	{
+		if (cur->value_2 == NULL)
+			add_cmd(cmd_list, cur->value, &i);
+		else
+			add_cmd(cmd_list, cur->value_2, &i);
+		cur = cur->next;
+		if (cur && cur->real == PIPE)
+		{
+			cmd_list = cmd_list->next;
+			cur = cur->next;
+			i = 0;
+		}
+	}
+	/*TEST---------------*/
+	i = 0;
+	t_cmd	*g;
+	g = (*master)->cmd_list;
+	while (g)
+	{
+		while(g->args[i])
+		{
+			printf("split[%d] : %s\n", i, g->args[i]);
+			i++;
+		}
+		g = g->next;
+		i = 0;
+	/*-------------------*/
+	}
+}
+
 int	parser(t_master *master)
 {
 	if (check_is_expand(&master->token_list, &master->env_clone) == 1)
 		return (printf("PROBLEME EXPAND\n"), 1);
 	merge_token(&master->token_list);
+	directory_check(&master->token_list);
 	parse_cmd(&master);
 	return (0);
 }
-
-
-// char *expand_variable(char *var_name) {
-//     char *value = getenv(var_name);
-//     if (value)
-//         return ft_strdup(value);  // Si défini, retourner la valeur
-//     return ft_strdup("");         // Sinon, retourner une string vide
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/28 15:41:54 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/04 14:22:21 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,37 @@ void	clean_values(t_token **lst)
 	}
 }
 
+void	cmd_clear(t_cmd **lst)
+{
+	t_cmd	*cur;
+	t_cmd	*tmp;
+	int	i;
+
+	cur = *lst;
+	while (cur)
+	{
+		i = 0;
+		tmp = cur->next;
+		while (cur->args[i])
+		{
+			free(cur->args[i]);
+			i++;
+		}
+		if (cur->infile != NULL)
+			free(cur->infile);
+		if (cur->outfile != NULL)
+			free(cur->outfile);
+		if (cur->path != NULL)
+			free(cur->path);
+		free(cur);
+		cur = tmp;
+	}
+	*lst = NULL;
+}
+
 void	free_all(t_master *master)
 {
 	clean_values(&master->token_list);
 	token_clear(&master->token_list); //pour liberer tous les neeouds
-	//clean_env(&master->env_clone); //clean les neouds de l'env
+	cmd_clear(&master->cmd_list);
 }
