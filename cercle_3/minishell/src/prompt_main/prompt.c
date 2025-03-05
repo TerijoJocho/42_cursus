@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/04 14:35:37 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:02:05 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,30 +87,30 @@ int	main(int argc, char **argv, char **envp)
 		master->token_list = NULL;
 		if (lexer(input, &master->token_list) == 1)
 			printf("Error lexer\n");
-		if (syntax_check(&master->token_list) == 1) // else if car sinon segfault apres erreur de lexer
-		{
+		else if (syntax_check(&master->token_list) == 1)
 			printf("Command line syntax error\n");
-
-		}
 		 else if (parser(master) == 1)
-			printf("Error during paring\n"); // je pense qu'il faut qu'on trouve une meilleure maniere detaillee de renvoyer une erreur que ca
+			printf("Error parsing\n");
 		// else if (parsing(&master->token_list) == 1)
 		//     printf("Error parsing\n");
-		// else
-		//     break ;
-		/*TEST------------------------------------*/
-		t_token	*current = master->token_list;
-		int	i = 1;
-		while (current)
+		// else if (executor(master) == 1)
+		// 	printf("Error exec\n");
+		else
 		{
-			printf("---Token %d---\n", i);
-			printf("Prog : %d, Dir: %d, Is Expand: %d, single quote: %d, space flag : %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space);
-			printf("value: %s\n", current->value);
-			printf("value_2: %s\n\n", current->value_2);
-			current = current->next;
-			i++;
+			/*TEST------------------------------------*/
+			t_token	*current = master->token_list;
+			int	i = 1;
+			while (current)
+			{
+				printf("\n---Token %d---\n", i);
+				printf("Prog : %d, Dir: %d, Is Expand: %d, single quote: %d, space flag : %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space);
+				printf("value: %s\n", current->value);
+				printf("value_2: %s\n\n", current->value_2);
+				current = current->next;
+				i++;
+			}
+			/*----------------------------------------*/	
 		}
-		/*----------------------------------------*/
 		free(input);
 		free_all(master);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/03 13:36:09 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/05 16:54:45 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,8 @@ void	directory_check(t_token **token_list);
 void	free_all(t_master *master);
 void	clean_env(t_clone **lst);
 /*------------------*/
+
+/*Executor's prototype*/
+int    executor(t_master *master);
 
 #endif

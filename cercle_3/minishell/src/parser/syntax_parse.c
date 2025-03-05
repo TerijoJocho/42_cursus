@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:23:17 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/04 14:43:01 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:15:30 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	syntax_check(t_token **token_list)
 	current = *token_list;
 	if (current->type == 2)
 		return (1); // caractere special en debut de string = KO | PAS BON
+	if (ft_strchr(current->value, ';'))
+		return (1);
+	if (ft_strchr(current->value, '&'))
+		return (1);
 	while (current->next)
 	{
 		if (current->type == 2 &&
