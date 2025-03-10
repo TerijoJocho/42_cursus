@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
+#    By: abastian <abastian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 15:42:55 by daavril           #+#    #+#              #
-#    Updated: 2025/03/05 16:55:03 by terijo           ###   ########.fr        #
+#    Updated: 2025/03/10 12:17:35 by abastian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ FLAG		=	-Wall -Werror -Wextra -g3
 LDFLAGS		=	-lreadline
 
 C_FILE		=	lexer/extract_quoted_string.c lexer/extract_special_char.c lexer/extract_word.c lexer/get_special_type.c \
-				lexer/lexer.c lexer/utils_token.c parser/expand_arg.c parser/expand_string.c parser/parser.c parser/syntax_parse.c \
+				lexer/lexer.c lexer/utils_token.c parser/expand_string.c parser/parser.c parser/syntax_parse.c \
 				parser/parse_cmd.c parser/parser_2.c prompt_main/prompt.c prompt_main/free.c signals/signals.c executor/executor.c
 
 SRC_DIR		=	./src/

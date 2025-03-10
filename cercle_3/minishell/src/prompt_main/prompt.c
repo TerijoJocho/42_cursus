@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/05 18:02:05 by terijo           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:39:44 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 // cc lexer.c -I../libft -L../libft -lft -lreadline
 // gcc -Wall -Wextra -Werror -I. -I../../libft prompt.c ../lexer/*.c -L../../libft -lft -lreadline -o minishell
@@ -93,8 +93,8 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error parsing\n");
 		// else if (parsing(&master->token_list) == 1)
 		//     printf("Error parsing\n");
-		// else if (executor(master) == 1)
-		// 	printf("Error exec\n");
+		else if (executor(master) == 1)
+			printf("Error exec\n");
 		else
 		{
 			/*TEST------------------------------------*/
@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 				current = current->next;
 				i++;
 			}
-			/*----------------------------------------*/	
+			/*----------------------------------------*/
 		}
 		free(input);
 		free_all(master);

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:07:53 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/24 13:16:17 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:12:01 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *extract_expand_2(char *str)
+char	*extract_expand_2(char *str)
 {
-	char *new_value;
-	int i;
+	char	*new_value;
+	int		i;
 
 	i = 0;
 	while (str[i])
@@ -90,13 +90,29 @@ char *expand_variable(char *cpy, char *new_value, t_clone **env, int *i)
 	return (new_value);
 }
 
+void	add_tmp(char *new_value, char *tmp, t_token *token)
+{
+	char	*prev_value;
+
+	prev_value = new_value;
+	if (tmp != NULL)
+	{
+		new_value = ft_strjoin(prev_value, tmp);
+		free(prev_value);
+		free(tmp);
+	}
+	token->value_2 = new_value;
+}
+
 int expand_string(t_token *token, t_clone **env, char *cpy)
 {
 	int i;
 	char *new_value;
+	char	*tmp;
 
 	i = 0;
 	new_value = ft_strdup("");
+	tmp =NULL;
 	if (!new_value)
 		return (0);
 	while (cpy[i])
@@ -107,12 +123,13 @@ int expand_string(t_token *token, t_clone **env, char *cpy)
 			if (!new_value)
 				return (0);
 			cpy += i;
+			tmp = ft_strdup(cpy);
 			i = 0;
 		}
 		else
 			i++;
 	}
-	token->value_2 = new_value;
+	add_tmp(new_value, tmp, token);
 	return (1);
 }
 

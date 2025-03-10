@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/04 14:42:13 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:03:42 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,17 @@ void	cmd_add_back(t_master **master, t_cmd *node)
 	*list = node;
 }
 
+void	init_cmd_list_2(t_cmd **cmd, int i)
+{
+	(*cmd)->args = ft_calloc(i, sizeof(char *)); // ptet pas 1024 on god
+	(*cmd)->infile = NULL;
+	(*cmd)->outfile = NULL;
+	(*cmd)->path = NULL;
+	(*cmd)->append = 0;
+	(*cmd)->next = NULL;
+	(*cmd)->error = 0;
+}
+
 void	init_cmd_list(t_master **master, int i)
 {
 	t_token	*cur;
@@ -110,19 +121,35 @@ void	init_cmd_list(t_master **master, int i)
 		new_cmd = malloc(sizeof(t_cmd));
 		if (!new_cmd)
 			return ;
-		new_cmd->args = ft_calloc(i, sizeof(char *)); // ptet pas 1024 on god
-		new_cmd->infile = NULL;
-		new_cmd->outfile = NULL;
-		new_cmd->path = NULL;
-		new_cmd->append = 0;
-		new_cmd->next = NULL;
+		init_cmd_list_2(&new_cmd, i);
 		cmd_add_back(master, new_cmd);
 		}
 }
 
 void	add_cmd(t_cmd *node, char *va, int *i)
 {
+	char	*path;
+	char	**split_path;
+	char	*full_path;
+	int		j;
+
 	node->args[*i] = ft_strdup(va);
+	path =  getenv("PATH");
+	split_path = ft_split(path, ':');
+	j = 0;
+	while(split_path[j])
+	{
+		full_path = ft_strjoin(split_path[j], "/");
+		full_path = ft_strjoin(full_path, va);
+		if (access(full_path, X_OK) == 0)
+		{
+			node->path = full_path;
+			(*i)++;
+			return ;
+		}
+		j++;
+	}
+	node->error = 0;
 	(*i)++;
 }
 
@@ -151,21 +178,22 @@ void	parse_cmd(t_master **master)
 		}
 	}
 	/*TEST---------------*/
-	i = 0;
-	t_cmd	*g;
-	g = (*master)->cmd_list;
-	while (g)
-	{
-		while(g->args[i])
-		{
-			printf("split[%d] : %s\n", i, g->args[i]);
-			i++;
-		}
-		g = g->next;
-		i = 0;
+	// i = 0;
+	// t_cmd	*g;
+	// g = (*master)->cmd_list;
+	// while (g)
+	// {
+	// 	while(g->args[i])
+	// 	{
+	// 		printf("split[%d] : %s\n", i, g->args[i]);
+	// 		printf("cmd_path = %s\n", g->path);
+	// 		i++;
+	// 	}
+	// 	g = g->next;
+	// 	i = 0;
 	/*-------------------*/
-	}
 }
+
 
 int	parser(t_master *master)
 {

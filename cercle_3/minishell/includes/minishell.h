@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/05 16:54:45 by terijo           ###   ########.fr       */
+/*   Updated: 2025/03/10 15:13:12 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 
 # include "../libft/libft.h"
 
@@ -72,7 +73,9 @@ typedef struct s_cmd
 	char *infile;
 	char *outfile;
 	char *path;
-	int  append;
+	int	append;
+	int	pfd[2];
+	int	error;
 	struct s_cmd *next;
 }	t_cmd;
 
@@ -81,6 +84,7 @@ typedef struct s_master
 {
 	t_token	*token_list;
 	t_clone	*env_clone;
+	char	**env;
 	t_cmd	*cmd_list;
 }		t_master;
 

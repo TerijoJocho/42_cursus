@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/04 14:22:21 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:08:33 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	clean_env(t_clone **lst)
 {
@@ -48,7 +48,7 @@ void	cmd_clear(t_cmd **lst)
 {
 	t_cmd	*cur;
 	t_cmd	*tmp;
-	int	i;
+	int		i;
 
 	cur = *lst;
 	while (cur)

@@ -6,11 +6,11 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:20 by abastian          #+#    #+#             */
-/*   Updated: 2025/02/19 16:09:22 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/06 16:09:17 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	choose_real(char *value, t_real *real)
 {
