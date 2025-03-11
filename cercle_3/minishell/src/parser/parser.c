@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/10 17:03:42 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/11 17:41:36 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	cmd_add_back(t_master **master, t_cmd *node)
 	*list = node;
 }
 
-void	init_cmd_list_2(t_cmd **cmd, int i)
+void	init_cmd_list_2(t_cmd **cmd, int i, t_token *token)
 {
 	(*cmd)->args = ft_calloc(i, sizeof(char *)); // ptet pas 1024 on god
 	(*cmd)->infile = NULL;
@@ -100,6 +100,12 @@ void	init_cmd_list_2(t_cmd **cmd, int i)
 	(*cmd)->append = 0;
 	(*cmd)->next = NULL;
 	(*cmd)->error = 0;
+	if (token && token->real >= 2 && token->real <= 8)
+		(*cmd)->builtins = token->real;
+	else
+		(*cmd)->builtins = 0;
+	printf("cmd_builtins = %d\n", (*cmd)->builtins);
+	// printf("cmd_real = %d\n", token->real);
 }
 
 void	init_cmd_list(t_master **master, int i)
@@ -113,17 +119,20 @@ void	init_cmd_list(t_master **master, int i)
 		i = 1;
 		while(cur && cur->real != PIPE)
 		{
-			cur = cur->next;
 			i++;
-		}
-		if (cur)
 			cur = cur->next;
+		}
+		if (cur->real == PIPE)
+			cur = cur->next;
+		if (cur == NULL)
+			break ;
+		// cur = cur->next;
 		new_cmd = malloc(sizeof(t_cmd));
 		if (!new_cmd)
 			return ;
-		init_cmd_list_2(&new_cmd, i);
+		init_cmd_list_2(&new_cmd, i, cur); //verifier si cur est NULL ou pas?
 		cmd_add_back(master, new_cmd);
-		}
+	}
 }
 
 void	add_cmd(t_cmd *node, char *va, int *i)
@@ -134,7 +143,7 @@ void	add_cmd(t_cmd *node, char *va, int *i)
 	int		j;
 
 	node->args[*i] = ft_strdup(va);
-	path =  getenv("PATH");
+	path =  getenv("PATH"); //belek ici faut prendre a partir de notre copie??
 	split_path = ft_split(path, ':');
 	j = 0;
 	while(split_path[j])
@@ -191,6 +200,7 @@ void	parse_cmd(t_master **master)
 	// 	}
 	// 	g = g->next;
 	// 	i = 0;
+	// }
 	/*-------------------*/
 }
 

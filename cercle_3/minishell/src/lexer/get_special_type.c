@@ -3,47 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   get_special_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:20 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/06 16:09:17 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/11 17:22:04 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	choose_real(char *value, t_real *real)
+void	choose_real(char *value, t_token *token)
 {
 	if (ft_strncmp(value, "|", 1) == 0)
-		*real = PIPE;
+		token->real = PIPE;
 	else if (ft_strncmp(value, "<<", 2) == 0)
-		*real = HEREDOC;
+		token->real = HEREDOC;
 	else if (ft_strncmp(value, ">>", 2) == 0)
-		*real = APPEND;
+		token->real = APPEND;
 	else if (ft_strncmp(value, "<", 1) == 0)
-		*real = REDIR_IN;
+		token->real = REDIR_IN;
 	else if (ft_strncmp(value, ">", 1) == 0)
-		*real = REDIR_OUT;
+		token->real = REDIR_OUT;
 }
 
-void	find_word(char *value, t_real *real)
+void find_word(char *value, t_token *token)
 {
-	if (ft_strlen(value) == 4 && ft_strncmp(value, "echo", 4) == 0) //ne pas oublier l'option -n
-		*real = ECHO;
-	else if (ft_strlen(value) == 2 && ft_strncmp(value, "cd", 2) == 0)
-		*real = CD;
-	else if (ft_strlen(value) == 3 && ft_strncmp(value, "pwd", 2) == 0)
-		*real = PWD;
-	else if (ft_strlen(value) == 6 && ft_strncmp(value, "export", 2) == 0)
-		*real = EXPORT;
-	else if (ft_strlen(value) == 5 && ft_strncmp(value, "unset", 2) == 0)
-		*real = UNSET;
-	else if (ft_strlen(value) == 3 && ft_strncmp(value, "env", 2) == 0)
-		*real = ENV;
-	else if (ft_strlen(value) == 4 && ft_strncmp(value, "exit", 2) == 0)
-		*real = EXIT;
-	else
-		*real = ARG;
+    if (ft_strlen(value) == 4 && ft_strncmp(value, "echo", 4) == 0) //option -n
+        token->real = ECHO;
+    else if (ft_strlen(value) == 2 && ft_strncmp(value, "cd", 2) == 0)
+        token->real = CD;
+    else if (ft_strlen(value) == 3 && ft_strncmp(value, "pwd", 3) == 0)
+        token->real = PWD;
+    else if (ft_strlen(value) == 6 && ft_strncmp(value, "export", 6) == 0)
+        token->real = EXPORT;
+    else if (ft_strlen(value) == 5 && ft_strncmp(value, "unset", 5) == 0)
+        token->real = UNSET;
+    else if (ft_strlen(value) == 3 && ft_strncmp(value, "env", 3) == 0)
+        token->real = ENV;
+    else if (ft_strlen(value) == 4 && ft_strncmp(value, "exit", 4) == 0)
+        token->real = EXIT;
+    else
+        token->real = ARG;
 }
 
 void	check_expand(t_token **token_list)
@@ -83,9 +83,9 @@ void	get_special_type(t_token **token_list)
 	while (current)
 	{
 		if (current->type == 1)
-			find_word(current->value, &current->real);
+			find_word(current->value, current);
 		else if (current->type == 2)
-			choose_real(current->value, &current->real);
+			choose_real(current->value, current);
 		else
 			current->real = STRING;
 		current = current->next;

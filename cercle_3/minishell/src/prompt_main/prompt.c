@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/10 14:39:44 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/11 16:39:40 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 			while (current)
 			{
 				printf("\n---Token %d---\n", i);
-				printf("Prog : %d, Dir: %d, Is Expand: %d, single quote: %d, space flag : %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space);
+				printf("Prog : %d, Dir: %d\nIs Expand: %d, single quote: %d, space flag : %d\nReal: %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space, current->real);
 				printf("value: %s\n", current->value);
 				printf("value_2: %s\n\n", current->value_2);
 				current = current->next;

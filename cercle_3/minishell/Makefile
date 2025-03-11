@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abastian <abastian@student.42.fr>          +#+  +:+       +#+         #
+#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 15:42:55 by daavril           #+#    #+#              #
-#    Updated: 2025/03/10 12:17:35 by abastian         ###   ########.fr        #
+#    Updated: 2025/03/11 16:22:47 by terijo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ LDFLAGS		=	-lreadline
 
 C_FILE		=	lexer/extract_quoted_string.c lexer/extract_special_char.c lexer/extract_word.c lexer/get_special_type.c \
 				lexer/lexer.c lexer/utils_token.c parser/expand_string.c parser/parser.c parser/syntax_parse.c \
-				parser/parse_cmd.c parser/parser_2.c prompt_main/prompt.c prompt_main/free.c signals/signals.c executor/executor.c
+				parser/parse_cmd.c parser/parser_2.c prompt_main/prompt.c prompt_main/free.c signals/signals.c executor/executor.c \
+				builtins/ft_pwd.c builtins/ft_env.c builtins/ft_cd.c
 
 SRC_DIR		=	./src/
 SRC			=	$(addprefix $(SRC_DIR), $(C_FILE))

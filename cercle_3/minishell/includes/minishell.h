@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/10 15:13:12 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/11 17:02:56 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_token
 	int				space;
 	int				dir;
 	int				prog;
-	t_real			real;
+	int				real; //changemenet en int
 	struct s_token	*prev;
 	struct s_token	*next;
 }		t_token;
@@ -76,6 +76,7 @@ typedef struct s_cmd
 	int	append;
 	int	pfd[2];
 	int	error;
+	int builtins;
 	struct s_cmd *next;
 }	t_cmd;
 
@@ -110,7 +111,7 @@ int		quoted_string_len(char *input, t_token **token_list);
 char	*extract_word(char *input);
 int		word_len(char *input, t_token **token_list);
 void	get_special_type(t_token **token_list);
-void	choose_real(char *value, t_real *real);
+void	choose_real(char *value, t_token *token);
 /*-----------------*/
 
 /*Parser's prototype*/
@@ -130,5 +131,10 @@ void	clean_env(t_clone **lst);
 
 /*Executor's prototype*/
 int    executor(t_master *master);
+
+/*Builtins*/
+void	ft_pwd();
+void    ft_env(char **env);
+void    ft_cd(t_master *master, t_cmd *cmd);
 
 #endif

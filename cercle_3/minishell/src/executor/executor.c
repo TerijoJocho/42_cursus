@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 12:36:10 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/10 17:02:58 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/11 16:45:58 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	**clone_tab_env(t_clone *env)
 	while (cur)
 	{
 		tab[i] = ft_strdup(cur->value);
-		// printf("tab[%d] = %s\n", i, tab[i]);
 		cur = cur->next;
 		i++;
 	}
@@ -42,7 +41,32 @@ char	**clone_tab_env(t_clone *env)
 	return (tab);
 }
 
-void	do_cmd_last(t_cmd *cmd, char **env)
+void	execute_builtins(t_master *master, t_cmd *cur_cmd, char **env)
+{
+	// if (cur_cmd->builtins == ECHO)
+	// 	ft_echo();
+	// else if (cur_cmd->builtins == CD)
+	// 	ft_cd();
+	// else if (cur_cmd->builtins == PWD)
+	// 	ft_pwd();
+	// else if (cur_cmd->builtins == EXPORT)
+	// 	ft_export();
+	// else if (cur_cmd->builtins == UNSET)
+	// 	ft_unset();
+	// else if (cur_cmd->builtins == ENV)
+	// 	ft_env(env);
+	// else if (cur_cmd->builtins == EXIT)
+	// 	ft_exit();
+	printf("AAAAAh");
+	if (cur_cmd->builtins == ENV)
+		ft_env(env);
+	else if (cur_cmd->builtins == PWD)
+		ft_pwd();
+	else if (cur_cmd->builtins == CD)
+		ft_cd(master, cur_cmd);
+}
+
+void	do_cmd_last(t_master *master, t_cmd *cmd, char **env)
 {
 	t_cmd	*cur_cmd;
 	pid_t	pid;
@@ -55,11 +79,16 @@ void	do_cmd_last(t_cmd *cmd, char **env)
 		return ;
 	if (pid == 0)
 	{
-		if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
-		{
-			printf("Error execve\n");
-			exit(1) ;
-		}
+		// if (cur_cmd->builtins == 0)
+		// {
+		// 	if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
+		// 	{
+		// 		printf("Error execve\n");
+		// 		exit(1) ;
+		// 	}	
+		// }
+		// else
+		execute_builtins(master, cur_cmd, env);
 	}
 	else
 		waitpid(pid, NULL, 0);
@@ -87,7 +116,7 @@ int	executor(t_master *master)
 		// }
 		// else if (!cur->next)
 		// 	do_cmd_last(cur);
-		do_cmd_last(cur, master->env);
+		do_cmd_last(master, cur, master->env);
 		cur = cur->next;
 	}
 	return (0);
