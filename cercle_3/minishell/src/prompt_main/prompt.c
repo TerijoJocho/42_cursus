@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/11 16:39:40 by terijo           ###   ########.fr       */
+/*   Updated: 2025/03/12 12:43:31 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,18 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = readline("minishell$ ");
+		master->token_list = NULL;
 		if (!input)
 			break ;
-		if (*input)
+		// else if (input[0] == '\0')
+		// 	add_history(input); // CA LA ADD APRES
+		else if (*input) // rajouter verif si que des espaces || GERER CA APRES LOL
 			add_history(input);
-		master->token_list = NULL;
 		if (lexer(input, &master->token_list) == 1)
 			printf("Error lexer\n");
 		else if (syntax_check(&master->token_list) == 1)
 			printf("Command line syntax error\n");
-		 else if (parser(master) == 1)
+		else if (parser(master) == 1)
 			printf("Error parsing\n");
 		// else if (parsing(&master->token_list) == 1)
 		//     printf("Error parsing\n");
@@ -98,17 +100,17 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			/*TEST------------------------------------*/
-			t_token	*current = master->token_list;
-			int	i = 1;
-			while (current)
-			{
-				printf("\n---Token %d---\n", i);
-				printf("Prog : %d, Dir: %d\nIs Expand: %d, single quote: %d, space flag : %d\nReal: %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space, current->real);
-				printf("value: %s\n", current->value);
-				printf("value_2: %s\n\n", current->value_2);
-				current = current->next;
-				i++;
-			}
+			// t_token	*current = master->token_list;
+			// int	i = 1;
+			// while (current)
+			// {
+			// 	printf("\n---Token %d---\n", i);
+			// 	printf("Prog : %d, Dir: %d\nIs Expand: %d, single quote: %d, space flag : %d\nReal: %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space, current->real);
+			// 	printf("value: %s\n", current->value);
+			// 	printf("value_2: %s\n\n", current->value_2);
+			// 	current = current->next;
+			// 	i++;
+			// }
 			/*----------------------------------------*/
 		}
 		free(input);

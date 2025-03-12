@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 12:36:10 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/11 16:45:58 by terijo           ###   ########.fr       */
+/*   Updated: 2025/03/12 15:07:13 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	execute_builtins(t_master *master, t_cmd *cur_cmd, char **env)
 	// 	ft_env(env);
 	// else if (cur_cmd->builtins == EXIT)
 	// 	ft_exit();
-	printf("AAAAAh");
 	if (cur_cmd->builtins == ENV)
 		ft_env(env);
 	else if (cur_cmd->builtins == PWD)
@@ -79,16 +78,16 @@ void	do_cmd_last(t_master *master, t_cmd *cmd, char **env)
 		return ;
 	if (pid == 0)
 	{
-		// if (cur_cmd->builtins == 0)
-		// {
-		// 	if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
-		// 	{
-		// 		printf("Error execve\n");
-		// 		exit(1) ;
-		// 	}	
-		// }
-		// else
-		execute_builtins(master, cur_cmd, env);
+		if (cur_cmd->builtins == 0)
+		{
+			if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
+			{
+				printf("Error execve\n");
+				exit(1) ;
+			}
+		}
+		else
+			execute_builtins(master, cur_cmd, env);
 	}
 	else
 		waitpid(pid, NULL, 0);

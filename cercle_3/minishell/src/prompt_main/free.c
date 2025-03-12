@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/06 16:08:33 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/12 13:00:25 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	clean_values(t_token **lst)
 	}
 }
 
-void	cmd_clear(t_cmd **lst)
+void	cmd_clear(t_cmd **lst) // CONDITIONNAL JUMP ??? VOIR CHATGPT 10 MARS 2025 // +1 dans cmd_init !!!
 {
 	t_cmd	*cur;
 	t_cmd	*tmp;

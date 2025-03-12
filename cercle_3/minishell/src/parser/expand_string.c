@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:07:53 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/06 16:12:01 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:54:27 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,15 @@ void	add_tmp(char *new_value, char *tmp, t_token *token)
 {
 	char	*prev_value;
 
+	if (new_value[0] == '\0') // faire + de tests mais $USERlooool par ex ne remplit pas value2 et ca c nice
+	{
+		// free ?
+		if (tmp)
+			free(tmp);
+		return ;
+	}
 	prev_value = new_value;
+	printf("AU SECOURS : %s\n", new_value);
 	if (tmp != NULL)
 	{
 		new_value = ft_strjoin(prev_value, tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:45:10 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/11 14:15:55 by terijo           ###   ########.fr       */
+/*   Updated: 2025/03/12 12:42:40 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_pwd()
 	char	buf[1024]; //1024 car c'est un choix courant en LINUX mais si on veut faire qqchose de plus secur on peut malloc avec PATH_MAX
 
 	getcwd(buf, sizeof(buf));
-	printf("%s", buf);
+	printf("%s\n", buf);
 	return ;
 }
 
