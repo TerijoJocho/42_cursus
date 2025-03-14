@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 12:36:10 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/12 15:07:13 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/14 12:02:43 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ char	**clone_tab_env(t_clone *env)
 
 void	execute_builtins(t_master *master, t_cmd *cur_cmd, char **env)
 {
-	// if (cur_cmd->builtins == ECHO)
-	// 	ft_echo();
+	if (cur_cmd->builtins == ECHO)
+		printf("CACA\n");
+		//ft_echo();
 	// else if (cur_cmd->builtins == CD)
 	// 	ft_cd();
 	// else if (cur_cmd->builtins == PWD)
@@ -57,7 +58,7 @@ void	execute_builtins(t_master *master, t_cmd *cur_cmd, char **env)
 	// 	ft_env(env);
 	// else if (cur_cmd->builtins == EXIT)
 	// 	ft_exit();
-	if (cur_cmd->builtins == ENV)
+	else if (cur_cmd->builtins == ENV)
 		ft_env(env);
 	else if (cur_cmd->builtins == PWD)
 		ft_pwd();

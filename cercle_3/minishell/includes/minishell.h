@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/12 14:47:17 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:02:49 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,12 @@ typedef struct s_token
 typedef struct s_cmd
 {
 	char **args;
-	char *infile;
-	char *outfile;
+	char **infile;
+	char **outfile; // Tous les outfiles inexistants sont cree quand meme, donc faire un tableau de tableau ? ou cree sur l'instant l'outfile
 	char *path;
 	int	append;
 	int	nb_heredoc;
+	char	*heredoc;
 	int	pfd[2];
 	int	error;
 	int builtins;
@@ -120,7 +121,7 @@ int	parser(t_master *master);
 int	syntax_check(t_token **token_list);
 int	expand_arg(t_token *token, t_clone **env);
 int	expand_string(t_token *token, t_clone **env, char *cpy);
-void	parse_cmd(t_master **master);
+void	parse_cmd(t_master **master, int i, int flag);
 void	directory_check(t_token **token_list);
 
 /*------------------*/

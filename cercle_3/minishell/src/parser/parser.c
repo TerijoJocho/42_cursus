@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/12 16:59:49 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:30:54 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,42 +92,69 @@ void	cmd_add_back(t_master **master, t_cmd *node)
 	*list = node;
 }
 
+char	**ft_file(t_token *token)
+{
+	char	**tab;
+	t_token	*cur;
+	int	i;
+
+	cur = token;
+	i = 0;
+	while (cur && cur->real != PIPE)
+	{
+		if (cur->real == REDIR_IN || cur->real == REDIR_OUT
+			|| cur->real == APPEND || cur->real == HEREDOC)
+			i++;
+		cur = cur->next;
+	}
+	tab = ft_calloc(i + 1, sizeof(char *));
+	printf("i = %d\n", i);
+	return (tab);
+}
+
 void	init_cmd_list_2(t_cmd **cmd, int i, t_token *token)
 {
 	(*cmd)->args = ft_calloc(i + 1, sizeof(char *)); // ptet pas 1024 on god
-	(*cmd)->infile = NULL;
-	(*cmd)->outfile = NULL;
+	(*cmd)->infile = ft_file(token);
+	(*cmd)->outfile = ft_file(token);
 	(*cmd)->path = NULL;
 	(*cmd)->append = 0;
 	(*cmd)->nb_heredoc = 0;
+	(*cmd)->heredoc = NULL;
 	(*cmd)->next = NULL;
 	(*cmd)->error = 0;
 	if (token && token->real >= 2 && token->real <= 8)
 		(*cmd)->builtins = token->real;
 	else
 		(*cmd)->builtins = 0;
-	// printf("cmd_builtins = %d\n", (*cmd)->builtins);
-	// // printf("cmd_real = %d\n", token->real);
+	printf("token value for builtin : %s\n", token->value);
+	printf("cmd_builtins = %d\n", (*cmd)->builtins);
+	printf("cmd_real = %d\n", token->real);
 }
 
 void	init_cmd_list(t_master **master, int i)
 {
 	t_token	*cur;
 	t_cmd	*new_cmd;
+	t_token	*head;
 
 	cur = (*master)->token_list;
 	while (cur)
 	{
 		i = 1;
-		while (cur->next && cur->next->real != PIPE)
+		head = cur;
+		while (cur->next && cur->next->type != 2)
 		{
 			i++;
 			cur = cur->next;
 		}
+		while (cur->next && cur->real != PIPE)
+			cur = cur->next;
 		new_cmd = malloc(sizeof(t_cmd));
 		if (!new_cmd)
 			return ;
-		init_cmd_list_2(&new_cmd, i, cur); // verifier si cur est NULL ou pas?
+		printf("valeur de i : %d\n", i);
+		init_cmd_list_2(&new_cmd, i, head); // verifier si cur est NULL ou pas?
 		cmd_add_back(master, new_cmd);
 		cur = cur->next;
 		if (cur == NULL)
@@ -135,16 +162,15 @@ void	init_cmd_list(t_master **master, int i)
 	}
 }
 
-void	add_cmd(t_cmd *node, char *va, int *i)
+void	add_cmd(t_cmd *node, char *va, int *i, int flag)
 {
 	char	*path;
 	char	**split_path;
 	char	*full_path;
 	int		j;
 
-	// if (ft_strncmp(va, "<", 1) == 0 || ft_strncmp(va, ">", 1) == 0
-	// 	|| ft_strncmp(va, "<<", 1) == 0 || ft_strncmp(va, ">>", 1) == 0)
-	// 	return ;
+	if (flag == 1)
+		return ;
 	node->args[*i] = ft_strdup(va);
 	path = getenv("PATH"); // belek ici faut prendre a partir de notre copie??
 	split_path = ft_split(path, ':');
@@ -161,20 +187,18 @@ void	add_cmd(t_cmd *node, char *va, int *i)
 		}
 		j++;
 	}
-	node->error = 0;
+	// node->error = 0;
 	(*i)++;
 }
 
-void	fill_redir(t_cmd **cmd, int in, t_token **token)
+void	fill_redir(t_cmd **cmd, int in, int *i, t_token **token)
 {
 	if (in == 0)
 	{
-		if ((*cmd)->outfile != NULL)
-			free((*cmd)->outfile);
 		if (!(*token)->value_2)
-			(*cmd)->outfile = ft_strdup((*token)->value);
+			(*cmd)->outfile[*i] = ft_strdup((*token)->value);
 		else
-			(*cmd)->outfile = ft_strdup((*token)->value_2);
+			(*cmd)->outfile[*i] = ft_strdup((*token)->value_2);
 		if ((*token)->prev->real == APPEND)
 			(*cmd)->append = 1;
 		else
@@ -182,35 +206,49 @@ void	fill_redir(t_cmd **cmd, int in, t_token **token)
 	}
 	else
 	{
-		if ((*cmd)->infile != NULL)
-			free((*cmd)->infile);
 		if (!(*token)->value_2)
-			(*cmd)->infile = ft_strdup((*token)->value);
+			(*cmd)->infile[*i] = ft_strdup((*token)->value);
 		else
-			(*cmd)->infile = ft_strdup((*token)->value_2);
+			(*cmd)->infile[*i] = ft_strdup((*token)->value_2);
 		if ((*token)->prev->real == HEREDOC)
 			(*cmd)->nb_heredoc += 1;
 	}
+	(*i)++;
 }
 
-void	outinfile_checker(t_cmd **cmd)
+void	fill_heredoc(t_cmd **cmd, t_token **token)
 {
-	if ((*cmd)->outfile != NULL)
-	{
-		if (access((*cmd)->outfile, F_OK) == 0 && access((*cmd)->outfile,
-				R_OK) != 0)
-			(*cmd)->error = 1;
-	}
-	if ((*cmd)->infile != NULL)
-	{
-		if (access((*cmd)->infile, F_OK) != 0)
-			(*cmd)->error = 1;
-		else if (access((*cmd)->infile, W_OK) != 0)
-			(*cmd)->error = 1;
-	}
+	if ((*cmd)->heredoc != NULL)
+		free((*cmd)->heredoc);
+	(*cmd)->heredoc = ft_strdup((*token)->value);
 }
+// void	fill_heredoc(t_cmd **cmd, t_token **token)
+// {
+// 	if ((*cmd)->heredoc != NULL)
+// 	{
+// 		open(".heredoc", O_WRONLY | O_CREATE | O_TRUNC, 0644);
+// 	}
+// }
 
-void	handle_redir(t_master **master)
+
+// void	outinfile_checker(t_cmd **cmd)
+// {
+// 	if ((*cmd)->outfile != NULL)
+// 	{
+// 		if (access((*cmd)->outfile, F_OK) == 0 && access((*cmd)->outfile,
+// 				R_OK) != 0)
+// 			(*cmd)->error = 1;
+// 	}
+// 	if ((*cmd)->infile != NULL)
+// 	{
+// 		if (access((*cmd)->infile, F_OK) != 0)
+// 			(*cmd)->error = 1;
+// 		else if (access((*cmd)->infile, W_OK) != 0)
+// 			(*cmd)->error = 1;
+// 	}
+// }
+
+void	handle_redir(t_master **master, int i, int j)
 {
 	t_token	*cur;
 	t_cmd	*cmd_list;
@@ -221,11 +259,13 @@ void	handle_redir(t_master **master)
 	cmd_list = (*master)->cmd_list;
 	while (cur && cmd_list)
 	{
-		if (cur->real == REDIR_IN || cur->real == HEREDOC)
-			fill_redir(&cmd_list, 1, &cur->next);
+		if (cur->real == REDIR_IN)
+			fill_redir(&cmd_list, 1, &i, &cur->next);
 		else if (cur->real == REDIR_OUT || cur->real == APPEND)
-			fill_redir(&cmd_list, 0, &cur->next);
-		outinfile_checker(&cmd_list);
+			fill_redir(&cmd_list, 0, &j, &cur->next);
+		else if (cur->real == HEREDOC)
+			fill_heredoc(&cmd_list, &cur->next);
+		// outinfile_checker(&cmd_list);
 		cur = cur->next;
 		if (cur && cur->real == PIPE)
 		{
@@ -262,32 +302,33 @@ void	handle_redir(t_master **master)
 // 	}
 // }
 
-void	parse_cmd(t_master **master)
+void	parse_cmd(t_master **master, int i, int flag)
 {
-	int		i;
 	t_token	*cur;
 	t_cmd	*cmd_list;
 	t_cmd	*g;
 
-	i = 0;
 	cur = (*master)->token_list;
 	init_cmd_list(master, 0);
 	cmd_list = (*master)->cmd_list;
 	while (cur && cmd_list)
 	{
+		if (cur->type == 2)
+			flag = 1;
 		if (cur->value_2 == NULL)
-			add_cmd(cmd_list, cur->value, &i);
+			add_cmd(cmd_list, cur->value, &i, flag);
 		else if (cur->value_2 != NULL)
-			add_cmd(cmd_list, cur->value_2, &i);
+			add_cmd(cmd_list, cur->value_2, &i, flag);
 		cur = cur->next;
 		if (cur && cur->real == PIPE)
 		{
 			cmd_list = cmd_list->next;
 			cur = cur->next;
 			i = 0;
+			flag = 0;
 		}
 	}
-	handle_redir(master);
+	handle_redir(master, 0, 0);
 	/*TEST---------------*/
 	i = 0;
 	g = (*master)->cmd_list;
@@ -296,17 +337,18 @@ void	parse_cmd(t_master **master)
 		while (g->args[i])
 		{
 			printf("split[%d] : %s\n", i, g->args[i]);
+			printf("cmd outfile[%i] : %s\n", i, g->outfile[i]);
+			printf("cmd infile[%i] : %s\n", i, g->infile[i]);;
 			i++;
 		}
-		printf("cmd outfile : %s\n", g->outfile);
-		printf("cmd infile : %s\n", g->infile);
+		i= 0;
 		printf("append value %d\n", g->append);
 		printf("heredoc value %d\n", g->nb_heredoc);
 		printf("error value : %d\n", g->error);
 		g = g->next;
 		i = 0;
-		/*-------------------*/
 	}
+	/*-------------------*/
 }
 
 int	parser(t_master *master)
@@ -317,6 +359,7 @@ int	parser(t_master *master)
 		return (printf("PROBLEME EXPAND\n"), 1);
 	merge_token(&master->token_list);
 	directory_check(&master->token_list);
-	parse_cmd(&master);
+	parse_cmd(&master, 0, 0);
+	// heredoc;
 	return (0);
 }
