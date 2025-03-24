@@ -1,0 +1,3 @@
+voir comment gerrer isaltty
+gerer heredoc et redir
+gerer l'exec

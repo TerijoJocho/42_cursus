@@ -34,3 +34,13 @@ int	syntax_check(t_token **token_list)
 	return (0);
 }
 
+void	cmd_add_back(t_master **master, t_cmd *node)
+{
+	t_cmd	**list;
+
+	list = &(*master)->cmd_list;
+	while (*list)
+		list = &(*list)->next;
+	*list = node;
+}
+

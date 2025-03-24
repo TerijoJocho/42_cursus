@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:10:37 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/06 16:08:58 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/24 10:34:05 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	add_token_list(t_token **token_list, int type, char *value)
 
 int	is_whitespace(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r')
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r')
 		return (1);
 	else
 		return (0);
@@ -104,8 +104,8 @@ int	lexer(char *input, t_token **token_list)
 		}
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
-			add_token_list(token_list, 3,
-				extract_quoted_string(&input[i], input[i]));
+			add_token_list(token_list, 3, extract_quoted_string(&input[i],
+					input[i]));
 			i += quoted_string_len(&input[i], token_list);
 		}
 		else

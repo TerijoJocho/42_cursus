@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
+#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 15:42:55 by daavril           #+#    #+#              #
-#    Updated: 2025/03/11 16:22:47 by terijo           ###   ########.fr        #
+#    Updated: 2025/03/24 17:02:04 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,10 @@ LDFLAGS		=	-lreadline
 
 C_FILE		=	lexer/extract_quoted_string.c lexer/extract_special_char.c lexer/extract_word.c lexer/get_special_type.c \
 				lexer/lexer.c lexer/utils_token.c parser/expand_string.c parser/parser.c parser/syntax_parse.c \
-				parser/parse_cmd.c parser/parser_2.c prompt_main/prompt.c prompt_main/free.c signals/signals.c executor/executor.c \
-				builtins/ft_pwd.c builtins/ft_env.c builtins/ft_cd.c
-
+				parser/handle_redir.c parser/init_cmd_list.c parser/make_heredoc.c parser/merge_token.c parser/directory_check.c \
+				parser/parse_cmd.c prompt_main/prompt.c prompt_main/free.c signals/signals.c executor/executor.c \
+				builtins/ft_pwd.c builtins/ft_env.c builtins/ft_cd.c builtins/ft_unset.c builtins/ft_echo.c builtins/ft_exit.c \
+				builtins/ft_export.c
 SRC_DIR		=	./src/
 SRC			=	$(addprefix $(SRC_DIR), $(C_FILE))
 

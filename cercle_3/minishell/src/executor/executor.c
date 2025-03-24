@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 12:36:10 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/14 12:02:43 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:00:53 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,13 @@ char	**clone_tab_env(t_clone *env)
 void	execute_builtins(t_master *master, t_cmd *cur_cmd, char **env)
 {
 	if (cur_cmd->builtins == ECHO)
-		printf("CACA\n");
-		//ft_echo();
-	// else if (cur_cmd->builtins == CD)
-	// 	ft_cd();
-	// else if (cur_cmd->builtins == PWD)
-	// 	ft_pwd();
-	// else if (cur_cmd->builtins == EXPORT)
-	// 	ft_export();
-	// else if (cur_cmd->builtins == UNSET)
-	// 	ft_unset();
-	// else if (cur_cmd->builtins == ENV)
-	// 	ft_env(env);
+		ft_echo(cur_cmd, 0);
+	else if (cur_cmd->builtins == EXPORT)
+		ft_export(master, cur_cmd);
 	// else if (cur_cmd->builtins == EXIT)
 	// 	ft_exit();
+	else if (cur_cmd->builtins == UNSET)
+		ft_unset(master, cur_cmd);
 	else if (cur_cmd->builtins == ENV)
 		ft_env(env);
 	else if (cur_cmd->builtins == PWD)
@@ -105,7 +98,7 @@ int	executor(t_master *master)
 	// flag = 0;
 	cur = master->cmd_list;
 	master->env = clone_tab_env(master->env_clone);
-	while (cur)
+	while(cur)
 	{
 		// if (cur->next && flag == 0)
 		// 	do_cmd_first(cur);
@@ -121,34 +114,3 @@ int	executor(t_master *master)
 	}
 	return (0);
 }
-
-
-// int	executor(t_master *master)
-// {
-	// pid_t	pid;
-	// char	buf;
-
-	// if (pipe(master->cmd_list->pfd) == -1)
-	// 	return (1);
-	// pid = fork();
-	// if (pid == -1)
-	// 	return (1);
-	// else if (pid == 0)
-	// {
-	// 	close(master->cmd_list->pfd[1]);
-	// 	write(STDOUT_FILENO, "K : le secret est : \n", 20);
-	// 	while (read(master->cmd_list->pfd[0], &buf, 1) > 0)
-	// 		write(STDOUT_FILENO, &buf, 1);
-	// 	close(master->cmd_list->pfd[0]);
-	// 	exit(EXIT_SUCCESS);
-	// }
-	// else
-	// {
-	// 	close(master->cmd_list->pfd[0]);
-
-	// 	close(master->cmd_list->pfd[1]);
-	// 	wait(NULL);
-	// 	write(STDOUT_FILENO, "P : GG\n", 7);
-	// }
-// 	return (0);
-// }

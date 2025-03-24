@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_special_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:20 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/11 17:22:04 by terijo           ###   ########.fr       */
+/*   Updated: 2025/03/24 10:34:02 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,24 @@ void	choose_real(char *value, t_token *token)
 		token->real = REDIR_OUT;
 }
 
-void find_word(char *value, t_token *token)
+void	find_word(char *value, t_token *token)
 {
-    if (ft_strlen(value) == 4 && ft_strncmp(value, "echo", 4) == 0) //option -n
-        token->real = ECHO;
-    else if (ft_strlen(value) == 2 && ft_strncmp(value, "cd", 2) == 0)
-        token->real = CD;
-    else if (ft_strlen(value) == 3 && ft_strncmp(value, "pwd", 3) == 0)
-        token->real = PWD;
-    else if (ft_strlen(value) == 6 && ft_strncmp(value, "export", 6) == 0)
-        token->real = EXPORT;
-    else if (ft_strlen(value) == 5 && ft_strncmp(value, "unset", 5) == 0)
-        token->real = UNSET;
-    else if (ft_strlen(value) == 3 && ft_strncmp(value, "env", 3) == 0)
-        token->real = ENV;
-    else if (ft_strlen(value) == 4 && ft_strncmp(value, "exit", 4) == 0)
-        token->real = EXIT;
-    else
-        token->real = ARG;
+	if (ft_strlen(value) == 4 && ft_strncmp(value, "echo", 4) == 0) // option -n
+		token->real = ECHO;
+	else if (ft_strlen(value) == 2 && ft_strncmp(value, "cd", 2) == 0)
+		token->real = CD;
+	else if (ft_strlen(value) == 3 && ft_strncmp(value, "pwd", 3) == 0)
+		token->real = PWD;
+	else if (ft_strlen(value) == 6 && ft_strncmp(value, "export", 6) == 0)
+		token->real = EXPORT;
+	else if (ft_strlen(value) == 5 && ft_strncmp(value, "unset", 5) == 0)
+		token->real = UNSET;
+	else if (ft_strlen(value) == 3 && ft_strncmp(value, "env", 3) == 0)
+		token->real = ENV;
+	else if (ft_strlen(value) == 4 && ft_strncmp(value, "exit", 4) == 0)
+		token->real = EXIT;
+	else
+		token->real = ARG;
 }
 
 void	check_expand(t_token **token_list)
@@ -55,7 +55,7 @@ void	check_expand(t_token **token_list)
 	while (current)
 	{
 		current->is_expand = 0;
-		if (current->real == ARG && (ft_strchr(current->value, '$'))) //MODIF
+		if (current->real == ARG && (ft_strchr(current->value, '$'))) // MODIF
 		{
 			i = 1;
 			while (current->value[i] && ft_isalpha(current->value[i]))
