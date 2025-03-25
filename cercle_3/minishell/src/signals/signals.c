@@ -6,7 +6,8 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:46:59 by daavril           #+#    #+#             */
-/*   Updated: 2025/02/18 16:47:00 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:35:04 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// https://www.codequoi.com/envoyer-et-intercepter-un-signal-en-c/

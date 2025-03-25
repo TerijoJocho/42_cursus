@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/24 17:03:12 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:59:10 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,30 @@ void	add_cmd(t_cmd *node, char *va, int *i, int flag)
 	char	*full_path;
 	int		j;
 
+	full_path = NULL;
 	if (flag == 1)
 		return ;
 	node->args[*i] = ft_strdup(va);
-	path = getenv("PATH"); // belek ici faut prendre a partir de notre copie??
+	path = getenv("PATH"); // belek ici faut prendre a partir de notre copie?? C SUR
 	split_path = ft_split(path, ':');
 	j = 0;
 	while (split_path[j])
 	{
-		full_path = ft_strjoin(split_path[j], "/");
+		path = ft_strjoin(split_path[j], "/");
 		full_path = ft_strjoin(full_path, va);
+		free(path);
 		if (access(full_path, X_OK) == 0)
 		{
 			node->path = full_path;
 			(*i)++;
+			free_tab(split_path);
 			return ;
 		}
+		free(full_path);
+		full_path = NULL;
 		j++;
 	}
-	// node->error = 0;
+	free_tab(split_path);
 	(*i)++;
 }
 
@@ -107,13 +112,34 @@ void	parse_cmd(t_master **master, int i, int flag)
 	// 		i++;
 	// 	}
 	// 	i= 0;
-	// 	printf("append value %d\n", g->append);
+	// 	// printf("append value %d\n", g->append);
 	// 	printf("heredoc value %d\n", g->nb_heredoc);
 	// 	printf("error value : %d\n", g->error);
 	// 	g = g->next;
 	// 	i = 0;
 	// }
 	/*-------------------*/
+}
+
+void	test(t_cmd **cmd)
+{
+	int	i;
+	t_cmd	*cur;
+
+	i = 0;
+	cur = *cmd;
+	while (cur)
+	{
+		i = 0;
+		printf("nb_heredoc attendu : %d\n", cur->nb_heredoc);
+		while (cur->link[i])
+		{
+			printf("link[%d] value : %s\n", i, cur->link[i]);
+			unlink(cur->link[i]);
+			i++;
+		}
+		cur = cur->next;
+	}
 }
 
 int	parser(t_master *master)
@@ -125,6 +151,7 @@ int	parser(t_master *master)
 	merge_token(&master->token_list);
 	directory_check(&master->token_list);
 	parse_cmd(&master, 0, 0);
-	// make_heredoc(&master->token_list, &master->cmd_list);
+	file_management(&master->cmd_list);
+	test(&master->cmd_list);
 	return (0);
 }

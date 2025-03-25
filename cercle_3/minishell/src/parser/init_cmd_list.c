@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:46 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/24 12:32:23 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/25 11:28:48 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ void	init_cmd_list_2(t_cmd **cmd, int i, t_token *token)
 	(*cmd)->infile = ft_infile(token);
 	(*cmd)->outfile = ft_outfile(token);
 	(*cmd)->path = NULL;
-	(*cmd)->append = 0;
+	(*cmd)->append = ft_append(token);
 	(*cmd)->nb_heredoc = 0;
 	(*cmd)->heredoc = ft_heredoc(token);
+	(*cmd)->link = ft_heredoc(token);
 	(*cmd)->next = NULL;
 	(*cmd)->error = 0;
 	if (token && token->real >= 2 && token->real <= 8)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:23:17 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/12 14:36:04 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:59:08 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,22 @@ void	cmd_add_back(t_master **master, t_cmd *node)
 	*list = node;
 }
 
+int	*ft_append(t_token *token)
+{
+	int	*tab;
+	t_token	*cur;
+	int	i;
+
+	cur = token;
+	i = 0;
+	while (cur && cur->real != PIPE)
+	{
+		if (cur->real == REDIR_OUT || cur->real == APPEND)
+			i++;
+		cur = cur->next;
+	}
+	tab = ft_calloc(i + 1, sizeof(int));
+	if (!tab)
+		return (NULL);
+	return (tab);
+}

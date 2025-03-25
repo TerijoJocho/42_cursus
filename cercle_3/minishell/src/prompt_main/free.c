@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/12 13:00:25 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:37:16 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,42 @@ void	clean_values(t_token **lst)
 		current = current->next;
 	}
 }
+void	free_tab(char **tab)
+{
+	int	i;
 
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+	tab = NULL;
+}
 void	cmd_clear(t_cmd **lst) // CONDITIONNAL JUMP ??? VOIR CHATGPT 10 MARS 2025 // +1 dans cmd_init !!!
 {
 	t_cmd	*cur;
 	t_cmd	*tmp;
-	int		i;
 
 	cur = *lst;
 	while (cur)
 	{
-		i = 0;
 		tmp = cur->next;
-		while (cur->args[i])
-		{
-			free(cur->args[i]);
-			i++;
-		}
-		if (cur->infile != NULL)
-			free(cur->infile);
-		if (cur->outfile != NULL)
-			free(cur->outfile);
-		if (cur->path != NULL)
+		if (cur->args)
+			free_tab(cur->args);
+		if (cur->infile)
+			free_tab(cur->infile);
+		if (cur->outfile)
+			free_tab(cur->outfile);
+		if (cur->heredoc)
+			free_tab(cur->heredoc);
+		if (cur->link)
+			free_tab(cur->link);
+		if (cur->path)
 			free(cur->path);
+		if (cur->append)
+			free(cur->append);
 		free(cur);
 		cur = tmp;
 	}

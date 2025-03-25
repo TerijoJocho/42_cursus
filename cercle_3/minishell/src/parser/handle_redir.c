@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:18:11 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/24 12:23:13 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/24 16:49:18 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	fill_redir(t_cmd **cmd, int in, int *i, t_token **token)
 		else
 			(*cmd)->outfile[*i] = ft_strdup((*token)->value_2);
 		if ((*token)->prev->real == APPEND)
-			(*cmd)->append = 1;
+			(*cmd)->append[*i] = 1;
 		else
-			(*cmd)->append = 0; // mettre peut etre au niveau du token  ? car si on a append puis pas append on va mettre append a 0 a tord
+			(*cmd)->append[*i] = 0; // mettre peut etre au niveau du token  ? car si on a append puis pas append on va mettre append a 0 a tord
 	}
 	else
 	{
@@ -49,23 +49,6 @@ void	fill_heredoc(t_cmd **cmd, int *i, t_token **token)
 // 	}
 // }
 
-
-// void	outinfile_checker(t_cmd **cmd)
-// {
-// 	if ((*cmd)->outfile != NULL)
-// 	{
-// 		if (access((*cmd)->outfile, F_OK) == 0 && access((*cmd)->outfile,
-// 				R_OK) != 0)
-// 			(*cmd)->error = 1;
-// 	}
-// 	if ((*cmd)->infile != NULL)
-// 	{
-// 		if (access((*cmd)->infile, F_OK) != 0)
-// 			(*cmd)->error = 1;
-// 		else if (access((*cmd)->infile, W_OK) != 0)
-// 			(*cmd)->error = 1;
-// 	}
-// }
 
 void	handle_redir(t_master **master, int i, int j, int h)
 {

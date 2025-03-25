@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/24 17:01:39 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:56:40 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 
 /*clone envp*/
 typedef struct s_clone
@@ -69,11 +70,12 @@ typedef struct s_cmd
 {
 	char			**args;
 	char			**infile;
-	char			**outfile; // Tous les outfiles inexistants sont cree quand meme, donc faire un tableau de tableau ? ou cree sur l'instant l'outfile
+	char			**outfile;
 	char			*path;
-	int				append;
+	int				*append;
 	int				nb_heredoc;
 	char			**heredoc;
+	char			**link;
 	int				pfd[2];
 	int				error;
 	int				builtins;
@@ -124,12 +126,16 @@ void	merge_token(t_token **token_list);
 void	init_cmd_list(t_master **master, int i);
 void	cmd_add_back(t_master **master, t_cmd *node);
 void	handle_redir(t_master **master, int i, int j, int h);
+void	file_management(t_cmd **cmd);
+int		*ft_append(t_token *token);
+int		make_heredoc(char **heredoc, int *error, char **link);
 
 /*------------------*/
 
 /*free functions*/
 void				free_all(t_master *master);
 void				clean_env(t_clone **lst);
+void				free_tab(char **tab);
 /*------------------*/
 
 /*Executor's prototype*/
@@ -141,6 +147,7 @@ void				ft_pwd(void);
 void				ft_env(char **env);
 int					ft_cd(t_master *master, t_cmd *cmd);
 void	ft_unset(t_master *master, t_cmd *cur_cmd);
+void	delete_node(t_clone **head, t_clone *ec);
 void	ft_echo(t_cmd *cur_cmd, int i);
 void	ft_export(t_master *master, t_cmd *cur_cmd);
 void	ft_exit(t_cmd *cur_cmd);

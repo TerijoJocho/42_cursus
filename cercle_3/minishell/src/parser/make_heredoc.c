@@ -3,47 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   make_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:31:59 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/24 11:41:26 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/25 12:20:16 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
 
-// int	make_heredoc_next(t_cmd *cmd)
-// {
-// 	int	fd;
+int	make_heredoc_next(char *name)
+{
+	int	fd;
 
-// 	fd = open("nom", O_CREAT | O_RDWR | O_TRUNC, 0600); //  O_TRUNC PAS SUR !!!!!!!
-// 	if (fd == -1)
-// }
+	fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (fd == -1)
+		return (0);
+	close(fd);
+	return (1);
+}
 
-// void	make_heredoc(t_cmd **cmd_list, t_token **token)
-// {
-// 	t_cmd	*cur_cmd;
-// 	t_token	*cur;
-// 	// int	i;
+char	*check_tmp(int *tmp, int i, char **link)
+{
+	char	*tmp_name;
+	int		tmp2;
 
-// 	// i = 0;
-// 	cur_cmd = *cmd_list;
-// 	cur = *token;
-// 	while (cur_cmd)
-// 	{
-// 		if (cur_cmd->nb_heredoc != 0)
-// 		{
-// 			while (cur_cmd->nb_heredoc--)
-// 			{
-// 				if (!make_heredoc_next(cur_cmd)) //->heredoc[i]));
-// 				{
-// 					printf("Error while using open in heredoc management\n");
-// 					return ;
-// 				}
-// 				// i++;
-// 			}
-// 			// i = 0;
-// 		}
-// 		cur_cmd = cur_cmd->next;
-// 	}
-// }
+	tmp2 = (*tmp);
+	tmp_name = ft_itoa(tmp2);
+	while (access(tmp_name, F_OK) == 0)
+	{
+		(*tmp)++;
+		tmp2 = (*tmp);
+		free(tmp_name);
+		tmp_name = ft_itoa(tmp2);
+	}
+	(*tmp)++;
+	link[i] = ft_strdup(tmp_name);
+	return (tmp_name);
+}
+
+int	make_heredoc(char **heredoc, int *error, char **link)
+{
+	int		i;
+	int		tmp;
+	char	*name;
+
+	tmp = 1;
+	i = 0;
+	name = NULL;
+	if (!heredoc || !heredoc[0])
+		return (1);
+	while (heredoc[i])
+	{
+		name = check_tmp(&tmp, i, link);
+		if (!name)
+			return (printf("Error with name alloc\n"), (*error)++, 0);
+		if (!make_heredoc_next(name))
+		{
+			printf("Error while using open in heredoc management\n");
+			(*error)++;
+			return (0);
+		}
+		i++;
+		free(name);
+	}
+	return (1);
+}

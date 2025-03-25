@@ -6,23 +6,11 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:08:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/24 18:37:23 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:49:04 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	display_export(t_clone *ex_lst)
-{
-	t_clone	*cur;
-
-	cur = ex_lst;
-	while (cur)
-	{
-		printf("%s\n", cur->value);
-		cur = cur->next;
-	}
-}
 
 int		is_export(char *arg)
 {
@@ -32,21 +20,75 @@ int		is_export(char *arg)
 	if (!arg || arg[0] == '=')
 	{
 		printf("export: %s : not a valid identifier\n", arg);
-		return (2);
+		return (1);
 	}
 	while (arg[i])
 	{
 		if (arg[i] == '=')
-			return (0);
+			return (2);
 		i++;
 	}
-	return (1);
+	return (0);
+}
+
+void	sort_export_list(t_clone **list)
+{
+	t_clone	*cur;
+	t_clone	*next;
+	char	*tmp;
+	int		sorted;
+
+	if (!list || !*list)
+		return ;
+	while (!sorted)
+	{
+		sorted = 1;
+		cur = *list;
+		while (cur->next)
+		{
+			next = cur->next;
+			if (ft_strncmp(cur->value, next->value, ft_strlen(cur->value)) > 0)
+			{
+				tmp = cur->value;
+				cur->value = next->value;
+				next->value = tmp;
+				sorted = 0;
+			}
+			cur = cur->next;
+		}
+	}
+}
+
+void	display_export(t_clone *ex_lst)
+{
+	t_clone	*cur;
+	char	*equal_sign;
+	char	*name;
+	char	*value;
+
+	sort_export_list(&ex_lst);
+	cur = ex_lst;
+	while (cur)
+	{
+		equal_sign = ft_strchr(cur->value, '=');
+		if (equal_sign)
+		{
+			name = ft_substr(cur->value, 0, equal_sign - cur->value);
+			value = equal_sign + 1;
+			printf("export %s=\"%s\"\n", name, value);
+			free(name);
+		}
+		else
+			printf("export %s\n", cur->value);
+		cur = cur->next;
+	}
 }
 
 t_clone	*find_var(t_clone *list, char *arg)
 {
 	t_clone	*cur;
 	int		len;
+	int		cur_len;
 
 	cur = list;
 	len = 0;
@@ -54,7 +96,10 @@ t_clone	*find_var(t_clone *list, char *arg)
 		len++;
 	while (cur)
 	{
-		if (ft_strncmp(cur->value, arg, len) == 0 && cur->value[len] == '=')
+		cur_len = 0;
+		while (cur->value[cur_len] && cur->value[cur_len] != '=')
+			cur_len++;
+		if (cur_len == len && ft_strncmp(cur->value, arg, len) == 0)
 			return (cur);
 		cur = cur->next;
 	}
@@ -71,13 +116,11 @@ void	add_it(t_clone **list, char *arg, int len)
 		len++;
 	name = ft_substr(arg, 0, len);
 	existing = find_var(*list, name);
-	printf("value:%s\n", existing->value);
 	free(name);
 	if (existing)
 	{
 		free(existing->value);
 		existing->value = ft_strdup(arg);
-		printf("value:%s\n", existing->value);
 		return ;
 	}
 	new = malloc(sizeof(t_clone));
@@ -96,14 +139,14 @@ void	handle_export(t_master *master, char *arg)
 	int	ex_val;
 
 	ex_val = is_export(arg);
-	if (ex_val == 2)
+	if (ex_val == 1)
 		return ;
-	else if (ex_val == 0)
+	else if (ex_val == 2)
 	{
 		add_it(&master->env_clone, arg, 0);
 		add_it(&master->export_list, arg, 0);
 	}
-	else if (ex_val == 1)
+	else if (ex_val == 0)
 	{
 		if (!find_var(master->export_list, arg))
 			add_it(&master->export_list, arg, 0);
