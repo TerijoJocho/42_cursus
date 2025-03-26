@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/25 15:56:40 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/26 15:47:54 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_master
 	t_clone			*export_list;
 	char			**env;
 	t_cmd			*cmd_list;
+	int				exit_status;
 }					t_master;
 
 /*Lexer's prototype*/
@@ -136,6 +137,7 @@ int		make_heredoc(char **heredoc, int *error, char **link);
 void				free_all(t_master *master);
 void				clean_env(t_clone **lst);
 void				free_tab(char **tab);
+void				clean_exit(int value, t_master *master, int flag);
 /*------------------*/
 
 /*Executor's prototype*/
@@ -144,12 +146,12 @@ char	**clone_tab_env(t_clone *env);
 
 /*Builtins*/
 void				ft_pwd(void);
-void				ft_env(char **env);
+void				ft_env(char **env, t_master *master);
 int					ft_cd(t_master *master, t_cmd *cmd);
 void	ft_unset(t_master *master, t_cmd *cur_cmd);
 void	delete_node(t_clone **head, t_clone *ec);
-void	ft_echo(t_cmd *cur_cmd, int i);
+void	ft_echo(t_cmd *cur_cmd, int i, t_master *master);
 void	ft_export(t_master *master, t_cmd *cur_cmd);
-void	ft_exit(t_cmd *cur_cmd);
+void	ft_exit(t_master *master, t_cmd *cur_cmd);
 
 #endif

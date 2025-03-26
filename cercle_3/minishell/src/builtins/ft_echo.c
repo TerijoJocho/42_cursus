@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:27:04 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/24 15:03:24 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/26 15:50:30 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,17 @@ int	option_check(char *arg)
 	return (0);
 }
 
-void	ft_echo(t_cmd *cur_cmd, int i)
+int	is_dollar(char *str, t_master *master)
+{
+	if (str && ft_strncmp(str, "$?", 2) == 0)
+	{
+		printf("%d", master->exit_status);
+		return (0);
+	}
+	return (1);
+}
+
+void	ft_echo(t_cmd *cur_cmd, int i, t_master *master)
 {
 	int	newline;
 
@@ -46,7 +56,8 @@ void	ft_echo(t_cmd *cur_cmd, int i)
 	}
 	while (cur_cmd->args[i])
 	{
-		printf("%s", cur_cmd->args[i]);
+		if (is_dollar(cur_cmd->args[i], master) == 1)
+			printf("%s", cur_cmd->args[i]);
 		if (cur_cmd->args[i + 1])
 			printf(" ");
 		i++;

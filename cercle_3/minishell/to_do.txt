@@ -1,3 +1,8 @@
-voir comment gerrer isaltty
-gerer heredoc et redir
-gerer l'exec
+I- parser
+	retirer getenv dans add_cmd
+II- exec
+	.Separer l'exec : un exec pour les redir, un pour les commandes buitins,
+		un pour les cmd hors builtins
+	.Faire en sorte que l'exec renvoie le "code exit" -> pour $? : il faudra le stocker qqpart
+	.Exit ne doit pas se faire dans les enfants
+

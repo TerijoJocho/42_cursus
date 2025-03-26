@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:20:04 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/25 15:03:31 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/26 14:22:48 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_unset(t_master *master, t_cmd *cur_cmd)
 	int	i;
 
 	i = 1;
+	printf("unse arg: %s\n", cur_cmd->args[0]);
 	if (!cur_cmd->args[i])
 	{
 		printf("unset : missing argument\n");
@@ -64,7 +65,10 @@ void	ft_unset(t_master *master, t_cmd *cur_cmd)
 		if (search_var(&master->export_list, cur_cmd->args[i]) == 0)
 			printf("unset : no such variable: %s\n", cur_cmd->args[i]);
 		if (search_var(&master->env_clone, cur_cmd->args[i]) == 1)
+		{
+			free_tab(master->env);
 			master->env = clone_tab_env(master->env_clone);
+		}
 		i++;
 	}
 }

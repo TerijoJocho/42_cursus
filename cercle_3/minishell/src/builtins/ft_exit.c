@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:31 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/24 14:26:15 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:49:18 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,38 +36,56 @@ Je pense qu'il faut faire comme avec les signaux
 Mais attends jsuis con jme  prends la tete j'ai juste a use exit tout court... nan ah ptn mais est-ce que ca va finir le prog ???
 */
 
-// void	ft_exit(t_cmd *cur_cmd)
-// {
-// 	int	i;
-// 	int	keep;
+int	get_value(char *arg)
+{
+	int	keep;
+	keep = ft_atoi(arg);
 
-// 	keep = 0;
-// 	i = 0;
-// 	if (!cur_cmd->args[0])
-// 	{
-// 		printf("Fatal error with exit and **args\n");
-// 		return ;
-// 	}
-// 	if (!cur_cmd->args[1])
-// 		exit();
-// 	while (cur_cmd->args[i])
-// 		i++;
-// 	if (i > 2)
-// 	{
-// 		printf("exit command cant handle more than one option\n");
-// 		return ;
-// 	}
-// 	i = 0;
-// 	while (cur_cmd->args[1][i])
-// 	{
-// 		if (ft_isdigit(cur_cmd->args[1][i] == 0))
-// 		{
-// 			printf("exit cant handle non digit option\n");
-// 			exit(2);
-// 		}
-// 		i++;
-// 	}
-// 	keep = ft_atoi(cur_cmd->args[1]);
-// 	// if (keep < 0) FAIRE UN TRUC + verif long max etc
-// 	exit(keep); // chatgpt dit : exit((unsigned char)exit_code); // On cast pour garder la cohérence avec bash
-// }
+	if (keep < 0)
+		keep *= -1;
+	if (keep > 255)
+		keep = (keep % 256);
+	return (keep);
+}
+
+void	clean_exit(int value, t_master *master, int flag)
+{
+	free_all(master);
+	clean_env(&master->env_clone); // adresse de env_clone ?
+	clean_env(&master->export_list);
+	if (master)
+	{
+		free(master);
+		master = NULL;
+	}
+	if (flag == 1)
+		printf("exit\n");
+	exit(value);
+}
+
+void	ft_exit(t_master *master, t_cmd *cur_cmd)
+{
+	int	i;
+	int	keep;
+
+	keep = 0;
+	i = 0;
+	if (!cur_cmd->args[1])
+		clean_exit(0, master, 1);
+	if (cur_cmd->args[2])
+	{
+		printf("exit: too many arguments\n");
+		return ;
+	}
+	while (cur_cmd->args[1][i])
+	{
+		if (ft_isdigit(cur_cmd->args[1][i]) == 0)
+		{
+			printf("exit: %s: numeric argument required\n", cur_cmd->args[1]);
+			clean_exit(2, master, 1);
+		}
+		i++;
+	}
+	keep = get_value(cur_cmd->args[1]);
+	clean_exit(keep, master, 1);
+}

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:08:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/25 15:49:04 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/26 14:52:01 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ void	handle_export(t_master *master, char *arg)
 	else if (ex_val == 2)
 	{
 		add_it(&master->env_clone, arg, 0);
+		free_tab(master->env);
+		master->env = clone_tab_env(master->env_clone);
 		add_it(&master->export_list, arg, 0);
 	}
 	else if (ex_val == 0)

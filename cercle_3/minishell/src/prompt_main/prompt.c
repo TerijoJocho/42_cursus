@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/25 16:00:40 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/26 14:55:54 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int	main(int argc, char **argv, char **envp)
 		free_all(master);
 	}
 	clean_env(&master->env_clone);
+	clean_env(&master->export_list);
 	free(master);
 	master = NULL;
 	printf("exit\n");

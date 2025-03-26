@@ -6,7 +6,7 @@
 /*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/25 13:37:16 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/26 10:24:56 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ void	free_all(t_master *master)
 	clean_values(&master->token_list);
 	token_clear(&master->token_list); //pour liberer tous les neeouds
 	cmd_clear(&master->cmd_list);
+	free_tab(master->env);
 }

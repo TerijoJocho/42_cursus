@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/25 15:59:10 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/26 16:04:40 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,35 +32,102 @@ int	check_is_expand(t_token **token_list, t_clone **env)
 	return (0); // des int partout ? je pense que je me perds
 }
 
-void	add_cmd(t_cmd *node, char *va, int *i, int flag)
+char	*ft_getenv(t_master **master)
 {
+	t_clone	*cur;
 	char	*path;
+
+	cur = (*master)->env_clone;
+	while (cur)
+	{
+		if (ft_strncmp(cur->value, "PATH=", 5) == 0)
+		{
+			path = ft_substr(cur->value, 5, ft_strlen(cur->value));
+			return (path);
+		}
+		cur = cur->next;
+	}
+	return (NULL);
+}
+
+// void	add_cmd(t_cmd *node, char *va, int *i, int flag, char	*path)
+// {
+// 	char	**split_path;
+// 	char	*full_path;
+// 	int		j;
+
+// 	full_path = NULL;
+// 	printf("VALEUR DE mii : %d\n", (*i));
+// 	node->args[*i] = ft_strdup(va);
+// 	if (flag == 1 || path == NULL)
+// 	{
+// 		(*i)++;
+// 		return ;
+// 	}
+// 	split_path = ft_split(path, ':');
+// 	j = 0;
+// 	while (split_path[j])
+// 	{
+// 		path = ft_strjoin(split_path[j], "/");
+// 		full_path = ft_strjoin(path, va);
+// 		free(path);
+// 		// printf("full_path value : %s\n", full_path);
+// 		if (access(full_path, X_OK) == 0)
+// 		{
+// 			node->path = full_path;
+// 			// printf("node->path value : %s\n", node->path);
+// 			(*i)++;
+// 			free_tab(split_path);
+// 			return ;
+// 		}
+// 		free(full_path);
+// 		full_path = NULL;
+// 		j++;
+// 	}
+// 	free_tab(split_path);
+// 	(*i)++;
+// }
+
+int	add_cmd2(char **split, char *fp, char *path, char *va, t_cmd *n)
+{
+	int	j;
+
+	j = 0;
+	while (split[j])
+	{
+		path = ft_strjoin(split[j], "/");
+		fp = ft_strjoin(path, va);
+		free(path);
+		if (access(fp, X_OK) == 0)
+		{
+			n->path = fp;
+			free_tab(split);
+			return (1);
+		}
+		free(fp);
+		fp = NULL;
+		j++;
+	}
+	return (0);
+}
+
+void	add_cmd(t_cmd *node, char *va, int *i, int flag, char *path)
+{
 	char	**split_path;
 	char	*full_path;
-	int		j;
 
 	full_path = NULL;
-	if (flag == 1)
-		return ;
 	node->args[*i] = ft_strdup(va);
-	path = getenv("PATH"); // belek ici faut prendre a partir de notre copie?? C SUR
-	split_path = ft_split(path, ':');
-	j = 0;
-	while (split_path[j])
+	if (flag == 1 || path == NULL)
 	{
-		path = ft_strjoin(split_path[j], "/");
-		full_path = ft_strjoin(full_path, va);
-		free(path);
-		if (access(full_path, X_OK) == 0)
-		{
-			node->path = full_path;
-			(*i)++;
-			free_tab(split_path);
-			return ;
-		}
-		free(full_path);
-		full_path = NULL;
-		j++;
+		(*i)++;
+		return ;
+	}
+	split_path = ft_split(path, ':');
+	if (add_cmd2(split_path, full_path, path, va, node) == 1)
+	{
+		(*i)++;
+		return ;
 	}
 	free_tab(split_path);
 	(*i)++;
@@ -79,9 +146,9 @@ void	parse_cmd(t_master **master, int i, int flag)
 		if (cur->type == 2)
 			flag = 1;
 		if (cur->value_2 == NULL)
-			add_cmd(cmd_list, cur->value, &i, flag);
+			add_cmd(cmd_list, cur->value, &i, flag, ft_getenv(master));
 		else if (cur->value_2 != NULL)
-			add_cmd(cmd_list, cur->value_2, &i, flag);
+			add_cmd(cmd_list, cur->value_2, &i, flag, ft_getenv(master));
 		cur = cur->next;
 		if (cur && cur->real == PIPE)
 		{
@@ -92,38 +159,11 @@ void	parse_cmd(t_master **master, int i, int flag)
 		}
 	}
 	handle_redir(master, 0, 0, 0);
-	/*TEST---------------*/
-	// t_cmd	*g;
-
-	// i = 0;
-	// int	k = -1;
-	// g = (*master)->cmd_list;
-	// while (g)
-	// {
-	// 	while (g->args[i])
-	// 	{
-	// 		printf("split[%d] : %s\n", i, g->args[i]);
-	// 		while (g->outfile[k++])
-	// 			printf("cmd outfile[%d] : %s\n", k, g->outfile[k]);
-	// 		k = -1;
-	// 		while (g->infile[k++])
-	// 			printf("cmd infile[%d] : %s\n", k, g->infile[k]);
-	// 		k = -1;
-	// 		i++;
-	// 	}
-	// 	i= 0;
-	// 	// printf("append value %d\n", g->append);
-	// 	printf("heredoc value %d\n", g->nb_heredoc);
-	// 	printf("error value : %d\n", g->error);
-	// 	g = g->next;
-	// 	i = 0;
-	// }
-	/*-------------------*/
 }
 
 void	test(t_cmd **cmd)
 {
-	int	i;
+	int		i;
 	t_cmd	*cur;
 
 	i = 0;
