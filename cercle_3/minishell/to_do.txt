@@ -5,4 +5,6 @@ II- exec
 		un pour les cmd hors builtins
 	.Faire en sorte que l'exec renvoie le "code exit" -> pour $? : il faudra le stocker qqpart
 	.Exit ne doit pas se faire dans les enfants
-
+III- norme
+	.ft_export.c et ft_cd.c
+IV- signals

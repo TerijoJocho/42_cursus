@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/26 14:55:54 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 15:46:00 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,33 @@
 // cc lexer.c -I../libft -L../libft -lft -lreadline
 // gcc -Wall -Wextra -Werror -I. -I../../libft prompt.c ../lexer/*.c -L../../libft -lft -lreadline -o minishell
 
-void	clone_envp(t_clone  **env_clone, char **envp)
+int clone_envp(t_clone **cl, char **envp)
 {
-	int i;
-	t_clone *new_node;
-	t_clone *last;
+    t_clone	*node;
+	t_clone	*last;
+    int i;
 
-	i = -1;
 	last = NULL;
-	if (!envp || !envp[0])
-		return ;
-	while (envp[++i])
+	i = 0;
+    if (!envp || !envp[0])
+        return 0;
+    while (envp[++i])
 	{
-		new_node = malloc(sizeof(t_clone));
-		if (!new_node)
+        node = malloc(sizeof(t_clone));
+        if (!node || !(node->value = ft_strdup(envp[i])))
 		{
-			printf("Malloc error\n");
-			clean_env(env_clone);
-			return ;
-		}
-		new_node->value = ft_strdup(envp[i]);
-		if (!new_node->value)  // Vérification du strdup
-		{
-			free(new_node);
-			clean_env(env_clone);
-			printf("Malloc error\n");
-			return ;
-		}
-		new_node->next = NULL;
-		new_node->prev = last;
-		if (last)
-			last->next = new_node;
-		else
-			*env_clone = new_node;
-		last = new_node;
-	}
+            free(node);
+            return (clean_env(cl), 1);
+    	}
+        node->next = NULL;
+        node->prev = last;
+        if (last)
+            last->next = node;
+        else
+            *cl = node;
+        last = node;
+    }
+    return 0;
 }
 
 int	main(int argc, char **argv, char **envp)

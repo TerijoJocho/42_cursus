@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/26 15:47:54 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 12:25:39 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_cmd
 	int				error;
 	int				builtins;
 	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }					t_cmd;
 
 /*Struct of minishell*/
@@ -121,6 +122,7 @@ void				choose_real(char *value, t_token *token);
 int		parser(t_master *master);
 int		syntax_check(t_token **token_list);
 int		expand_string(t_token *token, t_clone **env, char *cpy);
+int		check_is_expand(t_token **token_list, t_clone **env);
 void	parse_cmd(t_master **master, int i, int flag);
 void	directory_check(t_token **token_list);
 void	merge_token(t_token **token_list);
@@ -142,16 +144,16 @@ void				clean_exit(int value, t_master *master, int flag);
 
 /*Executor's prototype*/
 int					executor(t_master *master);
-char	**clone_tab_env(t_clone *env);
+char	**clone_tab_env(t_clone *env, int size);
 
 /*Builtins*/
 void				ft_pwd(void);
-void				ft_env(char **env, t_master *master);
+void				ft_env(t_master *master);
 int					ft_cd(t_master *master, t_cmd *cmd);
 void	ft_unset(t_master *master, t_cmd *cur_cmd);
 void	delete_node(t_clone **head, t_clone *ec);
 void	ft_echo(t_cmd *cur_cmd, int i, t_master *master);
 void	ft_export(t_master *master, t_cmd *cur_cmd);
-void	ft_exit(t_master *master, t_cmd *cur_cmd);
+void	ft_exit(t_master *master, t_cmd *cur_cmd, int flag);
 
 #endif

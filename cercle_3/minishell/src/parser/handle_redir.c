@@ -6,7 +6,7 @@
 /*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:18:11 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/24 16:49:18 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:43:11 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	fill_redir(t_cmd **cmd, int in, int *i, t_token **token)
 		if ((*token)->prev->real == APPEND)
 			(*cmd)->append[*i] = 1;
 		else
-			(*cmd)->append[*i] = 0; // mettre peut etre au niveau du token  ? car si on a append puis pas append on va mettre append a 0 a tord
+			(*cmd)->append[*i] = 0;
 	}
 	else
 	{

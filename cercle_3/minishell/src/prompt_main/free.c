@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/26 10:24:56 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:29:07 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,26 @@ void	free_tab(char **tab)
 	int	i;
 
 	i = 0;
+	if (tab == NULL)
+		return ;
 	while (tab[i])
 	{
 		free(tab[i]);
 		i++;
 	}
 	free(tab);
-	tab = NULL;
 }
 void	cmd_clear(t_cmd **lst) // CONDITIONNAL JUMP ??? VOIR CHATGPT 10 MARS 2025 // +1 dans cmd_init !!!
 {
 	t_cmd	*cur;
 	t_cmd	*tmp;
 
+	cur = *lst;
+	while (cur)
+	{
+		printf("cmd_list: %p\n", cur);
+		cur = cur->next;
+	}
 	cur = *lst;
 	while (cur)
 	{
@@ -90,5 +97,6 @@ void	free_all(t_master *master)
 	clean_values(&master->token_list);
 	token_clear(&master->token_list); //pour liberer tous les neeouds
 	cmd_clear(&master->cmd_list);
-	free_tab(master->env);
+	if (master->env)
+		free_tab(master->env);
 }

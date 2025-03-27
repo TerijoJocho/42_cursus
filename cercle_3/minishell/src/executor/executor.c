@@ -6,23 +6,21 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 12:36:10 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/26 16:03:58 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:06:46 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**clone_tab_env(t_clone *env)
+char	**clone_tab_env(t_clone *env, int size)
 {
 	char	**tab;
 	t_clone	*cur;
 	int		i;
-	int		size;
 
 	if (!env)
 		return (NULL);
 	cur = env;
-	size = 0;
 	while (cur)
 	{
 		cur = cur->next;
@@ -43,24 +41,24 @@ char	**clone_tab_env(t_clone *env)
 	return (tab);
 }
 
-void	execute_builtins(t_master *master, t_cmd *cur_cmd, char **env)
+void	execute_builtins(t_master *master, t_cmd *cur_cmd, int f)
 {
 	if (cur_cmd->builtins == ECHO)
 		ft_echo(cur_cmd, 0, master);
 	else if (cur_cmd->builtins == EXPORT)
 		ft_export(master, cur_cmd);
 	else if (cur_cmd->builtins == EXIT)
-		ft_exit(master, cur_cmd);
+		ft_exit(master, cur_cmd, f); // ca depend du moment pour le flag
 	else if (cur_cmd->builtins == UNSET)
 		ft_unset(master, cur_cmd);
 	else if (cur_cmd->builtins == ENV)
-		ft_env(env, master);
+		ft_env(master);
 	else if (cur_cmd->builtins == PWD)
 		ft_pwd();
 	else if (cur_cmd->builtins == CD)
 		ft_cd(master, cur_cmd);
 }
-
+/*si on a plusieurs cmd*/
 void	do_cmd_first(t_master *master, t_cmd *cmd, char **env)
 {
 	t_cmd	*cur_cmd;
@@ -78,12 +76,12 @@ void	do_cmd_first(t_master *master, t_cmd *cmd, char **env)
 			if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
 			{
 				perror("execve");
-				clean_exit(127, master, 0) ;//exi(127)??
+				clean_exit(127, master, 0); // exi(127)??
 			}
 		}
 		else
-			execute_builtins(master, cur_cmd, env); //ici aussi, recuperer un int flag pour savoir si la cmd a reussi
-		clean_exit(1, master, 0) ;//faire les builltins hors fork
+			execute_builtins(master, cur_cmd, 0);
+		clean_exit(1, master, 0);
 	}
 	else if (pid > 0)
 	{
@@ -97,6 +95,124 @@ void	do_cmd_first(t_master *master, t_cmd *cmd, char **env)
 		perror("fork");
 }
 
+void	check_in(t_cmd *cmd)
+{
+	int	fd;
+	int	i;
+
+	i = 0;
+	while (cmd->infile[i])
+		i++;
+	i--;
+	if (cmd->infile[i])
+	{
+		printf("infile: %s\n", cmd->infile[i]);
+		fd = open(cmd->infile[i], O_RDONLY);
+		printf("fd= %d\n", fd);
+		if (fd == -1)
+		{
+			perror("open infile in exec");
+			cmd->error = 1;
+			return ;
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+}
+
+int	is_append(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd->append || !cmd->append[0])
+		return (1);
+	while (cmd->append[i])
+	{
+		if (cmd->append[i] == 1)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	check_out(t_cmd *cmd)
+{
+	int	fd;
+	int	i;
+
+	i = 0;
+	if (!cmd->outfile || !cmd->outfile[0])
+		return ;
+	while (cmd->outfile[i])
+		i++;
+	i--;
+	if (cmd->outfile[i])
+	{
+		if (is_append(cmd) == 1)
+			fd = open(cmd->outfile[i], O_WRONLY | O_APPEND);
+		else
+			fd = open(cmd->outfile[i], O_WRONLY | O_TRUNC);
+		if (fd == -1)
+		{
+			perror("open outfile in exec"), cmd->error = 1;
+			return ;
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+}
+
+void	checkhere_doc(t_cmd *cmd)
+{
+	int	fd;
+	int	i;
+
+	i = 0;
+	if (!cmd->link || !cmd->link[0])
+		return ;
+	while (cmd->link[i])
+		i++;
+	i--;
+	if (cmd->link[i])
+	{
+		printf("link:%s\n", cmd->link[i]);
+		fd = open(cmd->link[i], O_RDONLY);
+		if (fd == -1)
+		{
+			perror("open heredoc in exec");
+			cmd->error = 1;
+			return ;
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+}
+
+int	check_redir(t_cmd *cmd_list)
+{
+	t_cmd	*cmd;
+
+	cmd = cmd_list;
+	if (!cmd)
+		return (1);
+	while (cmd)
+	{
+		if (cmd->error == 1)
+			break ;
+		check_in(cmd);
+		check_out(cmd);
+		checkhere_doc(cmd);
+		cmd = cmd->next;
+	}
+	if (cmd && cmd->error == 1)
+	{
+		printf("error check_redir\n");
+		return (1);
+	}
+	return (0);
+}
+
 int	executor(t_master *master)
 {
 	t_cmd	*cur;
@@ -106,11 +222,21 @@ int	executor(t_master *master)
 	// int	flag;
 	// flag = 0;
 	cur = master->cmd_list;
-	master->env = clone_tab_env(master->env_clone);
+	master->env = clone_tab_env(master->env_clone, 0);
+	/*test*/
+	int l = 0;
+	while (cur->outfile[l])
+	{
+		printf("infile: %s\n", cur->outfile[l]);
+		l++;
+	}
+	/*----*/
+	// if (check_redir(cur) == 1)
+	// 	return (1);
 	while (cur)
 	{
-		// if (cur->next && flag == 0)
-		// 	do_cmd_first(cur);
+		if (!cur->next && !cur->prev && cur->builtins > 0)
+			execute_builtins(master, cur, 1);
 		// else if (cur->next && flag == 1)
 		// {
 		// 	do_cmd_middle();
@@ -121,7 +247,7 @@ int	executor(t_master *master)
 		// if (!cur->next)
 		// 	do_cmd_solo(master, cur, master->env); //pour avoir le $?
 		// else
-			do_cmd_first(master, cur, master->env);
+		// 	do_cmd_first(master, cur, master->env);
 		cur = cur->next;
 	}
 	return (0);

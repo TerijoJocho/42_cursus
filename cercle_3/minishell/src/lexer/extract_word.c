@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:14 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/24 10:33:58 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 11:15:11 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	word_len(char *input, t_token **token_list)
 	i = 0;
 	while (current->next)
 		current = current->next;
-	while (input[i] && !is_whitespace(input[i]) && !is_special_char(input[i])
-		&& !is_quote(input[i]))
+	while (input[i] && !is_whitespace(input[i])
+		&& !is_special_char(input[i]) && !is_quote(input[i]))
 		i++;
 	if (input[i] == ' ')
 		current->space = 1;

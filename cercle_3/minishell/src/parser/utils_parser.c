@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_parse.c                                     :+:      :+:    :+:   */
+/*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:23:17 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/25 13:59:08 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:35:42 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,17 @@ int	syntax_check(t_token **token_list)
 void	cmd_add_back(t_master **master, t_cmd *node)
 {
 	t_cmd	**list;
+	t_cmd	*last;
 
 	list = &(*master)->cmd_list;
+	last = NULL;
 	while (*list)
+	{
+		last = *list;
 		list = &(*list)->next;
+	}
 	*list = node;
+	node->prev = last;
 }
 
 int	*ft_append(t_token *token)
@@ -62,4 +68,24 @@ int	*ft_append(t_token *token)
 	if (!tab)
 		return (NULL);
 	return (tab);
+}
+
+int	check_is_expand(t_token **token_list, t_clone **env)
+{
+	t_token	*current;
+	char	*cpy;
+
+	current = *token_list;
+	while (current)
+	{
+		cpy = ft_strdup(current->value);
+		if (current->is_expand == 1)
+		{
+			if (!expand_string(current, env, cpy))
+				return (1);
+		}
+		current = current->next;
+		free(cpy);
+	}
+	return (0);
 }

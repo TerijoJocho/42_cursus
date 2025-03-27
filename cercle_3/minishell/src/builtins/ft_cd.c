@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:19:46 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/25 16:03:26 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 11:18:19 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <string.h>
 
-char	*get_pwd(t_master *master, char *var, int i)
+char	*get_pwd(t_master *master, char *var, int i) // manque le free de path + va falloir normer cette merde lol
 {
 	t_clone		*clone_env;
 	char		*path;
@@ -27,7 +27,7 @@ char	*get_pwd(t_master *master, char *var, int i)
 	{
 		if (ft_strncmp(clone_env->value, var, i) == 0)
 		{
-			path = ft_substr(clone_env->value, i, ft_strlen(clone_env->value + i));
+			path = ft_substr(clone_env->value, i, ft_strlen(clone_env->value + i)); // pas free ?
 			break ;
 		}
 		clone_env = clone_env->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_special_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:20 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/24 10:34:02 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 11:14:50 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	choose_real(char *value, t_token *token)
 
 void	find_word(char *value, t_token *token)
 {
-	if (ft_strlen(value) == 4 && ft_strncmp(value, "echo", 4) == 0) // option -n
+	if (ft_strlen(value) == 4 && ft_strncmp(value, "echo", 4) == 0)
 		token->real = ECHO;
 	else if (ft_strlen(value) == 2 && ft_strncmp(value, "cd", 2) == 0)
 		token->real = CD;

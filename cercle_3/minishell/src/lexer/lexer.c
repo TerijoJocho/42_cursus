@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:10:37 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/24 10:34:05 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 11:35:18 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,6 @@ void	add_token_list(t_token **token_list, int type, char *value)
 	add_token_back(token_list, new_token);
 }
 
-int	is_whitespace(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
-		|| c == '\r')
-		return (1);
-	else
-		return (0);
-}
-
-int	is_special_char(char c)
-{
-	if (c == '|' || c == '<' || c == '>')
-		return (1);
-	else
-		return (0);
-}
-
 int	check_quote(char *input)
 {
 	int		i;
@@ -83,6 +66,32 @@ int	check_quote(char *input)
 	return (1);
 }
 
+int	lexer_next(char *input, t_token **token_list, int *i)
+{
+	if (is_whitespace(input[*i]))
+		(*i)++;
+	else if (is_special_char(input[*i]))
+	{
+		if (is_special_char(input[*i + 2]) && !is_whitespace(input[*i + 1])
+			&& !ft_isalpha((char)input[*i + 1]))
+			return (1);
+		add_token_list(token_list, 2, extract_special_char(&input[*i]));
+		(*i) += special_char_len(&input[*i], token_list);
+	}
+	else if (input[*i] == '\'' || input[*i] == '\"')
+	{
+		add_token_list(token_list, 3, extract_quoted_string(&input[*i],
+				input[*i]));
+		(*i) += quoted_string_len(&input[*i], token_list);
+	}
+	else
+	{
+		add_token_list(token_list, 1, extract_word(&input[*i]));
+		(*i) += word_len(&input[*i], token_list);
+	}
+	return (0);
+}
+
 int	lexer(char *input, t_token **token_list)
 {
 	int	i;
@@ -92,27 +101,8 @@ int	lexer(char *input, t_token **token_list)
 		return (1);
 	while (input[i])
 	{
-		if (is_whitespace(input[i]))
-			i++;
-		else if (is_special_char(input[i]))
-		{
-			if (is_special_char(input[i + 2]) && !is_whitespace(input[i + 1])
-				&& !ft_isalpha((char)input[i + 1]))
-				return (1);
-			add_token_list(token_list, 2, extract_special_char(&input[i]));
-			i += special_char_len(&input[i], token_list);
-		}
-		else if (input[i] == '\'' || input[i] == '\"')
-		{
-			add_token_list(token_list, 3, extract_quoted_string(&input[i],
-					input[i]));
-			i += quoted_string_len(&input[i], token_list);
-		}
-		else
-		{
-			add_token_list(token_list, 1, extract_word(&input[i]));
-			i += word_len(&input[i], token_list);
-		}
+		if (lexer_next(input, token_list, &i) == 1)
+			return (1);
 	}
 	get_special_type(token_list);
 	return (0);

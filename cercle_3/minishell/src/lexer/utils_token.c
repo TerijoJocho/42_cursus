@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:29 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/18 22:52:51 by terijo           ###   ########.fr       */
+/*   Updated: 2025/03/27 11:35:29 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,23 @@ int	is_quote(char c)
 	if (c == '\'' || c == '\"')
 		return (1);
 	return (0);
+}
+
+int	is_whitespace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r')
+		return (1);
+	else
+		return (0);
+}
+
+int	is_special_char(char c)
+{
+	if (c == '|' || c == '<' || c == '>')
+		return (1);
+	else
+		return (0);
 }
 
 void	add_token_back(t_token **lst, t_token *new)

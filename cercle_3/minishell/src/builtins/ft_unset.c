@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:20:04 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/26 14:22:48 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 11:24:35 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_unset(t_master *master, t_cmd *cur_cmd)
 		if (search_var(&master->env_clone, cur_cmd->args[i]) == 1)
 		{
 			free_tab(master->env);
-			master->env = clone_tab_env(master->env_clone);
+			master->env = clone_tab_env(master->env_clone, 0);
 		}
 		i++;
 	}

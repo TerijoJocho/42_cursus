@@ -6,31 +6,11 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/26 16:04:40 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:04:05 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	check_is_expand(t_token **token_list, t_clone **env)
-{
-	t_token	*current;
-	char	*cpy;
-
-	current = *token_list;
-	while (current)
-	{
-		cpy = ft_strdup(current->value);
-		if (current->is_expand == 1)
-		{
-			if (!expand_string(current, env, cpy))
-				return (1);
-		}
-		current = current->next;
-		free(cpy);
-	}
-	return (0); // des int partout ? je pense que je me perds
-}
 
 char	*ft_getenv(t_master **master)
 {
@@ -50,48 +30,14 @@ char	*ft_getenv(t_master **master)
 	return (NULL);
 }
 
-// void	add_cmd(t_cmd *node, char *va, int *i, int flag, char	*path)
-// {
-// 	char	**split_path;
-// 	char	*full_path;
-// 	int		j;
-
-// 	full_path = NULL;
-// 	printf("VALEUR DE mii : %d\n", (*i));
-// 	node->args[*i] = ft_strdup(va);
-// 	if (flag == 1 || path == NULL)
-// 	{
-// 		(*i)++;
-// 		return ;
-// 	}
-// 	split_path = ft_split(path, ':');
-// 	j = 0;
-// 	while (split_path[j])
-// 	{
-// 		path = ft_strjoin(split_path[j], "/");
-// 		full_path = ft_strjoin(path, va);
-// 		free(path);
-// 		// printf("full_path value : %s\n", full_path);
-// 		if (access(full_path, X_OK) == 0)
-// 		{
-// 			node->path = full_path;
-// 			// printf("node->path value : %s\n", node->path);
-// 			(*i)++;
-// 			free_tab(split_path);
-// 			return ;
-// 		}
-// 		free(full_path);
-// 		full_path = NULL;
-// 		j++;
-// 	}
-// 	free_tab(split_path);
-// 	(*i)++;
-// }
-
-int	add_cmd2(char **split, char *fp, char *path, char *va, t_cmd *n)
+int	add_cmd2(char **split, char *va, t_cmd *n)
 {
 	int	j;
+	char	*path;
+	char	*fp;
 
+
+	fp = NULL;
 	j = 0;
 	while (split[j])
 	{
@@ -114,9 +60,6 @@ int	add_cmd2(char **split, char *fp, char *path, char *va, t_cmd *n)
 void	add_cmd(t_cmd *node, char *va, int *i, int flag, char *path)
 {
 	char	**split_path;
-	char	*full_path;
-
-	full_path = NULL;
 	node->args[*i] = ft_strdup(va);
 	if (flag == 1 || path == NULL)
 	{
@@ -124,7 +67,14 @@ void	add_cmd(t_cmd *node, char *va, int *i, int flag, char *path)
 		return ;
 	}
 	split_path = ft_split(path, ':');
-	if (add_cmd2(split_path, full_path, path, va, node) == 1)
+	free(path);
+	path = NULL;
+	if (!split_path)
+	{
+		free(split_path);//a voir
+		return ;
+	}
+	if (add_cmd2(split_path, va, node) == 1)
 	{
 		(*i)++;
 		return ;
@@ -161,26 +111,26 @@ void	parse_cmd(t_master **master, int i, int flag)
 	handle_redir(master, 0, 0, 0);
 }
 
-void	test(t_cmd **cmd)
-{
-	int		i;
-	t_cmd	*cur;
+// void	test(t_cmd **cmd)
+// {
+// 	int		i;
+// 	t_cmd	*cur;
 
-	i = 0;
-	cur = *cmd;
-	while (cur)
-	{
-		i = 0;
-		printf("nb_heredoc attendu : %d\n", cur->nb_heredoc);
-		while (cur->link[i])
-		{
-			printf("link[%d] value : %s\n", i, cur->link[i]);
-			unlink(cur->link[i]);
-			i++;
-		}
-		cur = cur->next;
-	}
-}
+// 	i = 0;
+// 	cur = *cmd;
+// 	while (cur)
+// 	{
+// 		i = 0;
+// 		printf("nb_heredoc attendu : %d\n", cur->nb_heredoc);
+// 		while (cur->link[i])
+// 		{
+// 			printf("link[%d] value : %s\n", i, cur->link[i]);
+// 			unlink(cur->link[i]);
+// 			i++;
+// 		}
+// 		cur = cur->next;
+// 	}
+// }
 
 int	parser(t_master *master)
 {
@@ -191,7 +141,7 @@ int	parser(t_master *master)
 	merge_token(&master->token_list);
 	directory_check(&master->token_list);
 	parse_cmd(&master, 0, 0);
-	file_management(&master->cmd_list);
-	test(&master->cmd_list);
+	// file_management(&master->cmd_list);
+	// test(&master->cmd_list);
 	return (0);
 }
