@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:07:53 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/12 12:54:27 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/28 13:25:16 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int expand_string(t_token *token, t_clone **env, char *cpy)
 
 	i = 0;
 	new_value = ft_strdup("");
-	tmp =NULL;
+	tmp = NULL;
 	if (!new_value)
 		return (0);
 	while (cpy[i])

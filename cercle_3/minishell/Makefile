@@ -6,7 +6,7 @@
 #    By: abastian <abastian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 15:42:55 by daavril           #+#    #+#              #
-#    Updated: 2025/03/27 12:17:33 by abastian         ###   ########.fr        #
+#    Updated: 2025/03/28 11:11:48 by abastian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ C_FILE		=	lexer/extract_quoted_string.c lexer/extract_special_char.c lexer/extra
 				parser/handle_redir.c parser/init_cmd_list.c parser/make_heredoc.c parser/merge_token.c parser/directory_check.c \
 				parser/parse_cmd.c prompt_main/prompt.c prompt_main/free.c signals/signals.c executor/executor.c \
 				builtins/ft_pwd.c builtins/ft_env.c builtins/ft_cd.c builtins/ft_unset.c builtins/ft_echo.c builtins/ft_exit.c \
-				parser/file_management.c builtins/ft_export.c
+				parser/file_management.c parser/read_heredoc.c builtins/ft_export.c
 
 SRC_DIR		=	./src/
 SRC			=	$(addprefix $(SRC_DIR), $(C_FILE))

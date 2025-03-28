@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/27 16:04:05 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/28 11:12:13 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,26 @@ int	add_cmd2(char **split, char *va, t_cmd *n)
 void	add_cmd(t_cmd *node, char *va, int *i, int flag, char *path)
 {
 	char	**split_path;
-	node->args[*i] = ft_strdup(va);
-	if (flag == 1 || path == NULL)
+
+	if (flag == 1)
 	{
-		(*i)++;
+		free(path);
 		return ;
 	}
+	node->args[*i] = ft_strdup(va);
+	(*i)++;
+	if (path == NULL)
+		return ;
 	split_path = ft_split(path, ':');
 	free(path);
-	path = NULL;
 	if (!split_path)
 	{
-		free(split_path);//a voir
+		free(split_path);//a voir, a suppr selon chatgpt
 		return ;
 	}
 	if (add_cmd2(split_path, va, node) == 1)
-	{
-		(*i)++;
 		return ;
-	}
 	free_tab(split_path);
-	(*i)++;
 }
 
 void	parse_cmd(t_master **master, int i, int flag)
@@ -96,7 +95,7 @@ void	parse_cmd(t_master **master, int i, int flag)
 		if (cur->type == 2)
 			flag = 1;
 		if (cur->value_2 == NULL)
-			add_cmd(cmd_list, cur->value, &i, flag, ft_getenv(master));
+			add_cmd(cmd_list, cur->value, &i, flag, ft_getenv(master)); //pb alloc
 		else if (cur->value_2 != NULL)
 			add_cmd(cmd_list, cur->value_2, &i, flag, ft_getenv(master));
 		cur = cur->next;
@@ -141,7 +140,8 @@ int	parser(t_master *master)
 	merge_token(&master->token_list);
 	directory_check(&master->token_list);
 	parse_cmd(&master, 0, 0);
-	// file_management(&master->cmd_list);
+	file_management(&master->cmd_list);
+	read_heredoc(&master->cmd_list);
 	// test(&master->cmd_list);
 	return (0);
 }

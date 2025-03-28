@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/27 12:25:39 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/28 11:10:30 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	handle_redir(t_master **master, int i, int j, int h);
 void	file_management(t_cmd **cmd);
 int		*ft_append(t_token *token);
 int		make_heredoc(char **heredoc, int *error, char **link);
+void	read_heredoc(t_cmd **cmd);
 
 /*------------------*/
 

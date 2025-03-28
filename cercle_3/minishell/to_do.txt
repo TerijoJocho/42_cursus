@@ -8,3 +8,4 @@ II- exec
 III- norme
 	.ft_export.c et ft_cd.c
 IV- signals
+V- exit 
