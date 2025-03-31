@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_creator.c                                     :+:      :+:    :+:   */
+/*   file_management.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:37:46 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/25 12:19:18 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:14:43 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	create_file(char *name, int append, int *error)
 
 	if (append == 0)
 	{
-		printf("JE FAIS UN OUTFILE\n");
 		fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (fd == -1)
 			return ((*error) = 1, 0);
@@ -50,7 +49,6 @@ int	create_file(char *name, int append, int *error)
 	}
 	else
 	{
-		printf("JE FAIS UN APPEND\n");
 		fd = open(name, O_CREAT | O_RDWR | O_APPEND, 0644);
 		if (fd == -1)
 			return ((*error) = 1, 0);
@@ -97,7 +95,6 @@ void	file_management(t_cmd **cmd)
 	{
 		if (infile_check(cur->infile, &cur->error) == 0)
 			printf("Error with an infile non existent or non readable\n");
-		printf("error value : %d\n", cur->error);
 		if (outfile_check(cur->outfile, &cur->error, cur->append) == 0)
 			printf("Outfile error\n");
 		if (make_heredoc(cur->heredoc, &cur->error, cur->link) == 0)

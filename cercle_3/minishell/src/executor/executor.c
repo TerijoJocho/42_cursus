@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:40:23 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/28 16:52:53 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:34:48 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,96 +59,7 @@ void	execute_builtins(t_master *master, t_cmd *cur_cmd, int f)
 		ft_cd(master, cur_cmd);
 }
 
-int	is_append(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (!cmd->append || !cmd->append[0])
-		return (1);
-	while (cmd->append[i])
-	{
-		if (cmd->append[i] == 1)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	check_in(t_cmd *cmd)
-{
-	int	fd;
-	int	i;
-
-	i = 0;
-	while (cmd->infile[i])
-		i++;
-	if ( i > 0)
-		i--;
-	if (cmd->infile[i])
-	{
-		fd = open(cmd->infile[i], O_RDONLY);
-		if (fd == -1)
-		{
-			perror("open infile in exec");
-			cmd->error = 1;
-			return ;
-		}
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
-}
-
-void	check_out(t_cmd *cmd)
-{
-	int	fd;
-	int	i;
-
-	i = 0;
-	if (!cmd->outfile || !cmd->outfile[0])
-		return ;
-	while (cmd->outfile[i])
-		i++;
-	if (i > 0)
-		i--;
-	if (cmd->outfile[i])
-	{
-		if (is_append(cmd) == 1)
-			fd = open(cmd->outfile[i], O_WRONLY | O_APPEND);
-		else
-			fd = open(cmd->outfile[i], O_WRONLY | O_TRUNC);
-		if (fd == -1)
-		{
-			perror("open outfile in exec"), cmd->error = 1;
-			return ;
-		}
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
-}
-
-void	check_redir(t_cmd *cmd)
-{
-	if (!(cmd))
-		return ;
-	if (cmd->error == 1)
-		return ;
-	if (cmd->infile)
-		check_in(cmd);
-	if (cmd->outfile)
-		check_out(cmd);
-	// else if (cmd->nb_heredoc > 0)
-	// 	checkhere_doc(cmd);
-	cmd = cmd->next;
-	if (cmd && cmd->error == 1)
-	{
-		printf("error check_redir\n");
-		return ;
-	}
-	return ;
-}
-
-void	do_cmd_first(t_master *master, t_cmd *cmd, char **env)
+void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env)
 {
 	t_cmd	*cur_cmd;
 	pid_t	pid;
@@ -160,17 +71,11 @@ void	do_cmd_first(t_master *master, t_cmd *cmd, char **env)
 	if (pid == 0)
 	{
 		check_redir(cur_cmd);
-		if (cur_cmd->builtins == 0)
+		if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
 		{
-			if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
-			{
-				perror("execve");
-				clean_exit(127, master, 0);
-			}
+			perror("execve");
+			clean_exit(127, master, 0);
 		}
-		else
-			execute_builtins(master, cur_cmd, 0);
-		clean_exit(1, master, 0);
 	}
 	else if (pid > 0)
 	{
@@ -184,20 +89,78 @@ void	do_cmd_first(t_master *master, t_cmd *cmd, char **env)
 		perror("fork");
 }
 
+void	do_cmd(t_master *master, t_cmd *cmd, char **env)
+{
+	t_cmd	*cur_cmd;
+	pid_t	pid;
+	int		status;
+	int		prev_fd;
+
+	cur_cmd = cmd;
+	// gerer erreur
+	prev_fd = -1;
+	while (cur_cmd)
+	{
+		pipe(cur_cmd->pfd);
+		pid = fork();
+		if (pid == 0)
+		{
+			if (cur_cmd->prev && prev_fd != -1)
+			{
+				dup2(prev_fd, STDIN_FILENO);
+				close(prev_fd);
+			}
+			if (check_redir(cur_cmd) == 1)
+				if (cur_cmd->next != NULL)
+				{
+					dup2(cur_cmd->pfd[1], STDOUT_FILENO);
+				}
+			close(cur_cmd->pfd[0]);
+			close(cur_cmd->pfd[1]);
+			if (cur_cmd->builtins == 0)
+			{
+				if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
+				{
+					perror("execve");
+					clean_exit(127, master, 0);
+				}
+			}
+			else
+				execute_builtins(master, cur_cmd, 0);
+			clean_exit(1, master, 0);
+		}
+		else if (pid > 0)
+		{
+			close(cur_cmd->pfd[1]);
+			prev_fd = cur_cmd->pfd[0];
+			waitpid(pid, &status, 0);
+			cur_cmd = cur_cmd->next;
+		}
+	}
+	while (cur_cmd != NULL)
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+				master->exit_status = WEXITSTATUS(status);
+		else
+			master->exit_status = 1;
+		cur_cmd = cur_cmd->next;
+	}
+}
+
 int	executor(t_master *master)
 {
 	t_cmd	*cur;
 
 	cur = master->cmd_list;
+	// check cmd, si c'est une commande qui existe pas alors on fait pas execve
 	master->env = clone_tab_env(master->env_clone, 0);
-	while (cur)
-	{
-		if (!cur->next && !cur->prev && (cur->builtins == 3
-			|| (cur->builtins == 5 && cur->args[1]) || cur->builtins == 6 || cur->builtins == 8))
-			execute_builtins(master, cur, 1);
-		else
-			do_cmd_first(master, cur, master->env);
-		cur = cur->next;
-	}
+	if (!cur->next && !cur->prev && (cur->builtins == 3 || (cur->builtins == 5
+				&& cur->args[1]) || cur->builtins == 6 || cur->builtins == 8))
+		execute_builtins(master, cur, 1);
+	else if (!cur->next && !cur->prev)
+		do_cmd_solo(master, cur, master->env);
+	else if (cur->next && !cur->prev)
+		do_cmd(master, cur, master->env);
 	return (0);
 }

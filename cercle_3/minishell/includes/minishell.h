@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/28 11:10:30 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:03:09 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,9 @@ void				choose_real(char *value, t_token *token);
 /*Parser's prototype*/
 int		parser(t_master *master);
 int		syntax_check(t_token **token_list);
-int		expand_string(t_token *token, t_clone **env, char *cpy);
+int		expand_string(t_token *token, t_clone **env, char *cpy, int i);
 int		check_is_expand(t_token **token_list, t_clone **env);
+char	*expand_variable(char *cpy, char *new_value, t_clone **env, int *i);
 void	parse_cmd(t_master **master, int i, int flag);
 void	directory_check(t_token **token_list);
 void	merge_token(t_token **token_list);
@@ -132,7 +133,9 @@ void	handle_redir(t_master **master, int i, int j, int h);
 void	file_management(t_cmd **cmd);
 int		*ft_append(t_token *token);
 int		make_heredoc(char **heredoc, int *error, char **link);
-void	read_heredoc(t_cmd **cmd);
+void	read_heredoc(t_cmd **cmd, t_master *m);
+char	*expand_heredoc(t_clone **env, char *input, int i);
+void	write_it(int fd, char *word);
 
 /*------------------*/
 
@@ -146,6 +149,7 @@ void				clean_exit(int value, t_master *master, int flag);
 /*Executor's prototype*/
 int					executor(t_master *master);
 char	**clone_tab_env(t_clone *env, int size);
+int	check_redir(t_cmd *cmd);
 
 /*Builtins*/
 void				ft_pwd(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:07:53 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/28 13:25:16 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:03:55 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,15 +94,7 @@ void	add_tmp(char *new_value, char *tmp, t_token *token)
 {
 	char	*prev_value;
 
-	if (new_value[0] == '\0') // faire + de tests mais $USERlooool par ex ne remplit pas value2 et ca c nice
-	{
-		// free ?
-		if (tmp)
-			free(tmp);
-		return ;
-	}
 	prev_value = new_value;
-	printf("AU SECOURS : %s\n", new_value);
 	if (tmp != NULL)
 	{
 		new_value = ft_strjoin(prev_value, tmp);
@@ -112,13 +104,11 @@ void	add_tmp(char *new_value, char *tmp, t_token *token)
 	token->value_2 = new_value;
 }
 
-int expand_string(t_token *token, t_clone **env, char *cpy)
+int expand_string(t_token *token, t_clone **env, char *cpy, int i)
 {
-	int i;
 	char *new_value;
 	char	*tmp;
 
-	i = 0;
 	new_value = ft_strdup("");
 	tmp = NULL;
 	if (!new_value)
@@ -131,6 +121,8 @@ int expand_string(t_token *token, t_clone **env, char *cpy)
 			if (!new_value)
 				return (0);
 			cpy += i;
+			if (tmp != NULL)
+				free(tmp);
 			tmp = ft_strdup(cpy);
 			i = 0;
 		}

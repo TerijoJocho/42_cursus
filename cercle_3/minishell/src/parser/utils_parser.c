@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:23:17 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/27 12:35:42 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/31 15:40:45 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,17 @@ int	check_is_expand(t_token **token_list, t_clone **env)
 		cpy = ft_strdup(current->value);
 		if (current->is_expand == 1)
 		{
-			if (!expand_string(current, env, cpy))
-				return (1);
+			if (!expand_string(current, env, cpy, 0))
+				return (free(cpy), 1);
 		}
 		current = current->next;
 		free(cpy);
 	}
 	return (0);
+}
+
+void	write_it(int fd, char *word)
+{
+	write(fd, word, ft_strlen(word));
+	write(fd, "\n", 1);
 }

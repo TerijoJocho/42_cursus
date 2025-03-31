@@ -1,11 +1,20 @@
-I- parser
-	retirer getenv dans add_cmd
+
 II- exec
 	.Separer l'exec : un exec pour les redir, un pour les commandes buitins,
 		un pour les cmd hors builtins
-	.Faire en sorte que l'exec renvoie le "code exit" -> pour $? : il faudra le stocker qqpart
-	.Exit ne doit pas se faire dans les enfants
 III- norme
 	.ft_export.c et ft_cd.c
 IV- signals
-V- exit 
+V- exit
+
+
+31 MARS :
+
+- ctrl c et crtl d sont inverser => gerer les signqux !
+- bien gerer les echo $?
+- gerer le segfault quand on a zero input
+
+
+'$USER' dans expand heredoc broken + leaks
+il affiche '' et jsp pourquoi
+entre "" ne marche pas pour cat << "EOF"

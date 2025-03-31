@@ -6,7 +6,7 @@
 /*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/28 11:12:13 by abastian         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:08:01 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	parser(t_master *master)
 	directory_check(&master->token_list);
 	parse_cmd(&master, 0, 0);
 	file_management(&master->cmd_list);
-	read_heredoc(&master->cmd_list);
+	read_heredoc(&master->cmd_list, master);
 	// test(&master->cmd_list);
 	return (0);
 }

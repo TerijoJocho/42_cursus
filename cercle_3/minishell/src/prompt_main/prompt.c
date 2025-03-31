@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/27 15:46:00 by daavril          ###   ########.fr       */
+/*   Updated: 2025/03/31 17:04:33 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ int clone_envp(t_clone **cl, char **envp)
     int i;
 
 	last = NULL;
-	i = 0;
+	i = -1;
     if (!envp || !envp[0])
-        return 0;
+        return 1;
     while (envp[++i])
 	{
         node = malloc(sizeof(t_clone));
-        if (!node || !(node->value = ft_strdup(envp[i])))
-		{
-            free(node);
-            return (clean_env(cl), 1);
-    	}
+		if (!node)
+			return (clean_env(cl), 1);
+		node->value = ft_strdup(envp[i]);
+        if (!node->value)
+			return (free(node), clean_env(cl), 1);
         node->next = NULL;
         node->prev = last;
         if (last)
@@ -49,8 +49,8 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	t_master	*master;
 
-	(void)argc;
-	(void)argv;
+	(void)argc; // verif si argc == 2
+	(void)argv; // on s'en fiche
 	master = malloc(sizeof(t_master));
 	if (!master)
 	{
@@ -61,13 +61,11 @@ int	main(int argc, char **argv, char **envp)
 	master->export_list = NULL;
 	master->token_list = NULL;
 	master->cmd_list = NULL;
+	master->env = NULL;
 	clone_envp(&master->env_clone, envp);
 	clone_envp(&master->export_list, envp);
-	if (!master->env_clone)  // Si clone_envp a échoué
-	{
-		free(master);
-		return (0);
-	}
+	if (!master->env_clone)
+		return (free(master), 0);
 	/*signal*/
 	// setup_signal();
 	/*------*/
@@ -78,9 +76,9 @@ int	main(int argc, char **argv, char **envp)
 		if (!input)
 			break ;
 		// else if (input[0] == '\0')
-		// 	add_history(input); // CA LA ADD APRES
-		else if (*input) // rajouter verif si que des espaces || GERER CA APRES LOL
-			add_history(input);
+		// 	add_history(input);
+		else if (*input)
+			add_history(input); //a gerer sino segfault
 		if (lexer(input, &master->token_list) == 1)
 			printf("Error lexer\n");
 		else if (syntax_check(&master->token_list) == 1)
@@ -89,20 +87,18 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error parsing\n");
 		else if (executor(master) == 1)
 			printf("Error exec\n");
-		// else
-		// {
 		// 	/*TEST------------------------------------*/
-		// 	t_token	*current = master->token_list;
-		// 	int	i = 1;
-		// 	while (current)
-		// 	{
-		// 		printf("\n---Token %d---\n", i);
-		// 		printf("Prog : %d, Dir: %d\nIs Expand: %d, single quote: %d, space flag : %d\nReal: %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space, current->real);
-		// 		printf("value: %s\n", current->value);
-		// 		printf("value_2: %s\n\n", current->value_2);
-		// 		current = current->next;
-		// 		i++;
-		// 	}
+			t_token	*current = master->token_list;
+			int	i = 1;
+			while (current)
+			{
+				printf("\n---Token %d---\n", i);
+				printf("Prog : %d, Dir: %d\nIs Expand: %d, single quote: %d, space flag : %d\nReal: %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space, current->real);
+				printf("value: %s\n", current->value);
+				printf("value_2: %s\n\n", current->value_2);
+				current = current->next;
+				i++;
+			}
 		// 	/*----------------------------------------*/
 		// }
 		free(input);
@@ -110,6 +106,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	clean_env(&master->env_clone);
 	clean_env(&master->export_list);
+	if (master->env_clone)
+		printf("caca\n");
 	free(master);
 	master = NULL;
 	printf("exit\n");
