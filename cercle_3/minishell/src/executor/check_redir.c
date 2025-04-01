@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:57:01 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/31 15:52:19 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/01 16:02:47 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ int	check_out(t_cmd *cmd)
 		else
 			fd = open(cmd->outfile[i], O_WRONLY | O_TRUNC);
 		if (fd == -1)
-		{
-			perror("open outfile in exec"), cmd->error = 1;
-			return (-1);
-		}
+			return ((printf("open outfile in exec\n"), cmd->error = 1), -1);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
@@ -112,34 +109,6 @@ int	checkhere_doc(t_cmd *cmd)
 	return (0);
 }
 
-// int	check_redir(t_cmd *cmd)
-// {
-// 	if (!cmd || cmd->error == 1)
-// 		return (-1);
-// 	if (cmd->outfile)
-// 	{
-// 		if(check_out(cmd) == 1)
-// 		return (1);
-// 	}
-// 	if (cmd->nb_heredoc > 0)
-// 	{
-// 		if(checkhere_doc(cmd) == 1)
-// 		return (1);
-// 	}
-// 	else if (cmd->infile)
-// 	{
-// 		if(check_in(cmd) == 1)
-// 		return (1);
-// 	}
-// 	cmd = cmd->next;
-// 	if (cmd && cmd->error == 1)
-// 	{
-// 		printf("error check_redir\n");
-// 		return (-1);
-// 	}
-// 	return(0);
-// }
-
 int	check_redir(t_cmd *cmd)
 {
 	int	res_in;
@@ -153,8 +122,6 @@ int	check_redir(t_cmd *cmd)
 		return (-1);
 	if (cmd->outfile)
 		res_out = check_out(cmd);
-	// verif le dernier infile/heredoc pour faire comme le bash
-	// cat << EOF  > outfileA < outfileD
 	if (cmd->nb_heredoc > 0)
 		res_here = checkhere_doc(cmd);
 	if (cmd->infile)

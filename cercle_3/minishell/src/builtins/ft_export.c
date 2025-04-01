@@ -3,61 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:08:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/27 11:24:28 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:45:41 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int		is_export(char *arg)
-{
-	int	i;
-
-	i = 0;
-	if (!arg || arg[0] == '=')
-	{
-		printf("export: %s : not a valid identifier\n", arg);
-		return (1);
-	}
-	while (arg[i])
-	{
-		if (arg[i] == '=')
-			return (2);
-		i++;
-	}
-	return (0);
-}
-
-void	sort_export_list(t_clone **list)
-{
-	t_clone	*cur;
-	t_clone	*next;
-	char	*tmp;
-	int		sorted;
-
-	if (!list || !*list)
-		return ;
-	while (!sorted)
-	{
-		sorted = 1;
-		cur = *list;
-		while (cur->next)
-		{
-			next = cur->next;
-			if (ft_strncmp(cur->value, next->value, ft_strlen(cur->value)) > 0)
-			{
-				tmp = cur->value;
-				cur->value = next->value;
-				next->value = tmp;
-				sorted = 0;
-			}
-			cur = cur->next;
-		}
-	}
-}
 
 void	display_export(t_clone *ex_lst)
 {
@@ -157,7 +110,7 @@ void	handle_export(t_master *master, char *arg)
 
 void	ft_export(t_master *master, t_cmd *cur_cmd)
 {
-	int		i;
+	int	i;
 
 	i = 1;
 	if (!cur_cmd->args[1])

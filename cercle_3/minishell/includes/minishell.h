@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/31 17:03:09 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/01 16:19:01 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
@@ -21,7 +22,6 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <fcntl.h>
 
 /*clone envp*/
 typedef struct s_clone
@@ -60,7 +60,7 @@ typedef struct s_token
 	int				space;
 	int				dir;
 	int				prog;
-	int				real; // changemenet en int
+	int				real;
 	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
@@ -119,23 +119,25 @@ void				choose_real(char *value, t_token *token);
 /*-----------------*/
 
 /*Parser's prototype*/
-int		parser(t_master *master);
-int		syntax_check(t_token **token_list);
-int		expand_string(t_token *token, t_clone **env, char *cpy, int i);
-int		check_is_expand(t_token **token_list, t_clone **env);
-char	*expand_variable(char *cpy, char *new_value, t_clone **env, int *i);
-void	parse_cmd(t_master **master, int i, int flag);
-void	directory_check(t_token **token_list);
-void	merge_token(t_token **token_list);
-void	init_cmd_list(t_master **master, int i);
-void	cmd_add_back(t_master **master, t_cmd *node);
-void	handle_redir(t_master **master, int i, int j, int h);
-void	file_management(t_cmd **cmd);
-int		*ft_append(t_token *token);
-int		make_heredoc(char **heredoc, int *error, char **link);
-void	read_heredoc(t_cmd **cmd, t_master *m);
-char	*expand_heredoc(t_clone **env, char *input, int i);
-void	write_it(int fd, char *word);
+int					parser(t_master *master);
+int					syntax_check(t_token **token_list);
+int					expand_string(t_token *token, t_clone **env, char *cpy,
+						int i);
+int					check_is_expand(t_token **token_list, t_clone **env);
+char				*expand_variable(char *cpy, char *new_value, t_clone **env,
+						int *i);
+void				parse_cmd(t_master **master, int i, int flag);
+void				directory_check(t_token **token_list);
+void				merge_token(t_token **token_list);
+void				init_cmd_list(t_master **master, int i);
+void				cmd_add_back(t_master **master, t_cmd *node);
+void				handle_redir(t_master **master, int i, int j, int h);
+void				file_management(t_cmd **cmd);
+int					*ft_append(t_token *token);
+int					make_heredoc(char **heredoc, int *error, char **link);
+void				read_heredoc(t_cmd **cmd, t_master *m);
+char				*expand_heredoc(t_clone **env, char *input, int i);
+void				write_it(int fd, char *word);
 
 /*------------------*/
 
@@ -148,17 +150,34 @@ void				clean_exit(int value, t_master *master, int flag);
 
 /*Executor's prototype*/
 int					executor(t_master *master);
-char	**clone_tab_env(t_clone *env, int size);
-int	check_redir(t_cmd *cmd);
+char				**clone_tab_env(t_clone *env, int size);
+int					check_redir(t_cmd *cmd);
+void				do_cmd(t_master *master, t_cmd *cmd, char **env,
+						int prev_fd);
+void				do_cmd_solo(t_master *master, t_cmd *cmd, char **env,
+						int status);
+void				do_parent(int *prev_fd, t_cmd *cur_cmd, int pid,
+						int status);
+void				do_child(t_cmd *cmd, int prev_fd, char **env,
+						t_master *master);
+void				check_if_child(int pid, int status, t_master *master);
+int					check_cmd(t_master *master, t_cmd *cmd, int pfd);
+void				clean_pipes(t_master *master, t_cmd *cmd, int value,
+						int pfd);
+void				define_exec(t_cmd *cmd, char **env, t_master *master);
+int					is_dir_exec(t_cmd *node, t_master *m);
 
 /*Builtins*/
 void				ft_pwd(void);
 void				ft_env(t_master *master);
 int					ft_cd(t_master *master, t_cmd *cmd);
-void	ft_unset(t_master *master, t_cmd *cur_cmd);
-void	delete_node(t_clone **head, t_clone *ec);
-void	ft_echo(t_cmd *cur_cmd, int i, t_master *master);
-void	ft_export(t_master *master, t_cmd *cur_cmd);
-void	ft_exit(t_master *master, t_cmd *cur_cmd, int flag);
+void				ft_unset(t_master *master, t_cmd *cur_cmd);
+void				delete_node(t_clone **head, t_clone *ec);
+void				ft_echo(t_cmd *cur_cmd, int i, t_master *master);
+void				ft_export(t_master *master, t_cmd *cur_cmd);
+int					is_export(char *arg);
+void				sort_export_list(t_clone **list);
+void				ft_exit(t_master *master, t_cmd *cur_cmd, int flag);
+void				execute_builtins(t_master *master, t_cmd *cur_cmd, int f);
 
 #endif

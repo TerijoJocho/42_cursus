@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:20:04 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/27 11:24:35 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:25:08 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	ft_unset(t_master *master, t_cmd *cur_cmd)
 	int	i;
 
 	i = 1;
-	printf("unse arg: %s\n", cur_cmd->args[0]);
 	if (!cur_cmd->args[i])
 	{
 		printf("unset : missing argument\n");

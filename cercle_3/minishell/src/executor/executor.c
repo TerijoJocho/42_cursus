@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:40:23 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/31 16:34:48 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/01 16:42:46 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	**clone_tab_env(t_clone *env, int size)
 
 void	execute_builtins(t_master *master, t_cmd *cur_cmd, int f)
 {
+	printf("BUILTIN GO\n");
 	if (cur_cmd->builtins == ECHO)
 		ft_echo(cur_cmd, 0, master);
 	else if (cur_cmd->builtins == EXPORT)
@@ -59,108 +60,20 @@ void	execute_builtins(t_master *master, t_cmd *cur_cmd, int f)
 		ft_cd(master, cur_cmd);
 }
 
-void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env)
-{
-	t_cmd	*cur_cmd;
-	pid_t	pid;
-	int		status;
-
-	cur_cmd = cmd;
-	// gerer erreur
-	pid = fork();
-	if (pid == 0)
-	{
-		check_redir(cur_cmd);
-		if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
-		{
-			perror("execve");
-			clean_exit(127, master, 0);
-		}
-	}
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			master->exit_status = WEXITSTATUS(status);
-		else
-			master->exit_status = 1;
-	}
-	else
-		perror("fork");
-}
-
-void	do_cmd(t_master *master, t_cmd *cmd, char **env)
-{
-	t_cmd	*cur_cmd;
-	pid_t	pid;
-	int		status;
-	int		prev_fd;
-
-	cur_cmd = cmd;
-	// gerer erreur
-	prev_fd = -1;
-	while (cur_cmd)
-	{
-		pipe(cur_cmd->pfd);
-		pid = fork();
-		if (pid == 0)
-		{
-			if (cur_cmd->prev && prev_fd != -1)
-			{
-				dup2(prev_fd, STDIN_FILENO);
-				close(prev_fd);
-			}
-			if (check_redir(cur_cmd) == 1)
-				if (cur_cmd->next != NULL)
-				{
-					dup2(cur_cmd->pfd[1], STDOUT_FILENO);
-				}
-			close(cur_cmd->pfd[0]);
-			close(cur_cmd->pfd[1]);
-			if (cur_cmd->builtins == 0)
-			{
-				if (execve(cur_cmd->path, cur_cmd->args, env) == -1)
-				{
-					perror("execve");
-					clean_exit(127, master, 0);
-				}
-			}
-			else
-				execute_builtins(master, cur_cmd, 0);
-			clean_exit(1, master, 0);
-		}
-		else if (pid > 0)
-		{
-			close(cur_cmd->pfd[1]);
-			prev_fd = cur_cmd->pfd[0];
-			waitpid(pid, &status, 0);
-			cur_cmd = cur_cmd->next;
-		}
-	}
-	while (cur_cmd != NULL)
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-				master->exit_status = WEXITSTATUS(status);
-		else
-			master->exit_status = 1;
-		cur_cmd = cur_cmd->next;
-	}
-}
-
 int	executor(t_master *master)
 {
 	t_cmd	*cur;
+	int		status1;
 
 	cur = master->cmd_list;
-	// check cmd, si c'est une commande qui existe pas alors on fait pas execve
+	status1 = 0;
 	master->env = clone_tab_env(master->env_clone, 0);
 	if (!cur->next && !cur->prev && (cur->builtins == 3 || (cur->builtins == 5
 				&& cur->args[1]) || cur->builtins == 6 || cur->builtins == 8))
 		execute_builtins(master, cur, 1);
 	else if (!cur->next && !cur->prev)
-		do_cmd_solo(master, cur, master->env);
+		do_cmd_solo(master, cur, master->env, status1);
 	else if (cur->next && !cur->prev)
-		do_cmd(master, cur, master->env);
+		do_cmd(master, cur, master->env, -1);
 	return (0);
 }

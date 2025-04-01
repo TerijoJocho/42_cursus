@@ -1,0 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   do_cmd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 15:50:58 by daavril           #+#    #+#             */
+/*   Updated: 2025/04/01 16:43:48 by daavril          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/minishell.h"
+
+void	do_child(t_cmd *cmd, int prev_fd, char **env, t_master *master)
+{
+	if (cmd->prev && prev_fd != -1)
+	{
+		dup2(prev_fd, STDIN_FILENO);
+		close(prev_fd);
+	}
+	if (check_redir(cmd) == 1)
+		if (cmd->next != NULL)
+			dup2(cmd->pfd[1], STDOUT_FILENO);
+	close(cmd->pfd[0]);
+	close(cmd->pfd[1]);
+	if (cmd->builtins == 0)
+		define_exec(cmd, env, master);
+	else
+		execute_builtins(master, cmd, 0);
+	clean_exit(1, master, 0);
+}
+
+void	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, int status)
+{
+	if (*prev_fd != -1)
+		close(*prev_fd);
+	close(cur_cmd->pfd[1]);
+	*prev_fd = cur_cmd->pfd[0];
+	waitpid(pid, &status, 0);
+}
+
+void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env, int status)
+{
+	t_cmd	*cur_cmd;
+	pid_t	pid;
+
+	cur_cmd = cmd;
+	pid = fork();
+	if (pid == 0 && check_cmd(master, cur_cmd, -1) == 0)
+	{
+		check_redir(cur_cmd);
+		if (cmd->builtins == 0)
+			define_exec(cmd, env, master);
+		else
+			execute_builtins(master, cmd, 0);
+		clean_exit(0, master, 0);
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			master->exit_status = WEXITSTATUS(status);
+		else
+			master->exit_status = 1;
+	}
+	else
+		perror("fork");
+}
+
+void	do_cmd(t_master *master, t_cmd *cmd, char **env, int prev_fd)
+{
+	t_cmd	*cur_cmd;
+	pid_t	pid;
+	int		status;
+
+	cur_cmd = cmd;
+	status = 0;
+	while (cur_cmd)
+	{
+		pipe(cur_cmd->pfd);
+		pid = fork();
+		if (pid == 0 && check_cmd(master, cur_cmd, prev_fd) == 0)
+			do_child(cur_cmd, prev_fd, env, master);
+		else if (pid > 0)
+		{
+			do_parent(&prev_fd, cur_cmd, pid, status);
+			cur_cmd = cur_cmd->next;
+		}
+	}
+	while (cur_cmd != NULL)
+	{
+		check_if_child(pid, status, master);
+		cur_cmd = cur_cmd->next;
+	}
+	if (prev_fd != -1)
+		close(prev_fd);
+}

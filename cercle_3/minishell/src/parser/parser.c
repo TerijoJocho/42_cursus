@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/31 12:08:01 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:12:49 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,16 @@ void	add_cmd(t_cmd *node, char *va, int *i, int flag, char *path)
 		return ;
 	split_path = ft_split(path, ':');
 	free(path);
-	if (!split_path)
+	if ((*i) == 1)
 	{
-		free(split_path);//a voir, a suppr selon chatgpt
-		return ;
+		if (!split_path)
+			return ;
+		if (add_cmd2(split_path, va, node) == 1)
+			return ;
+		free_tab(split_path);
 	}
-	if (add_cmd2(split_path, va, node) == 1)
-		return ;
-	free_tab(split_path);
+	else
+		free_tab(split_path);
 }
 
 void	parse_cmd(t_master **master, int i, int flag)
@@ -95,7 +97,7 @@ void	parse_cmd(t_master **master, int i, int flag)
 		if (cur->type == 2)
 			flag = 1;
 		if (cur->value_2 == NULL)
-			add_cmd(cmd_list, cur->value, &i, flag, ft_getenv(master)); //pb alloc
+			add_cmd(cmd_list, cur->value, &i, flag, ft_getenv(master));
 		else if (cur->value_2 != NULL)
 			add_cmd(cmd_list, cur->value_2, &i, flag, ft_getenv(master));
 		cur = cur->next;

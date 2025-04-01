@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/31 17:04:33 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/01 12:41:50 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,17 @@ int	main(int argc, char **argv, char **envp)
 		else if (executor(master) == 1)
 			printf("Error exec\n");
 		// 	/*TEST------------------------------------*/
-			t_token	*current = master->token_list;
-			int	i = 1;
-			while (current)
-			{
-				printf("\n---Token %d---\n", i);
-				printf("Prog : %d, Dir: %d\nIs Expand: %d, single quote: %d, space flag : %d\nReal: %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space, current->real);
-				printf("value: %s\n", current->value);
-				printf("value_2: %s\n\n", current->value_2);
-				current = current->next;
-				i++;
-			}
+			// t_token	*current = master->token_list;
+			// int	i = 1;
+			// while (current)
+			// {
+			// 	printf("\n---Token %d---\n", i);
+			// 	printf("Prog : %d, Dir: %d\nIs Expand: %d, single quote: %d, space flag : %d\nReal: %d\n", current->prog, current->dir, current->is_expand, current->quote_flag, current->space, current->real);
+			// 	printf("value: %s\n", current->value);
+			// 	printf("value_2: %s\n\n", current->value_2);
+			// 	current = current->next;
+			// 	i++;
+			// }
 		// 	/*----------------------------------------*/
 		// }
 		free(input);
