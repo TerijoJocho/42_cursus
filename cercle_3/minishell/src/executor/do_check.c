@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:52:33 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 17:00:44 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 12:29:52 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	define_exec(t_cmd *cmd, char **env, t_master *master)
 	int	kind;
 
 	kind = is_dir_exec(cmd, master);
-
-	printf("cmd path : %s\n", cmd->path);
 	if (kind == 2)
 	{
 		if (execve(cmd->args[0], cmd->args, env) == -1)
@@ -78,6 +76,8 @@ int	check_cmd(t_master *master, t_cmd *cmd, int pfd)
 	int	kind;
 
 	kind = is_dir_exec(cmd, master);
+	if (cmd->args[0][0] == '\0')
+		return (clean_pipes(master, cmd, 0, pfd), 1);
 	if (cmd->error == 1)
 		return (clean_pipes(master, cmd, 127, pfd), 1);
 	if (cmd->builtins > 0)

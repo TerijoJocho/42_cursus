@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:01 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 17:01:06 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
+
+extern	int	g_signal;
 
 /*clone envp*/
 typedef struct s_clone
@@ -57,6 +60,7 @@ typedef struct s_token
 	int				type;
 	int				is_expand;
 	int				quote_flag;
+	int				double_quote;
 	int				space;
 	int				dir;
 	int				prog;
@@ -123,9 +127,10 @@ int					parser(t_master *master);
 int					syntax_check(t_token **token_list);
 int					expand_string(t_token *token, t_clone **env, char *cpy,
 						int i);
-int					check_is_expand(t_token **token_list, t_clone **env);
+int					check_is_expand(t_token **token_list, t_clone **env, int exit);
 char				*expand_variable(char *cpy, char *new_value, t_clone **env,
 						int *i);
+int		exp_check(int c);
 void				parse_cmd(t_master **master, int i, int flag);
 void				directory_check(t_token **token_list);
 void				merge_token(t_token **token_list);
@@ -157,7 +162,7 @@ void				do_cmd(t_master *master, t_cmd *cmd, char **env,
 void				do_cmd_solo(t_master *master, t_cmd *cmd, char **env,
 						int status);
 void				do_parent(int *prev_fd, t_cmd *cur_cmd, int pid,
-						int status);
+						int status, t_master *m);
 void				do_child(t_cmd *cmd, int prev_fd, char **env,
 						t_master *master);
 void				check_if_child(int pid, int status, t_master *master);
@@ -179,5 +184,11 @@ int					is_export(char *arg);
 void				sort_export_list(t_clone **list);
 void				ft_exit(t_master *master, t_cmd *cur_cmd, int flag);
 void				execute_builtins(t_master *master, t_cmd *cur_cmd, int f);
+
+
+/*signals prototypes*/
+void	set_signal(void);
+void	handle_signal_heredoc(int sig);
+void	get_exit(t_master *master, int fd);
 
 #endif

@@ -1,39 +1,7 @@
-
-II- exec
-	.Separer l'exec : un exec pour les redir, un pour les commandes buitins,
-		un pour les cmd hors builtins
-III- norme
-	.ft_export.c et ft_cd.c
-IV- signals
-V- exit
-
-
-31 MARS :
-
-- ctrl c et crtl d sont inverser => gerer les signqux !
-- bien gerer les echo $?
-- gerer le segfault quand on a zero input
-
-
-'$USER' dans expand heredoc broken + leaks
-il affiche '' et jsp pourquoi
-entre "" ne marche pas pour cat << "EOF"
-
-
-1 Avril :
+2 Avril :
 -gerer le "isasty"
-
-- bien gerer les echo $?
-
 -corriger le lexer :
 		minishell$ | ls
 		Command line syntax error
 		[1]    1440918 segmentation fault (core dumped)  ./minishell
-
 - faire les signaux
-
-- '$USER' dans expand heredoc broken + leaks
-	il affiche '' et jsp pourquoi
-
-- attention leak dans cd quand on ait cd -, le pwd ne doit pas etre free belek
-

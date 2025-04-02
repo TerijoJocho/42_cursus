@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 12:41:50 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 15:15:58 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 // cc lexer.c -I../libft -L../libft -lft -lreadline
 // gcc -Wall -Wextra -Werror -I. -I../../libft prompt.c ../lexer/*.c -L../../libft -lft -lreadline -o minishell
+
+int		g_signal;
 
 int clone_envp(t_clone **cl, char **envp)
 {
@@ -66,9 +68,7 @@ int	main(int argc, char **argv, char **envp)
 	clone_envp(&master->export_list, envp);
 	if (!master->env_clone)
 		return (free(master), 0);
-	/*signal*/
-	// setup_signal();
-	/*------*/
+	set_signal();
 	while (1)
 	{
 		input = readline("minishell$ ");

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:27:04 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/26 15:50:30 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:56:44 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,21 @@ int	option_check(char *arg)
 
 int	is_dollar(char *str, t_master *master)
 {
-	if (str && ft_strncmp(str, "$?", 2) == 0)
+	char	*status_str;
+	int		x;
+
+	status_str = ft_itoa(master->exit_status);
+	x = ft_strncmp(str, "$?", 2);
+	if (str && x == 0)
 	{
-		printf("%d", master->exit_status);
+		if (!status_str)
+			return(1);
+		printf("%s", status_str);
+		free(status_str);
 		return (0);
 	}
+	if (status_str)
+		free(status_str);
 	return (1);
 }
 
@@ -43,6 +53,7 @@ void	ft_echo(t_cmd *cur_cmd, int i, t_master *master)
 	int	newline;
 
 	newline = 1;
+	printf("Dans ft_echo, str:%s\n", cur_cmd->args[1]);//test
 	if (!cur_cmd->args[1])
 	{
 		printf("\n");

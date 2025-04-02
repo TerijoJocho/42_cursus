@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:07:53 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/31 17:03:55 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:49:25 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*extract_expand_2(char *str)
 		i++;
 	}
 	new_value[i] = '\0';
-	return (new_value); // mdr c'est juste un strdup fdp
+	return (new_value);
 }
 
 char *take_var(char *value, t_clone **env, int i)
@@ -39,11 +39,11 @@ char *take_var(char *value, t_clone **env, int i)
 	t_clone *cur_env;
 
 	cur_env = *env;
-	while (value[i] && value[i] != ' ' && value[i] != '$')
+	while (value[i] && exp_check(value[i]) == 1)
 		i++;
 	var = malloc(sizeof(char) * (i + 2));
 	i = 0;
-	while (value[i] && value[i] != ' ' && value[i] != '$')
+	while (value[i] && exp_check(value[i]) == 1)
 	{
 		var[i] = value[i];
 		i++;
@@ -52,7 +52,7 @@ char *take_var(char *value, t_clone **env, int i)
 	var[i] = '\0';
 	while (cur_env)
 	{
-		if (ft_strncmp(cur_env->value, var, i - 1) == 0)
+		if (ft_strncmp(cur_env->value, var, i) == 0)
 		{
 			free(var);
 			return (extract_expand_2(&cur_env->value[i]));

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:19:46 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 16:12:13 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 13:49:31 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int	ft_cd(t_master *master, t_cmd *cmd)
 		update_env(master, "PWD=", newpwd);
 	free(oldpwd);
 	free(newpwd);
+	free(path);
 	return (0);
 }

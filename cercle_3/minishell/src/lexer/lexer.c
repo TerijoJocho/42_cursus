@@ -6,7 +6,7 @@
 /*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:10:37 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/27 11:35:18 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:51:32 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	add_token_list(t_token **token_list, int type, char *value)
 	new_token->value_2 = NULL;
 	new_token->type = type;
 	new_token->quote_flag = 0;
+	new_token->double_quote = 0;
 	new_token->space = 0;
 	new_token->prev = NULL;
 	new_token->next = NULL;

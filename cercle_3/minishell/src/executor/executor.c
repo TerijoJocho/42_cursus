@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:40:23 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 16:42:46 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:37:16 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ char	**clone_tab_env(t_clone *env, int size)
 
 void	execute_builtins(t_master *master, t_cmd *cur_cmd, int f)
 {
-	printf("BUILTIN GO\n");
 	if (cur_cmd->builtins == ECHO)
+	{
 		ft_echo(cur_cmd, 0, master);
+		master->exit_status = 0;
+	}
 	else if (cur_cmd->builtins == EXPORT)
 		ft_export(master, cur_cmd);
 	else if (cur_cmd->builtins == EXIT)

@@ -6,11 +6,22 @@
 /*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 13:13:33 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/31 16:36:59 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:42:27 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	exp_check(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	if (c >= 'a' && c <= 'z')
+		return (1);
+	return (0);
+}
 
 void	add_tmp_heredoc(char **new_value, char *tmp)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:15:08 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 16:17:03 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 15:41:16 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ void	sort_export_list(t_clone **list)
 	char	*tmp;
 	int		sorted;
 
+	sorted = 0;
 	if (!list || !*list)
 		return ;
-	while (!sorted)
+	while (sorted == 0)
 	{
 		sorted = 1;
 		cur = *list;

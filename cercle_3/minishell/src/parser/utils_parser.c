@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:23:17 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/31 15:40:45 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:16:02 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	*ft_append(t_token *token)
 	return (tab);
 }
 
-int	check_is_expand(t_token **token_list, t_clone **env)
+int	check_is_expand(t_token **token_list, t_clone **env, int exit)
 {
 	t_token	*current;
 	char	*cpy;
@@ -78,14 +78,19 @@ int	check_is_expand(t_token **token_list, t_clone **env)
 	current = *token_list;
 	while (current)
 	{
-		cpy = ft_strdup(current->value);
-		if (current->is_expand == 1)
+		if (ft_strncmp("$?", current->value, 2) == 0)
+			current->value_2 = ft_itoa(exit);
+		else
 		{
-			if (!expand_string(current, env, cpy, 0))
-				return (free(cpy), 1);
+			cpy = ft_strdup(current->value);
+			if (current->is_expand == 1)
+			{
+				if (!expand_string(current, env, cpy, 0))
+					return (free(cpy), 1);
+			}
+			free(cpy);
 		}
 		current = current->next;
-		free(cpy);
 	}
 	return (0);
 }

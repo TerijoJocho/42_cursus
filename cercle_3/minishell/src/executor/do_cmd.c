@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:50:58 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 16:43:48 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:57:07 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ void	do_child(t_cmd *cmd, int prev_fd, char **env, t_master *master)
 	clean_exit(1, master, 0);
 }
 
-void	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, int status)
+void	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, int status, t_master *m)
 {
 	if (*prev_fd != -1)
 		close(*prev_fd);
 	close(cur_cmd->pfd[1]);
 	*prev_fd = cur_cmd->pfd[0];
 	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		m->exit_status = WEXITSTATUS(status);
+	else
+		m->exit_status = 1;
 }
 
 void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env, int status)
@@ -84,7 +88,7 @@ void	do_cmd(t_master *master, t_cmd *cmd, char **env, int prev_fd)
 			do_child(cur_cmd, prev_fd, env, master);
 		else if (pid > 0)
 		{
-			do_parent(&prev_fd, cur_cmd, pid, status);
+			do_parent(&prev_fd, cur_cmd, pid, status, master);
 			cur_cmd = cur_cmd->next;
 		}
 	}

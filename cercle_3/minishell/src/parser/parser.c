@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 17:12:49 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/02 15:05:11 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,12 @@ int	parser(t_master *master)
 {
 	if (!master)
 		return (1);
-	if (check_is_expand(&master->token_list, &master->env_clone) == 1)
+	if (check_is_expand(&master->token_list, &master->env_clone, master->exit_status) == 1)
 		return (printf("PROBLEME EXPAND\n"), 1);
 	merge_token(&master->token_list);
 	directory_check(&master->token_list);
 	parse_cmd(&master, 0, 0);
 	file_management(&master->cmd_list);
 	read_heredoc(&master->cmd_list, master);
-	// test(&master->cmd_list);
 	return (0);
 }

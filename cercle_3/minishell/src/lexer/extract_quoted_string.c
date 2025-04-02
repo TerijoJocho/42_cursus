@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_quoted_string.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:03 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/06 16:09:09 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/01 15:52:57 by abastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	quoted_string_len(char *input, t_token **token_list)
 		current = current->next;
 	if (input[0] == '\'')
 		current->quote_flag = 1;
+	if (input[0] == '\"')
+		current->double_quote = 1;
 	while (input[i] && input[i] != input[0])
 		i++;
 	if (input[i] == input[0])
