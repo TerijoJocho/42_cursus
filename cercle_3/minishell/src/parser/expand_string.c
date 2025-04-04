@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:07:53 by abastian          #+#    #+#             */
-/*   Updated: 2025/04/02 11:49:25 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 00:53:51 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ char	*extract_expand_2(char *str)
 	return (new_value);
 }
 
-char *take_var(char *value, t_clone **env, int i)
+char	*take_var(char *value, t_clone **env, int i)
 {
-	char *var;
-	t_clone *cur_env;
+	char	*var;
+	t_clone	*cur_env;
 
 	cur_env = *env;
 	while (value[i] && exp_check(value[i]) == 1)
@@ -62,11 +62,11 @@ char *take_var(char *value, t_clone **env, int i)
 	return (free(var), NULL);
 }
 
-char *expand_variable(char *cpy, char *new_value, t_clone **env, int *i)
+char	*expand_variable(char *cpy, char *new_value, t_clone **env, int *i)
 {
-	char *substr;
-	char *tmp;
-	char *var;
+	char	*substr;
+	char	*tmp;
+	char	*var;
 
 	substr = ft_substr(cpy, 0, *i);
 	tmp = ft_strjoin(new_value, substr);
@@ -104,9 +104,9 @@ void	add_tmp(char *new_value, char *tmp, t_token *token)
 	token->value_2 = new_value;
 }
 
-int expand_string(t_token *token, t_clone **env, char *cpy, int i)
+int	expand_string(t_token *token, t_clone **env, char *cpy, int i)
 {
-	char *new_value;
+	char	*new_value;
 	char	*tmp;
 
 	new_value = ft_strdup("");
@@ -132,56 +132,3 @@ int expand_string(t_token *token, t_clone **env, char *cpy, int i)
 	add_tmp(new_value, tmp, token);
 	return (1);
 }
-
-// VERSION ORIGINALE
-// int	expand_string(t_token *token, t_clone **env, char *cpy)
-// {
-// 	int	i;
-// 	char	*new_value;
-// 	char	*tmp;
-// 	char	*var;
-// 	char	*substr;
-
-// 	i = 0;
-// 	new_value = ft_strdup("");
-// 	if (!new_value)
-// 		return (0);
-// 	printf("value before expand_2: %s\n", cpy);
-// 	while (cpy[i])
-// 	{
-// 		if (cpy[i] == '$')
-// 		{
-// 			substr = ft_substr(cpy, 0, i);
-// 			printf("substr : %s\n", substr);
-// 			tmp = ft_strjoin(new_value, substr);
-// 			printf("tmp first: %s\n", tmp);
-// 			free(substr);
-// 			free(new_value);
-// 			if (!tmp)
-// 				return (0);
-// 			new_value = tmp;
-// 			printf("new_value first: %s\n", new_value);
-// 			i++;
-// 			var = take_var(&cpy[i], env, 0);
-// 			if (!var)
-// 				var = ft_strdup("");
-// 			printf("VAR : %s\n", var);
-// 			tmp = ft_strjoin(new_value, var);
-// 			printf("tmp second : %s\n", tmp);
-// 			free(new_value);
-// 			free(var);
-// 			if (!tmp)
-// 				return (0);
-// 			new_value = tmp;
-// 			printf("new_value: %s\n", new_value);
-// 			while (cpy[i] && (ft_isalnum(cpy[i])))
-// 				i++;
-// 			cpy += i;
-// 			i = 0;
-// 		}
-// 		else
-// 			i++;
-// 	}
-// 	token->value_2 = new_value;
-// 	return (1);
-// }

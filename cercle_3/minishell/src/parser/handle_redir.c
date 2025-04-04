@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:18:11 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/27 11:43:11 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 01:02:49 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	fill_redir(t_cmd **cmd, int in, int *i, t_token **token)
 {
@@ -41,14 +41,6 @@ void	fill_heredoc(t_cmd **cmd, int *i, t_token **token)
 	(*cmd)->nb_heredoc += 1;
 	(*i)++;
 }
-// void	fill_heredoc(t_cmd **cmd, t_token **token)
-// {
-// 	if ((*cmd)->heredoc != NULL)
-// 	{
-// 		open(".heredoc", O_WRONLY | O_CREATE | O_TRUNC, 0644);
-// 	}
-// }
-
 
 void	handle_redir(t_master **master, int i, int j, int h)
 {

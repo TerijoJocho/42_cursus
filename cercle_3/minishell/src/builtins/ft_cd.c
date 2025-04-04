@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:19:46 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/02 13:49:31 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/04 23:01:02 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,31 @@ void	update_env(t_master *master, char *var, char *new_value)
 	}
 }
 
+int	check_cd(t_master *master, char *oldpwd, char **path, t_cmd *cmd)
+{
+	if (!oldpwd)
+		return (printf("cd: can not get current directory: %s\n",
+				strerror(errno)), 1);
+	if (cmd->args[1] == NULL)
+	{
+		(*path) = get_pwd(master, "HOME=", 5);
+		if ((*path) == NULL)
+			return (printf("cd: HOME not set\n"), free(oldpwd), 1);
+	}
+	else if (cmd->args[2])
+		return (printf("cd: too many arguments\n"), free(oldpwd), 1);
+	else if (ft_strncmp(cmd->args[1], "-", 1) == 0)
+	{
+		(*path) = get_pwd(master, "OLDPWD=", 7);
+		if ((*path) == NULL)
+			return (printf("cd: OLDPWD not set\n"), free(oldpwd), 1);
+		printf("%s\n", (*path));
+	}
+	else
+		(*path) = cmd->args[1];
+	return (0);
+}
+
 int	ft_cd(t_master *master, t_cmd *cmd)
 {
 	char	*path;
@@ -60,26 +85,8 @@ int	ft_cd(t_master *master, t_cmd *cmd)
 	char	*newpwd;
 
 	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
-		return (printf("cd: can not get current directory: %s\n",
-				strerror(errno)), 1);
-	if (cmd->args[1] == NULL)
-	{
-		path = get_pwd(master, "HOME=", 5);
-		if (path == NULL)
-			return (printf("cd: HOME not set\n"), free(oldpwd), 1);
-	}
-	else if (cmd->args[2])
-		return (printf("cd: too many arguments\n"), free(oldpwd), 1);
-	else if (ft_strncmp(cmd->args[1], "-", 1) == 0)
-	{
-		path = get_pwd(master, "OLDPWD=", 7);
-		if (path == NULL)
-			return (printf("cd: OLDPWD not set\n"), free(oldpwd), 1);
-		printf("%s\n", path);
-	}
-	else
-		path = cmd->args[1];
+	path = NULL;
+	check_cd(master, oldpwd, &path, cmd);
 	if (access(path, F_OK) == -1)
 		return (printf("cd: no such file or directory: %s\n", path),
 			free(oldpwd), 1);

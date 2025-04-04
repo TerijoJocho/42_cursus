@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   merge_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:14:21 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/19 12:14:21 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 01:02:19 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	do_merge(t_token **token_list, t_token *cur, char *va_prev, char *va)
 	free(to_delete->value);
 	free(cur->value);
 	if (cur->value_2 && cur->value_2 != to_delete->value_2)
-		// refaire des tests de valgrind
 		free(cur->value_2);
 	if (to_delete->value_2)
 		free(to_delete->value_2);

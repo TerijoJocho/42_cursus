@@ -1,26 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_2.c                                         :+:      :+:    :+:   */
+/*   directory_check.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:31:32 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/03 14:04:21 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 01:13:33 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
+
+char	*ft_getenv(t_master **master)
+{
+	t_clone	*cur;
+	char	*path;
+
+	cur = (*master)->env_clone;
+	while (cur)
+	{
+		if (ft_strncmp(cur->value, "PATH=", 5) == 0)
+		{
+			path = ft_substr(cur->value, 5, ft_strlen(cur->value));
+			return (path);
+		}
+		cur = cur->next;
+	}
+	return (NULL);
+}
 
 void	is_access(t_token *current, char *value)
 {
-	struct stat info;
+	struct stat	info;
 
 	if (stat(value, &info) != 0)
 	{
 		current->dir = -1;
 		current->prog = -1;
-		return;
+		return ;
 	}
 	if (S_ISDIR(info.st_mode))
 		current->dir = 1;
@@ -30,7 +48,7 @@ void	is_access(t_token *current, char *value)
 
 void	directory_check(t_token **token_list)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = *token_list;
 	while (current)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_quoted_string.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:20:03 by abastian          #+#    #+#             */
-/*   Updated: 2025/04/01 15:52:57 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/04 23:03:54 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*extract_quoted_string(char *input, char quote)
 	while (input[i] && input[i] != quote)
 		i++;
 	if (input[i] != quote)
-		return (NULL); // erreur
+		return (NULL);
 	value = malloc(sizeof(char) * i);
 	if (!value)
 		return (NULL);

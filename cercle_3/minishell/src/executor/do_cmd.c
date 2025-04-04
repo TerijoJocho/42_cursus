@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:50:58 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/02 11:57:07 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 01:01:19 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ void	do_child(t_cmd *cmd, int prev_fd, char **env, t_master *master)
 	clean_exit(1, master, 0);
 }
 
-void	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, int status, t_master *m)
+void	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, t_master *m)
 {
+	int	status;
+
+	status = 0;
 	if (*prev_fd != -1)
 		close(*prev_fd);
 	close(cur_cmd->pfd[1]);
@@ -42,6 +45,8 @@ void	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, int status, t_master *m)
 		m->exit_status = WEXITSTATUS(status);
 	else
 		m->exit_status = 1;
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+		write(2, "Quit (core dumped)\n", 20);
 }
 
 void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env, int status)
@@ -53,6 +58,7 @@ void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env, int status)
 	pid = fork();
 	if (pid == 0 && check_cmd(master, cur_cmd, -1) == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		check_redir(cur_cmd);
 		if (cmd->builtins == 0)
 			define_exec(cmd, env, master);
@@ -67,34 +73,32 @@ void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env, int status)
 			master->exit_status = WEXITSTATUS(status);
 		else
 			master->exit_status = 1;
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
 	}
-	else
-		perror("fork");
 }
 
-void	do_cmd(t_master *master, t_cmd *cmd, char **env, int prev_fd)
+void	do_cmd(t_master *m, t_cmd *cmd, char **env, int prev_fd)
 {
 	t_cmd	*cur_cmd;
 	pid_t	pid;
-	int		status;
 
 	cur_cmd = cmd;
-	status = 0;
 	while (cur_cmd)
 	{
 		pipe(cur_cmd->pfd);
 		pid = fork();
-		if (pid == 0 && check_cmd(master, cur_cmd, prev_fd) == 0)
-			do_child(cur_cmd, prev_fd, env, master);
+		if (pid == 0 && check_cmd(m, cur_cmd, prev_fd) == 0)
+			(signal(SIGQUIT, SIG_DFL), do_child(cur_cmd, prev_fd, env, m));
 		else if (pid > 0)
 		{
-			do_parent(&prev_fd, cur_cmd, pid, status, master);
+			do_parent(&prev_fd, cur_cmd, pid, m);
 			cur_cmd = cur_cmd->next;
 		}
 	}
 	while (cur_cmd != NULL)
 	{
-		check_if_child(pid, status, master);
+		check_if_child(pid, 0, m);
 		cur_cmd = cur_cmd->next;
 	}
 	if (prev_fd != -1)

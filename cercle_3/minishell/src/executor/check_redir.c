@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:57:01 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/02 16:20:26 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 01:00:24 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,11 @@ int	checkhere_doc(t_cmd *cmd)
 			cmd->error = 1;
 			return (-1);
 		}
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-		unlink(cmd->link[i]);
+		(dup2(fd, STDIN_FILENO), close(fd));
 	}
+	i = 0;
+	while (cmd->link[i])
+		(unlink(cmd->link[i]), i++);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/02 17:01:06 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 01:13:48 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <signal.h>
 
-extern	int	g_signal;
+extern int			g_signal;
 
 /*clone envp*/
 typedef struct s_clone
@@ -96,6 +96,7 @@ typedef struct s_master
 	char			**env;
 	t_cmd			*cmd_list;
 	int				exit_status;
+	int				flag;
 }					t_master;
 
 /*Lexer's prototype*/
@@ -127,11 +128,12 @@ int					parser(t_master *master);
 int					syntax_check(t_token **token_list);
 int					expand_string(t_token *token, t_clone **env, char *cpy,
 						int i);
-int					check_is_expand(t_token **token_list, t_clone **env, int exit);
+int					check_is_expand(t_token **token_list, t_clone **env,
+						int exit);
 char				*expand_variable(char *cpy, char *new_value, t_clone **env,
 						int *i);
-int		exp_check(int c);
-void				parse_cmd(t_master **master, int i, int flag);
+int					exp_check(int c);
+void				parse_cmd(t_master **master, int i);
 void				directory_check(t_token **token_list);
 void				merge_token(t_token **token_list);
 void				init_cmd_list(t_master **master, int i);
@@ -143,6 +145,7 @@ int					make_heredoc(char **heredoc, int *error, char **link);
 void				read_heredoc(t_cmd **cmd, t_master *m);
 char				*expand_heredoc(t_clone **env, char *input, int i);
 void				write_it(int fd, char *word);
+char				*ft_getenv(t_master **master);
 
 /*------------------*/
 
@@ -151,18 +154,20 @@ void				free_all(t_master *master);
 void				clean_env(t_clone **lst);
 void				free_tab(char **tab);
 void				clean_exit(int value, t_master *master, int flag);
+void				cmd_clear(t_cmd **lst);
+void				clean_values(t_token **lst);
+void				clean_heredoc(int value, t_master *m, int flag);
 /*------------------*/
 
 /*Executor's prototype*/
 int					executor(t_master *master);
 char				**clone_tab_env(t_clone *env, int size);
 int					check_redir(t_cmd *cmd);
-void				do_cmd(t_master *master, t_cmd *cmd, char **env,
-						int prev_fd);
+void				do_cmd(t_master *m, t_cmd *cmd, char **env, int prev_fd);
 void				do_cmd_solo(t_master *master, t_cmd *cmd, char **env,
 						int status);
 void				do_parent(int *prev_fd, t_cmd *cur_cmd, int pid,
-						int status, t_master *m);
+						t_master *m);
 void				do_child(t_cmd *cmd, int prev_fd, char **env,
 						t_master *master);
 void				check_if_child(int pid, int status, t_master *master);
@@ -185,10 +190,12 @@ void				sort_export_list(t_clone **list);
 void				ft_exit(t_master *master, t_cmd *cur_cmd, int flag);
 void				execute_builtins(t_master *master, t_cmd *cur_cmd, int f);
 
-
 /*signals prototypes*/
-void	set_signal(void);
-void	handle_signal_heredoc(int sig);
-void	get_exit(t_master *master, int fd);
+void				set_signal(void);
+void				handle_signal_heredoc(int sig);
+void				handle_signal_minishell(int sig);
+void				handle_signal_exec(int sig);
+void				get_exit(t_master *master, int fd);
+int					waitloop(pid_t pid, int status, int fd, t_cmd *cur);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/03/31 11:29:24 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/04 22:48:35 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	clean_values(t_token **lst)
 		current = current->next;
 	}
 }
+
 void	free_tab(char **tab)
 {
 	int	i;
@@ -56,8 +57,28 @@ void	free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+	tab = NULL;
 }
-void	cmd_clear(t_cmd **lst) // CONDITIONNAL JUMP ??? VOIR CHATGPT 10 MARS 2025 // +1 dans cmd_init !!!
+
+void	cmd_clear_2(t_cmd **cur)
+{
+	if ((*cur)->args)
+		free_tab((*cur)->args);
+	if ((*cur)->infile)
+		free_tab((*cur)->infile);
+	if ((*cur)->outfile)
+		free_tab((*cur)->outfile);
+	if ((*cur)->heredoc)
+		free_tab((*cur)->heredoc);
+	if ((*cur)->link)
+		free_tab((*cur)->link);
+	if ((*cur)->path)
+		free((*cur)->path);
+	if ((*cur)->append)
+		free((*cur)->append);
+}
+
+void	cmd_clear(t_cmd **lst)
 {
 	t_cmd	*cur;
 	t_cmd	*tmp;
@@ -69,31 +90,9 @@ void	cmd_clear(t_cmd **lst) // CONDITIONNAL JUMP ??? VOIR CHATGPT 10 MARS 2025 /
 	while (cur)
 	{
 		tmp = cur->next;
-		if (cur->args)
-			free_tab(cur->args);
-		if (cur->infile)
-			free_tab(cur->infile);
-		if (cur->outfile)
-			free_tab(cur->outfile);
-		if (cur->heredoc)
-			free_tab(cur->heredoc);
-		if (cur->link)
-			free_tab(cur->link);
-		if (cur->path)
-			free(cur->path);
-		if (cur->append)
-			free(cur->append);
+		cmd_clear_2(&cur);
 		free(cur);
 		cur = tmp;
 	}
 	*lst = NULL;
-}
-
-void	free_all(t_master *master)
-{
-	clean_values(&master->token_list);
-	token_clear(&master->token_list); //pour liberer tous les neeouds
-	cmd_clear(&master->cmd_list);
-	if (master->env != NULL)
-		free_tab(master->env);
 }

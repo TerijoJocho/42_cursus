@@ -6,17 +6,17 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:28:46 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/27 16:34:50 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 01:03:45 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	**ft_outfile(t_token *token)
 {
 	char	**tab;
 	t_token	*cur;
-	int	i;
+	int		i;
 
 	cur = token;
 	i = 0;
@@ -36,7 +36,7 @@ char	**ft_infile(t_token *token)
 {
 	char	**tab;
 	t_token	*cur;
-	int	i;
+	int		i;
 
 	cur = token;
 	i = 0;
@@ -56,7 +56,7 @@ char	**ft_heredoc(t_token *token)
 {
 	char	**tab;
 	t_token	*cur;
-	int	i;
+	int		i;
 
 	cur = token;
 	i = 0;
@@ -90,8 +90,6 @@ void	init_cmd_list_2(t_cmd **cmd, int i, t_token *token)
 	(*cmd)->next = NULL;
 	(*cmd)->prev = NULL;
 	(*cmd)->error = 0;
-	// (*cmd)->pfd[0] = -1;
-	// (*cmd)->pfd[1] = -1;
 	if (token && token->real >= 2 && token->real <= 8)
 		(*cmd)->builtins = token->real;
 	else
@@ -120,10 +118,8 @@ void	init_cmd_list(t_master **master, int i)
 		if (!new_cmd)
 			return ;
 		ft_bzero(new_cmd, sizeof(t_cmd));
-		init_cmd_list_2(&new_cmd, i, head); // verifier si cur est NULL ou pas?
+		init_cmd_list_2(&new_cmd, i, head);
 		cmd_add_back(master, new_cmd);
 		cur = cur->next;
 	}
 }
-
-

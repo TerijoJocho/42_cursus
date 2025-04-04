@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 13:13:33 by abastian          #+#    #+#             */
-/*   Updated: 2025/04/02 11:42:27 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 00:50:53 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,36 @@ char	*expand_heredoc(t_clone **env, char *input, int i)
 	}
 	add_tmp_heredoc(&new_value, tmp);
 	return (new_value);
+}
+
+void	clean_heredoc(int value, t_master *m, int flag)
+{
+	t_cmd	*cur;
+	int		i;
+
+	i = 0;
+	cur = m->cmd_list;
+	while (cur)
+	{
+		i = 0;
+		while (cur->link[i])
+		{
+			unlink(cur->link[i]);
+			i++;
+		}
+		cur = cur->next;
+	}
+	clean_exit(value, m, flag);
+}
+
+int	waitloop(pid_t pid, int status, int fd, t_cmd *cur)
+{
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
+	{
+		cur->error = 1;
+		(set_signal(), close(fd));
+		return (1);
+	}
+	return (0);
 }

@@ -1,7 +1,0 @@
-2 Avril :
--gerer le "isasty"
--corriger le lexer :
-		minishell$ | ls
-		Command line syntax error
-		[1]    1440918 segmentation fault (core dumped)  ./minishell
-- faire les signaux

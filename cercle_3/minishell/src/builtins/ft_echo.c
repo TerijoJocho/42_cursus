@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:27:04 by abastian          #+#    #+#             */
-/*   Updated: 2025/04/02 11:56:44 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 00:52:05 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int	is_dollar(char *str, t_master *master)
 	if (str && x == 0)
 	{
 		if (!status_str)
-			return(1);
-		printf("%s", status_str);
+			return (1);
 		free(status_str);
 		return (0);
 	}
@@ -53,7 +52,6 @@ void	ft_echo(t_cmd *cur_cmd, int i, t_master *master)
 	int	newline;
 
 	newline = 1;
-	printf("Dans ft_echo, str:%s\n", cur_cmd->args[1]);//test
 	if (!cur_cmd->args[1])
 	{
 		printf("\n");

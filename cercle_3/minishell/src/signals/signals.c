@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:46:59 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/02 17:00:54 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 01:14:28 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	handle_signal_minishell(int sig)
 {
 	if (sig == SIGINT)
 	{
-		// clean ?
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -30,24 +29,26 @@ void	handle_signal_heredoc(int sig)
 	{
 		g_signal = 1;
 		printf("\n");
+		close(0);
 	}
+}
+
+void	handle_signal_exec(int sig)
+{
 	if (sig == SIGQUIT)
-		printf("\b\b \b\b");
+		signal(SIGQUIT, SIG_DFL);
 }
 
 void	get_exit(t_master *master, int fd)
 {
+	(void)master;
 	if (g_signal == 1)
 	{
+		g_signal = 0;
 		if (fd != -1)
 			close(fd);
-		clean_exit(0, master, 0);
+		clean_heredoc(2, master, 0);
 	}
-}
-
-void	handle_signal_fork()
-{
-
 }
 
 void	set_signal(void)
@@ -56,4 +57,3 @@ void	set_signal(void)
 	signal(SIGINT, handle_signal_minishell);
 	signal(SIGQUIT, SIG_IGN);
 }
-

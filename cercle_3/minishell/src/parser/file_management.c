@@ -6,11 +6,11 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:37:46 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/31 15:14:43 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 00:54:20 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	infile_check(char **infile, int *error)
 {
@@ -45,14 +45,14 @@ int	create_file(char *name, int append, int *error)
 		fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (fd == -1)
 			return ((*error) = 1, 0);
-		close (fd);
+		close(fd);
 	}
 	else
 	{
 		fd = open(name, O_CREAT | O_RDWR | O_APPEND, 0644);
 		if (fd == -1)
 			return ((*error) = 1, 0);
-		close (fd);
+		close(fd);
 	}
 	return (1);
 }
@@ -77,7 +77,7 @@ int	outfile_check(char **outfile, int *error, int *append)
 				return ((*error) = 1, 0);
 			if (append[i] == 0)
 			{
-				if (create_file(outfile[i], append[i], error) == 0) // si pas un append on ecrase le fichier
+				if (create_file(outfile[i], append[i], error) == 0)
 					return (0);
 			}
 		}
@@ -102,20 +102,3 @@ void	file_management(t_cmd **cmd)
 		cur = cur->next;
 	}
 }
-
-// void	outinfile_checker(t_cmd **cmd)
-// {
-// 	if ((*cmd)->outfile != NULL)
-// 	{
-// 		if (access((*cmd)->outfile, F_OK) == 0 && access((*cmd)->outfile,
-// 				R_OK) != 0)
-// 			(*cmd)->error = 1;
-// 	}
-// 	if ((*cmd)->infile != NULL)
-// 	{
-// 		if (access((*cmd)->infile, F_OK) != 0)
-// 			(*cmd)->error = 1;
-// 		else if (access((*cmd)->infile, W_OK) != 0)
-// 			(*cmd)->error = 1;
-// 	}
-// }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   make_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:31:59 by abastian          #+#    #+#             */
-/*   Updated: 2025/03/25 12:20:16 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 01:02:06 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	make_heredoc_next(char *name)
 {
