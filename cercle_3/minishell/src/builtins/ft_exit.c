@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:52:31 by abastian          #+#    #+#             */
-/*   Updated: 2025/04/04 22:36:38 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 04:11:26 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ void	clean_exit(int value, t_master *master, int flag)
 	exit(value);
 }
 
+int	is_sign_digit(int c)
+{
+	// if (c == '+' || c == '-')
+	// 	return (2);//ICI
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+
 void	ft_exit(t_master *master, t_cmd *cur_cmd, int flag)
 {
 	int	i;
@@ -50,12 +59,13 @@ void	ft_exit(t_master *master, t_cmd *cur_cmd, int flag)
 		clean_exit(0, master, flag);
 	if (cur_cmd->args[2])
 	{
+		printf("exit\n");
 		printf("exit: too many arguments\n");
 		return ;
 	}
 	while (cur_cmd->args[1][i])
 	{
-		if (ft_isdigit(cur_cmd->args[1][i]) == 0)
+		if (is_sign_digit(cur_cmd->args[1][i]) == 0)
 		{
 			printf("exit: %s: numeric argument required\n", cur_cmd->args[1]);
 			clean_exit(2, master, flag);

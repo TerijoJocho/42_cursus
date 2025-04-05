@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/04 22:48:35 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 05:22:08 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	free_tab(char **tab)
 	while (tab[i])
 	{
 		free(tab[i]);
+		tab[i] = NULL;
 		i++;
 	}
 	free(tab);
@@ -64,18 +65,25 @@ void	cmd_clear_2(t_cmd **cur)
 {
 	if ((*cur)->args)
 		free_tab((*cur)->args);
+	((*cur)->args) = NULL;
 	if ((*cur)->infile)
 		free_tab((*cur)->infile);
+	((*cur)->infile) = NULL;
 	if ((*cur)->outfile)
 		free_tab((*cur)->outfile);
+	((*cur)->outfile) = NULL;
 	if ((*cur)->heredoc)
 		free_tab((*cur)->heredoc);
+	((*cur)->heredoc) = NULL;
 	if ((*cur)->link)
 		free_tab((*cur)->link);
+	((*cur)->link) = NULL;
 	if ((*cur)->path)
 		free((*cur)->path);
+	((*cur)->path) = NULL;
 	if ((*cur)->append)
 		free((*cur)->append);
+	((*cur)->append) = NULL;
 }
 
 void	cmd_clear(t_cmd **lst)

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/05 01:13:48 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 04:28:02 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int					check_redir(t_cmd *cmd);
 void				do_cmd(t_master *m, t_cmd *cmd, char **env, int prev_fd);
 void				do_cmd_solo(t_master *master, t_cmd *cmd, char **env,
 						int status);
-void				do_parent(int *prev_fd, t_cmd *cur_cmd, int pid,
+int					do_parent(int *prev_fd, t_cmd *cur_cmd, int pid,
 						t_master *m);
 void				do_child(t_cmd *cmd, int prev_fd, char **env,
 						t_master *master);

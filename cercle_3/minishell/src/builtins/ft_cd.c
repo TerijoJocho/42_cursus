@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:19:46 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/04 23:01:02 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 03:45:12 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,23 @@
 char	*get_pwd(t_master *master, char *var, int i)
 {
 	t_clone	*clone_env;
-	char	*path;
+	char	*p;
 
 	clone_env = master->env_clone;
 	if (clone_env == NULL)
 		return (NULL);
-	path = NULL;
+	p = NULL;
 	while (clone_env)
 	{
 		if (ft_strncmp(clone_env->value, var, i) == 0)
 		{
-			path = ft_substr(clone_env->value, i, ft_strlen(clone_env->value
+			p = ft_substr(clone_env->value, i, ft_strlen(clone_env->value
 						+ i));
 			break ;
 		}
 		clone_env = clone_env->next;
 	}
-	return (path);
+	return (p);
 }
 
 void	update_env(t_master *master, char *var, char *new_value)
@@ -53,53 +53,67 @@ void	update_env(t_master *master, char *var, char *new_value)
 	}
 }
 
-int	check_cd(t_master *master, char *oldpwd, char **path, t_cmd *cmd)
+void	f(char *path, char *oldpwd, char *newpwd)
 {
-	if (!oldpwd)
+	if (oldpwd != NULL)
+		free(oldpwd);
+	oldpwd = NULL;
+	if (newpwd != NULL)
+		free(newpwd);
+	newpwd = NULL;
+	if (path != NULL)
+		free(path);
+	path = NULL;
+}
+
+int	check_cd(t_master *master, char *o, char **p, t_cmd *cmd)
+{
+	if (!o)
 		return (printf("cd: can not get current directory: %s\n",
 				strerror(errno)), 1);
 	if (cmd->args[1] == NULL)
 	{
-		(*path) = get_pwd(master, "HOME=", 5);
-		if ((*path) == NULL)
-			return (printf("cd: HOME not set\n"), free(oldpwd), 1);
+		(*p) = get_pwd(master, "HOME=", 5);
+		if ((*p) == NULL)
+			return (printf("cd: HOME not set\n"), 1);
 	}
 	else if (cmd->args[2])
-		return (printf("cd: too many arguments\n"), free(oldpwd), 1);
+		return (printf("cd: too many arguments\n"), 1);
 	else if (ft_strncmp(cmd->args[1], "-", 1) == 0)
 	{
-		(*path) = get_pwd(master, "OLDPWD=", 7);
-		if ((*path) == NULL)
-			return (printf("cd: OLDPWD not set\n"), free(oldpwd), 1);
-		printf("%s\n", (*path));
+		(*p) = get_pwd(master, "OLDPWD=", 7);
+		if ((*p) == NULL)
+			return (printf("cd: OLDPWD not set\n"), 1);
+		printf("%s\n", (*p));
 	}
 	else
-		(*path) = cmd->args[1];
+		(*p) = ft_strdup(cmd->args[1]);
 	return (0);
 }
 
 int	ft_cd(t_master *master, t_cmd *cmd)
 {
-	char	*path;
-	char	*oldpwd;
-	char	*newpwd;
+	char	*p;
+	char	*o;
+	char	*n;
 
-	oldpwd = getcwd(NULL, 0);
-	path = NULL;
-	check_cd(master, oldpwd, &path, cmd);
-	if (access(path, F_OK) == -1)
-		return (printf("cd: no such file or directory: %s\n", path),
-			free(oldpwd), 1);
-	if (access(path, X_OK) == -1)
-		return (printf("cd: permission denied: %s\n", path), free(oldpwd), 1);
-	if (chdir(path) == -1)
-		return (printf("cd: %s: %s\n", path, strerror(errno)), free(oldpwd), 1);
-	update_env(master, "OLDPWD=", oldpwd);
-	newpwd = getcwd(NULL, 0);
-	if (newpwd)
-		update_env(master, "PWD=", newpwd);
-	free(oldpwd);
-	free(newpwd);
-	free(path);
+	o = getcwd(NULL, 0);
+	p = NULL;
+	n = NULL;
+	check_cd(master, o, &p, cmd);
+	if (!p)
+		return (f(p, o, n), 1);
+	if (access(p, F_OK) == -1)
+		return (printf("cd: no such file or directory: %s\n", p),
+			f(p, o, n), 1);
+	if (access(p, X_OK) == -1)
+		return (printf("cd: permission denied: %s\n", p), f(p, o, n), 1);
+	if (chdir(p) == -1)
+		return (printf("cd: %s: %s\n", p, strerror(errno)), f(p, o, n), 1);
+	update_env(master, "OLDPWD=", o);
+	n = getcwd(NULL, 0);
+	if (n)
+		update_env(master, "PWD=", n);
+	f(p, o, n);
 	return (0);
 }

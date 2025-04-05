@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastian <abastian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:10:37 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/01 15:51:32 by abastian         ###   ########.fr       */
+/*   Updated: 2025/04/05 01:28:57 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	lexer_next(char *input, t_token **token_list, int *i)
 		(*i)++;
 	else if (is_special_char(input[*i]))
 	{
-		if (is_special_char(input[*i + 2]) && !is_whitespace(input[*i + 1])
+		if (is_special_char(input[*i + 2]) && !is_whitespace(input[*i + 1]) //ICI
 			&& !ft_isalpha((char)input[*i + 1]))
 			return (1);
 		add_token_list(token_list, 2, extract_special_char(&input[*i]));

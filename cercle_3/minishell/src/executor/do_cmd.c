@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:50:58 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/05 01:01:19 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 05:30:11 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	do_child(t_cmd *cmd, int prev_fd, char **env, t_master *master)
 	clean_exit(1, master, 0);
 }
 
-void	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, t_master *m)
+int	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, t_master *m)
 {
 	int	status;
 
@@ -46,7 +46,13 @@ void	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, t_master *m)
 	else
 		m->exit_status = 1;
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+	{
 		write(2, "Quit (core dumped)\n", 20);
+		return (1);
+	}
+	else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		return (1);
+	return (0);
 }
 
 void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env, int status)
@@ -92,7 +98,8 @@ void	do_cmd(t_master *m, t_cmd *cmd, char **env, int prev_fd)
 			(signal(SIGQUIT, SIG_DFL), do_child(cur_cmd, prev_fd, env, m));
 		else if (pid > 0)
 		{
-			do_parent(&prev_fd, cur_cmd, pid, m);
+			if (do_parent(&prev_fd, cur_cmd, pid, m) == 1)
+				break ;
 			cur_cmd = cur_cmd->next;
 		}
 	}

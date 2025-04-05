@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/05 01:11:52 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/05 01:39:18 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	free_all(t_master *master)
 int	init_master(t_master *master, char **envp)
 {
 	master->flag = 0;
+	master->exit_status = 0;
 	master->env_clone = NULL;
 	master->export_list = NULL;
 	master->token_list = NULL;
