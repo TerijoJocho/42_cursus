@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:23:17 by abastian          #+#    #+#             */
-/*   Updated: 2025/04/05 01:03:30 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 14:36:45 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	syntax_check(t_token **token_list)
 
 	current = *token_list;
 	if (current->real == PIPE)
+		return (1);
+	else if (current->type == 2)
 		return (1);
 	if (ft_strchr(current->value, ';'))
 		return (1);

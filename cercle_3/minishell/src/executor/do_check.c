@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:52:33 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/02 12:29:52 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:28:38 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	clean_pipes(t_master *master, t_cmd *cmd, int value, int pfd)
 	if (pfd != -1)
 		close(pfd);
 	master->exit_status = value;
-	clean_exit(127, master, 0);
+	clean_exit(value, master, 0);
 }
 
 int	check_cmd(t_master *master, t_cmd *cmd, int pfd)

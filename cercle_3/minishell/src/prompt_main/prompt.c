@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/05 01:39:18 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:39:21 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	go_minishell(t_master *master)
 				printf("Error exec\n");
 		}
 		free(input);
-		free_all(master);
+		(free_all(master), set_signal());
 	}
 }
 
@@ -107,6 +107,11 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+	{
+		perror("Don't do that please");
+		return (1);
+	}
 	master = malloc(sizeof(t_master));
 	if (!master)
 	{
@@ -117,8 +122,6 @@ int	main(int argc, char **argv, char **envp)
 	go_minishell(master);
 	clean_env(&master->env_clone);
 	clean_env(&master->export_list);
-	if (master->env_clone)
-		printf("caca\n");
 	free(master);
 	master = NULL;
 	printf("exit\n");

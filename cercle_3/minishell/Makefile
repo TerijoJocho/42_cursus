@@ -6,14 +6,14 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 15:42:55 by daavril           #+#    #+#              #
-#    Updated: 2025/04/05 05:16:25 by daavril          ###   ########.fr        #
+#    Updated: 2025/04/07 15:08:34 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 CC			=	gcc
-FLAG		=	-Wall -Werror -Wextra -g3
+FLAG		=	-Wall -Werror -Wextra
 LDFLAGS		=	-lreadline
 
 C_FILE		=	lexer/extract_quoted_string.c lexer/extract_special_char.c \

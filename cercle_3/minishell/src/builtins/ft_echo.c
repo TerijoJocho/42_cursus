@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:27:04 by abastian          #+#    #+#             */
-/*   Updated: 2025/04/05 01:39:37 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 11:56:10 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	ft_echo(t_cmd *cur_cmd, int i, t_master *master)
 		printf("\n");
 		return ;
 	}
-	while (cur_cmd->args[i++] && cur_cmd->args[i][0] == '-'
-		&& option_check(cur_cmd->args[i]) == 0)//ICI
+	while (cur_cmd->args[++i] && cur_cmd->args[i][0] == '-'
+		&& option_check(cur_cmd->args[i]) == 0)
 	{
 		if (cur_cmd->args[i][0] == '-' && newline == 1)
 			newline = option_check(cur_cmd->args[i]);

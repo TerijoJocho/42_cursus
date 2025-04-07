@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:40:34 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/05 01:13:22 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 13:24:05 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	parse_cmd(t_master **master, int i)
 			(*master)->flag = 0;
 		}
 	}
+	(*master)->flag = 0;
 	handle_redir(master, 0, 0, 0);
 }
 

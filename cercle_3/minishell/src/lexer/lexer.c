@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:10:37 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/05 01:28:57 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 11:26:15 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ void	add_token_list(t_token **token_list, int type, char *value)
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	if (!new_token)
-	{
-		free(new_token);
 		return ;
-	}
 	add_token_back(token_list, new_token);
 }
 
@@ -73,7 +70,8 @@ int	lexer_next(char *input, t_token **token_list, int *i)
 		(*i)++;
 	else if (is_special_char(input[*i]))
 	{
-		if (is_special_char(input[*i + 2]) && !is_whitespace(input[*i + 1]) //ICI
+		if (input[*i + 1] && input[*i + 2] && is_special_char(input[*i + 2])
+			&& !is_whitespace(input[*i + 1]) // ICI
 			&& !ft_isalpha((char)input[*i + 1]))
 			return (1);
 		add_token_list(token_list, 2, extract_special_char(&input[*i]));

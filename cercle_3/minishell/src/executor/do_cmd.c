@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:50:58 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/05 05:30:11 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 14:11:24 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	do_parent(int *prev_fd, t_cmd *cur_cmd, int pid, t_master *m)
 		close(*prev_fd);
 	close(cur_cmd->pfd[1]);
 	*prev_fd = cur_cmd->pfd[0];
+	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		m->exit_status = WEXITSTATUS(status);
@@ -74,7 +75,7 @@ void	do_cmd_solo(t_master *master, t_cmd *cmd, char **env, int status)
 	}
 	else if (pid > 0)
 	{
-		waitpid(pid, &status, 0);
+		(signal(SIGINT, SIG_IGN), waitpid(pid, &status, 0));
 		if (WIFEXITED(status))
 			master->exit_status = WEXITSTATUS(status);
 		else

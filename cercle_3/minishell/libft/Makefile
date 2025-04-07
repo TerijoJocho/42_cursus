@@ -6,13 +6,13 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/28 15:23:41 by daavril           #+#    #+#              #
-#    Updated: 2025/04/05 04:56:50 by daavril          ###   ########.fr        #
+#    Updated: 2025/04/07 15:14:35 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -fPIC
 AR = ar
 ARFLAGS = rcs
 SRCS = libft_src/
