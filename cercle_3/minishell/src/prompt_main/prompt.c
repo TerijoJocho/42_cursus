@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:38:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/07 15:39:21 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 16:40:05 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	go_minishell(t_master *master)
 			else if (executor(master) == 1)
 				printf("Error exec\n");
 		}
-		free(input);
+		(free(input), clean_heredoc(master));
 		(free_all(master), set_signal());
 	}
 }

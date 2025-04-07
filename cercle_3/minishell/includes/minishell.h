@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:26:05 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/07 13:25:38 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 16:20:09 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void				free_tab(char **tab);
 void				clean_exit(int value, t_master *master, int flag);
 void				cmd_clear(t_cmd **lst);
 void				clean_values(t_token **lst);
-void				clean_heredoc(int value, t_master *m, int flag);
+void				clean_heredoc(t_master *m);
 /*------------------*/
 
 /*Executor's prototype*/

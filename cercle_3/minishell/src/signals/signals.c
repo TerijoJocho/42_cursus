@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:46:59 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/05 01:14:28 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 16:19:56 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	get_exit(t_master *master, int fd)
 		g_signal = 0;
 		if (fd != -1)
 			close(fd);
-		clean_heredoc(2, master, 0);
+		clean_heredoc(master);
+		clean_exit(2, master, 0);
 	}
 }
 

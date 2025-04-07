@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 13:13:33 by abastian          #+#    #+#             */
-/*   Updated: 2025/04/05 00:50:53 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/07 16:18:54 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*expand_heredoc(t_clone **env, char *input, int i)
 	return (new_value);
 }
 
-void	clean_heredoc(int value, t_master *m, int flag)
+void	clean_heredoc(t_master *m)
 {
 	t_cmd	*cur;
 	int		i;
@@ -82,7 +82,6 @@ void	clean_heredoc(int value, t_master *m, int flag)
 		}
 		cur = cur->next;
 	}
-	clean_exit(value, m, flag);
 }
 
 int	waitloop(pid_t pid, int status, int fd, t_cmd *cur)
