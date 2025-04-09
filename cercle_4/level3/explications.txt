@@ -1,0 +1,9 @@
+Très simple, ici on a un switch qui va permettre la communication dans un réseau local (LAN) entre trois appareils.
+On veut A<->B, A<->C et B<->C
+On a deja une bonne adresse ip de A et un bon masque de C
+On fait 256 - 128 = 128 
+Ou alors si on a retenu, on sait que mask 255.255.255.128 = /25 -> 128 hosts, dont 126 dispo
+On donne le meme mask a tout le monde
+Ainsi notre plage se compte de 128 hosts(?)
+Ça veut dire que on peut avoir n'importe quel hosts de 1 à 126 dans l'adresse IP, car on ne calcul pas 0 et 127(pour l'autre plage on commence a 128 jusqu'a 256 sans calculer 128 et 256->129-255) 
+xxx.xxx.xxx.1-126 

@@ -1,0 +1,1 @@
+Comme on a un mask 255.255.255.0, le 0 correspond à la place qu'on a pour les hosts, donc sur une plage de 0-255, sachant que le 0 est pour le sub-network(?) et le 255 pour la diffusion(Broadcast), ainsi on peut écrire un id xxx.xxx.xxx.yyy, dont les x sont pareils sur les deux appareils et les y compris dans la plage qu'on a calculé avec les mask
