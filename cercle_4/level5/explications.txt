@@ -1,0 +1,16 @@
+Dans ce niveau, A<->B à travers un routeur
+
+Donc on veut A1<->R1:
+On peut pas toucher aux IP et Mask de R1, il va falloir adapter l'interface de A1:
+Facile, on met A1 dans le meme mask que R1 et on lui donne un IP dans le meme sous-réseau.
+On doit aussi mettre la bonne passerelle(Gateway) dans la route de A:
+À gauche on met "default"(?) et à droite on donne l'ip de R1.
+
+On fait la meme chose pour B<->R2
+
+Les passerelles ou gateway:
+Ce sont une règle dans une machine qui leur "dit" d'envoie leur paquet à telle passerelle pour parler à telle adresse IP ou tel réseau.
+Une route est définie par :
+	Sa destination réseau : 0.0.0.0
+	Son masque(ou préfixe/CIDR) : 0.0.0.0(ou /0) -> default (="toutes les adresses IP que je ne connais pas)
+	Sa passerelle(gateway) : adresse IP du routeur

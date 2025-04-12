@@ -1,0 +1,14 @@
+Ok c'était relou.
+Ici on veut A<->C à travers deux routeurs
+
+Pour assurer une communication entre tous les appareils :
+On met le meme mask partout ->255.255.255.252 = /30 ->donne 2 hosts utilisable(pas de pb apres c'est cool)et beaucoup de sous-réseaux.
+
+Ensuite, on va donner les bonnes routes :
+On met la destination par default comme ca pas de soucis.
+On donne à A comme route l'IP de R11
+On donne à R1 comme route l'IP de R21
+On donne à R2 comme route l'IP de C1
+On donne à C comme route l'IP de R22
+
+Et voila, tout le monde sait par quelle interface communiquer, en passant par quelle route et on a mis la destination a default pour accepter tous les réseaux, on s'embête pas.

@@ -8,4 +8,16 @@ R1 est en /23 = 255.255.254.0, donc bcp plus large (89.110.116.0 à 89.110.117.2
 
 La solution ici est de passer A1 en /23 aussi, c'est tout.
 
-On veut B1<->R1 :
+On veut B1<->R1 et B1<->A1 : 
+
+Switch : relie physiquement A, B, R1
+↓
+IP et masque : doivent être dans le même sous-réseau
+↓
+A1(ip) est fixe → on adapte B1 et R1 à elle
+↓
+Masque /23 choisi pour couvrir toutes les IP
+↓
+Tout le monde voit tout le monde
+↓
+Et R1 devient gateway → tout roule ✅

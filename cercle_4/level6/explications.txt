@@ -1,0 +1,19 @@
+Ici, on veut faire en sorte que notre ordi A puisse communiquer avec internet à travers un switch(communication local) et un routeur(communication extérieur).
+
+On veut d'abord A<->R :
+A1 est en /24 = 255.255.255.0 -> 0 = 0000 0000
+R1 est en /25 = 255.255.255.128 -> 128 (= 2^7) = 1000 0000 -> 7 bits pour les hosts dont 2 qu'on ne peut pas prendre
+Comme on ne peut pas changer le mask de R1, /25 qui est moins large que celui de A1, on va vouloir donner le meme mask à A1->/25.
+On va aussi modifier la route de A:
+	-on laisse la destination a default(=0.0.0.0/0)
+	-on lui donne comme passerelle l'ip de R1
+
+Dans la route de R :
+R reçoit un paquet de A pour envoyer vers internet à une IP inconnue
+Alors on met default pour qu'il utilise l'interface R2
+
+Dans la route d'internet, pour revenir à A:
+Internet doit connaitre la route pour joindre A(via R2)
+L'IP de A c'est 74.47.182.227
+Alors internet doit savoir que 74.47.182.128/25 passe par R2
+En fait on dit à internet "si jamais tu dois répondre à une adresse comme 74.47.182.227(IP de A1), tu dois passer par le sous-réseau 74.47.182.128/25 et par la passerelle 163.172.250.12(IP de R2)
