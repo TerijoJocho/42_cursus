@@ -73,7 +73,9 @@ int ft_exec(char **argv, int i, char **envp)
     if (has_pipe == 1)
         if (dup2(fd[0], 0) == -1 || close(fd[0]) == -1 || close(fd[1]) == -1)
             return (ft_error("error: fatal\n"));
-    return (WIFEXITED(status) && WEXITSTATUS(status));
+    if (WIFEXITED(status))
+        return (WEXITSTATUS(status));
+    return (1);
 }
 
 /*
