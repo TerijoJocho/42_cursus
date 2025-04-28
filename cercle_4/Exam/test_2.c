@@ -18,18 +18,18 @@ int	ft_error(char *str)
 int	ft_cd(char **argv, int i)
 {
 	if (i != 2)
-		return (ft_error("error: cd: bad arguments"), ft_error("\n"));
-	if (chdir(argv[1]) == -1)
+		return (ft_error("error: cd: bad arguments\n"));
+	if (chdir(*argv) == -1)
 		return (ft_error("error: cd: cannot change directory to "),
-			ft_error(argv[1]), ft_error("\n"));
+			ft_error(*argv), ft_error("\n"));
 	return (0);
 }
 
 int	ft_exec(char **argv, int i, char **envp)
 {
 	int	status;
-	int	fd[2];
 	int	pid;
+	int	fd[2];
 	int	has_pipe;
 
 	has_pipe = 0;
@@ -44,7 +44,7 @@ int	ft_exec(char **argv, int i, char **envp)
 	{
 		argv[i] = NULL;
 		if (has_pipe && (dup2(fd[1], 1) == -1 || close(fd[0]) == -1
-				|| close(fd[1]) == -1))
+			|| close(fd[1]) == -1))
 			return (ft_error("error: fatal\n"));
 		if (has_pipe && !strcmp(*argv, "cd"))
 			ft_cd(argv, i);
@@ -54,7 +54,7 @@ int	ft_exec(char **argv, int i, char **envp)
 	}
 	waitpid(pid, &status, 0);
 	if (has_pipe && (dup2(fd[0], 0) == -1 || close(fd[0]) == -1
-			|| close(fd[1]) == -1))
+		|| close(fd[1]) == -1))
 		return (ft_error("error: fatal\n"));
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));

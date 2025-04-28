@@ -6,7 +6,7 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/12 15:01:40 by daavril           #+#    #+#              #
-#    Updated: 2024/09/12 16:26:01 by daavril          ###   ########.fr        #
+#    Updated: 2025/04/28 13:32:42 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,10 @@ OBJECTS = $(addprefix $(SRCS), $(SOURCES:.c=.o))
 .PHONY: all clean fclean re
 
 all: $(NAME)
+	@echo "✅ $(NAME) built successfully!"
 
 $(NAME): $(OBJECTS)
-	@echo "\033[1;32mBuilding gnl...\033[m"
-	$(AR) $(ARFLAGS) $@ $^
-	@echo "\033[1;32mGnl OK\033[m"
+	@$(AR) $(ARFLAGS) $@ $^
 
 $(SRCS)%.o: $(SRCS)%.c
 	$(CC) $(CFLAGS) -I$(HEADER) -o $@ -c $<
@@ -38,11 +37,13 @@ $(SRCS)%.o: $(SRCS)%.c
 #$(AR) $(ARFLAGS) $(NAME) $(BONUS_OBJECTS)
 
 clean:
-	rm -f $(OBJECTS)
+	@rm -f $(OBJECTS)
+	@echo "🧹 GNL : Clean done"
 #$(BONUS_OBJECTS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "🔥 GNL : Full clean done"
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/28 15:23:41 by daavril           #+#    #+#              #
-#    Updated: 2025/04/07 15:14:35 by daavril          ###   ########.fr        #
+#    Updated: 2025/04/28 13:33:30 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,23 +33,24 @@ OBJECTS = $(addprefix $(SRCS), $(SOURCES:.c=.o))
 .PHONY: all clean fclean re
 
 all: $(NAME)
+	@echo "✅ $(NAME) built successfully!"
 
 $(NAME): $(OBJECTS)
-	@echo "\033[1;32mBuilding libft...\033[m"
-	$(AR) $(ARFLAGS) $@ $^
-	@echo "\033[1;32mLibft OK\033[m"
+	@$(AR) $(ARFLAGS) $@ $^
 
 $(SRCS)%.o: $(SRCS)%.c
-	$(CC) $(CFLAGS) -I$(HEADER) -o $@ -c $<
+	@$(CC) $(CFLAGS) -I$(HEADER) -o $@ -c $<
 
 #bonus : $(BONUS_OBJECTS)
 #$(AR) $(ARFLAGS) $(NAME) $(BONUS_OBJECTS)
 
 clean:
-	rm -f $(OBJECTS)
+	@rm -f $(OBJECTS)
+	@echo "🧹 LIBFT : Clean done"
 #$(BONUS_OBJECTS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "🔥 LIBFT : Full clean done"
 
 re: fclean all
