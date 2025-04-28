@@ -3,7 +3,9 @@ NAME = cube3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes -g
 
-SRC = src/main.c src/parsing/parsing.c src/parsing/parse_file.c src/exit/exit.c src/init/init.c
+SRC = src/main.c src/parsing/parsing.c src/parsing/parse_file.c src/exit/exit.c src/init/init.c \
+		src/parsing/check_texture.c src/parsing/check_colors.c src/parsing/check_map.c
+
 OBJ_DIR = obj
 OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
