@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:54:27 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/28 17:23:51 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/29 11:50:48 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_check_texture(t_game *game)
 	char	*f;
 
 	i = 0;
-	while (game->file_tab[i] && i < 4)
+	while (game->file_tab[i] && ++i < 4)
 	{
 		if (!ft_strncmp(game->file_tab[i], "NO", 2)
 			|| !ft_strncmp(game->file_tab[i], "SO", 2)
@@ -49,7 +49,6 @@ int	ft_check_texture(t_game *game)
 				return (printf("error: %s doesn't exist\n", f), free(f), 1);
 			free(f);
 		}
-		i++;
 	}
 	if (ft_check_void(game->file_tab[i]))
 		return (printf("error: the .cub file is wrong(?)\n"), 1);

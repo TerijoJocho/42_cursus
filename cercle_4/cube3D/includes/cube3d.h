@@ -22,6 +22,8 @@ int	ft_get_file(t_game *game);
 int	ft_parse_file(t_game *game);
 int	ft_check_void(char *str);
 int	ft_check_texture(t_game *game);
+int	ft_check_colors(t_game *game);
+
 
 /*init*/
 int	ft_init_game(t_game *game, char *argv);

@@ -29,7 +29,7 @@ int	ft_check_void(char *line)
 int	ft_parse_file(t_game *game)
 {
 	ft_check_texture(game);
-	// ft_check_colors(game->file_tab);
+	// ft_check_colors(game);
 	// ft_check_map(game->file_tab);
 	return (0);
 }
