@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:54:27 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/29 11:50:48 by daavril          ###   ########.fr       */
+/*   Updated: 2025/04/29 13:59:45 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_check_texture(t_game *game)
 	char	*f;
 
 	i = 0;
-	while (game->file_tab[i] && ++i < 4)
+	while (game->file_tab[i] && i < 4)
 	{
 		if (!ft_strncmp(game->file_tab[i], "NO", 2)
 			|| !ft_strncmp(game->file_tab[i], "SO", 2)
@@ -43,11 +43,11 @@ int	ft_check_texture(t_game *game)
 			if (!f)
 				return (printf("error: malloc fail\n"), 1);
 			if (ft_is_xpm(f))
-				return (printf("error: %s is not a .xpm file\n", f), free(f),
-					1);
+				return (printf("error: %s is not a .xpm file\n", f), free(f), 1);
 			if (access(f, F_OK) == -1)
 				return (printf("error: %s doesn't exist\n", f), free(f), 1);
 			free(f);
+			i++;
 		}
 	}
 	if (ft_check_void(game->file_tab[i]))

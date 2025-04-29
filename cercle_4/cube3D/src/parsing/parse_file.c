@@ -28,8 +28,18 @@ int	ft_check_void(char *line)
  */
 int	ft_parse_file(t_game *game)
 {
-	ft_check_texture(game);
-	// ft_check_colors(game);
-	// ft_check_map(game->file_tab);
+	if (ft_check_texture(game))
+		return (1);
+	if (ft_check_colors(game))
+		return (1);
+	if (ft_check_map(game))
+		return (1);
 	return (0);
 }
+
+
+/*parsing faux, il faudrait juste chercher les types d'element
+ensuite enregistre leur valeurs dans la struct apres avoir verifier
+s'ils sont bon
+et aussi verifier qu'il existe un seul meme type a chaque fois
+et enfin verifier la map*/
