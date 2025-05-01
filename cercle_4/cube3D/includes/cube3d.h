@@ -11,6 +11,13 @@
 # include <string.h>
 # include <unistd.h>
 
+typedef struct s_player
+{
+	int	p_x;
+	int	p_y;
+	char	p_dir;
+}	t_player;
+
 typedef struct s_game
 {
 	char	*file_name;
@@ -22,6 +29,7 @@ typedef struct s_game
 	char	*EA;
 	char	*F;
 	char	*C;
+	t_player	*p;
 }			t_game;
 
 /*parsing*/

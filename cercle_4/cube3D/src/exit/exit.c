@@ -18,7 +18,7 @@ void	ft_clean_tab(char **tab)
 	free(tab);
 }
 
-void	ft_free_textures(t_game *game)
+void	ft_free_textures_colors(t_game *game)
 {
 	if (!game)
 		return ;
@@ -38,20 +38,10 @@ void	ft_free_textures(t_game *game)
 
 void	ft_clean(t_game *game)
 {
-	int	i;
-
 	if (!game)
 		return ;
-	ft_free_textures(game);
-	if (game->file_tab)
-	{
-		i = 0;
-		while (game->file_tab[i])
-		{
-			free(game->file_tab[i]);
-			i++;
-		}
-		free(game->file_tab);
-	}
+	ft_free_textures_colors(game);
+	ft_clean_tab(game->file_tab);
+	ft_clean_tab(game->map);
 	free(game);
 }
