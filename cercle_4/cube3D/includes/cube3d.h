@@ -16,15 +16,21 @@ typedef struct s_game
 	char	*file_name;
 	char	**file_tab;
 	char	**map;
+	char	*NO;
+	char	*SO;
+	char	*WE;
+	char	*EA;
+	char	*F;
+	char	*C;
 }			t_game;
 
 /*parsing*/
 int	ft_get_file(t_game *game);
 int	ft_parse_file(t_game *game);
 int	ft_check_void(char *str);
-int	ft_check_texture(t_game *game);
-int	ft_check_colors(t_game *game);
-int	ft_check_map(t_game *game);
+int	ft_check_texture(t_game *game, int len);
+int	ft_check_colors(t_game *game, int len);
+int	ft_check_map(t_game *game, int i);
 
 /*init*/
 int	ft_init_game(t_game *game, char *argv);

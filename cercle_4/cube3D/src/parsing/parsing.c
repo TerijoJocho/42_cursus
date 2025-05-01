@@ -45,7 +45,6 @@ int	ft_get_file(t_game *game)
 	char *line;
 	int line_count;
 
-	game->file_tab = NULL;
 	line_count = 0;
 	fd = open(game->file_name, O_RDONLY);
 	if (fd < 0)

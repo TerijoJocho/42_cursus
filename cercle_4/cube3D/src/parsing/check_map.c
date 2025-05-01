@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:00:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/04/29 14:45:22 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/01 14:41:15 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ char	**ft_dup_map(char	**tab)
 	return (res);
 }
 
-int	ft_check_map(t_game *game)
+int	ft_check_map(t_game *game, int i)
 {
 	char	**cpy;
 
-	cpy = ft_dup_map(&game->file_tab[8]);//a free !
-	game->map = ft_dup_map(&game->file_tab[8]);//a free a la fin du game !
+	cpy = ft_dup_map(&game->file_tab[i]);//a free !
+	game->map = ft_dup_map(&game->file_tab[i]);//a free a la fin du game !
 	/*test*/
-	int i =0;
-	while (cpy[i])
+	int j =0;
+	while (cpy[j])
 	{
-		printf("line[%d] =   %s", i, cpy[i]);
-		i++;
+		printf("line[%d] =   %s", j, cpy[j]);
+		j++;
 	}
 	/*----*/
 	return (0);
