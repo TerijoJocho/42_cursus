@@ -6,7 +6,7 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:48 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/01 14:27:50 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/02 14:54:23 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_check_colors(t_game *game, int len)
 			if (ft_is_color(f))
 				return (printf("error: wrong colors\n"), free(f), 1);
 			if (ft_save_colors(f, game->file_tab[i], game))
-				return (printf("error: duplicate colors: %s\n",game->file_tab[i]), free(f), 1);
+				return (printf("error: duplicate colors: %s",game->file_tab[i]), free(f), 1);
 			free(f);
 		}
 		i++;

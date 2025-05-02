@@ -36,7 +36,7 @@ typedef struct s_game
 int	ft_get_file(t_game *game);
 int	ft_parse_file(t_game *game);
 int	ft_check_void(char *str);
-int	ft_check_texture(t_game *game, int len);
+int	ft_check_texture(t_game *game, int len, int i);
 int	ft_check_colors(t_game *game, int len);
 int	ft_check_map(t_game *game, int i);
 

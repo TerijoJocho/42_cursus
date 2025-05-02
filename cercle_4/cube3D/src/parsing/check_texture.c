@@ -6,7 +6,7 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:54:27 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/01 14:34:22 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/02 16:49:50 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	ft_is_xpm(char *file)
 {
 	char	*str;
 
-	while (*file == ' ')
-		file++;
 	str = ft_strrchr(file, '.');
 	if (!str)
 		return (1);
@@ -43,6 +41,8 @@ int	ft_is_xpm(char *file)
 
 int	ft_is_texture(char *line)
 {
+	while (*line == ' ' || *line == '\t')
+		line++;
 	if (!ft_strncmp(line, "NO", 2)
 			|| !ft_strncmp(line, "SO", 2)
 			|| !ft_strncmp(line, "WE", 2)
@@ -53,25 +53,38 @@ int	ft_is_texture(char *line)
 	return (0);
 }
 
-int	ft_check_texture(t_game *game, int len)
+char	*ft_get_texture_path(char *line, int flag)
 {
-	int		i;
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (flag == 1)
+	{
+		line +=2;
+		while (*line == ' ' || *line == '\t')
+			line++;	
+	}
+	return (ft_strtrim(line, " \t\n"));
+}
+
+int	ft_check_texture(t_game *game, int len, int i)
+{
+	int		fd;
 	char	*f;
 
-	i = 0;
 	while (game->file_tab[i] && i < len)
 	{
 		if (ft_is_texture(game->file_tab[i]))
 		{
-			f = ft_strtrim(game->file_tab[i] + 2, " \n");
+			f = ft_get_texture_path(game->file_tab[i], 1);
 			if (!f)
 				return (printf("error: malloc fail\n"), 1);
 			if (ft_is_xpm(f))
 				return (printf("error: %s is not a .xpm file\n", f), free(f), 1);
-			if (access(f, F_OK) == -1)
-				return (printf("error: %s doesn't exist\n", f), free(f), 1);
-			if (ft_save_textures(f, game->file_tab[i], game))
-				return (printf("error: duplicate texture: %s\n", game->file_tab[i]), free(f), 1);
+			fd = open(f, O_RDONLY);
+			if (fd == -1)
+				return (printf("error: %s can not be opened\n", f), free(f), 1);
+			if (ft_save_textures(f, ft_get_texture_path(game->file_tab[i], 0), game))
+				return (printf("error: duplicate texture: %s", game->file_tab[i]), free(f), 1);
 			free(f);
 		}
 		i++;

@@ -14,7 +14,7 @@ int	ft_is_cub(char *argv)
 
 	str = ft_strrchr(argv, '.');
 	if (!str)
-		return (1);
+		return (printf("error: not a .cub file\n"), 1);
 	if (ft_strncmp(str, ".cub", 5))
 		return (printf("error: not a .cub file\n"), 1);
 	return (0);
@@ -32,8 +32,10 @@ int	main(int argc, char **argv)
 	if (!game)
 		return (printf("error: malloc\n"), 1);
 	ft_init_game(game, argv[1]);
-	ft_is_cub(game->file_name);
-	ft_get_file(game);
+	if (ft_is_cub(game->file_name))
+		return (1);
+	if (ft_get_file(game))
+		return (1);
 	ft_clean(game);
 	return (0);
 }
