@@ -33,9 +33,8 @@ int	main(int argc, char **argv)
 		return (printf("error: malloc\n"), 1);
 	ft_init_game(game, argv[1]);
 	if (ft_is_cub(game->file_name))
-		return (1);
+		return (ft_clean(game), 1);
 	if (ft_get_file(game))
-		return (1);
-	ft_clean(game);
+		return (ft_clean(game), 1);
 	return (0);
 }
