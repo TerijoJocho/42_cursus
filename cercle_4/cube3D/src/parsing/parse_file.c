@@ -2,6 +2,13 @@
 
 #include "../includes/cube3d.h"
 
+/**
+ * @brief   Check if the line is empty
+ *
+ * @param   line the line to check
+ *
+ * @return  1 when the line is empty or 0 when it is not
+ */
 int	ft_is_line_empty(char *line)
 {
 	int	i;
@@ -18,6 +25,13 @@ int	ft_is_line_empty(char *line)
 	return (1);
 }
 
+/**
+ * @brief   Check if the line contains 'void' caracters or not
+ *
+ * @param   line the line to check
+ *
+ * @return  0 when there is no 'void' caracters or 1 when there is one or more
+ */
 int	ft_check_void(char *line)
 {
 	int	i;
@@ -34,6 +48,13 @@ int	ft_check_void(char *line)
 	return (0);
 }
 
+/**
+ * @brief   Check if we are in the beginin of the map
+ *
+ * @param   line line of th file.cub to check
+ *
+ * @return  1 if we are on the map or 0 if not
+ */
 int	ft_is_map(char *line)
 {
 	char	*str;
@@ -57,12 +78,11 @@ int	ft_is_map(char *line)
 }
 
 /**
- * @brief   [Résume très court de ce que fait la fonction.]
+ * @brief   Function to parse the array that has been saved
  *
- * @param   [nom_du_param] [Description rapide du paramètre.]
- * @param   [autre_param]  [S'il y a plusieurs paramètres.]
+ * @param   game struct of the game
  *
- * @return  [Ce que la fonction retourne, dans quel cas.]
+ * @return  0 when everything is good or 1 when there is an error
  */
 int	ft_parse_file(t_game *game)
 {

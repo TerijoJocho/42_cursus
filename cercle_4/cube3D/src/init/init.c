@@ -1,6 +1,13 @@
 
 #include "../includes/cube3d.h"
 
+/**
+ * @brief   Initalize the structure game
+ *
+ * @param   argv Name of the file in the command line
+ * @param   game the struct to init 
+ * @return  0 if everything's good or 1 if there's an error
+ */
 int	ft_init_game(t_game *game, char *argv)
 {
 	game->file_name = argv;

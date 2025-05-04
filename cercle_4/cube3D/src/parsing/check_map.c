@@ -6,13 +6,19 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:00:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/02 17:06:45 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/04 17:52:42 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cube3d.h"
 
-/*renvoie la map qu'on a dans le file en plus d'enregistrer la map dans la game*/
+/**
+ * @brief   Save the map in the game struct
+ *
+ * @param   tab the remaining array of the file game
+ *
+ * @return  the map in an array
+ */
 char	**ft_dup_map(char	**tab)
 {
 	int	i;
@@ -42,6 +48,13 @@ char	**ft_dup_map(char	**tab)
 	return (res);
 }
 
+/**
+ * @brief   Get the max lenght of the map
+ *
+ * @param   map a copy of the map
+ *
+ * @return  the longest line of the map
+ */
 int	ft_get_maplen(char **map)
 {
 	int	i;
@@ -61,6 +74,16 @@ int	ft_get_maplen(char **map)
 	return (max);
 }
 
+/**
+ * @brief   Function to rectangularize the map
+ *
+ * @param   map a copy of the map
+ * @param   max_len max lenght of the map
+ * @param   i	the begining of the map
+ * @param   len the le of each line of the map
+ *
+ * @return  0 when everything is ok or 1 when there's an error
+ */
 int	ft_rectangularize(char **map, int max_len, int i, int len)
 {
 	int	j;
@@ -99,6 +122,16 @@ int	ft_rectangularize(char **map, int max_len, int i, int len)
 	return (0);
 }
 
+/**
+ * @brief   Function to get the player position
+ *
+ * @param   map a copy of the map
+ * @param   game struct of the game
+ * @param   i	the begining of the map
+ * @param   count param to verified if ther's inly one player
+ *
+ * @return  0 when everything is ok or 1 when there's an error
+ */
 int	ft_get_player(char **map, t_game *game, int i, int count)
 {
 	int	j;
@@ -127,6 +160,15 @@ int	ft_get_player(char **map, t_game *game, int i, int count)
 	return (0);
 }
 
+/**
+ * @brief   Check if the map is playable
+ *
+ * @param   map a copy of the map
+ * @param   x	the position x of the player
+ * @param   y	the position y of the player
+ *
+ * @return  0 when everything is ok or 1 when there's an error
+ */
 int	ft_flood_fill(char **map, int x, int y)
 {
 	if (x < 0 || y < 0 || !map[x] || y >= (int)ft_strlen(map[x]))
@@ -147,6 +189,12 @@ int	ft_flood_fill(char **map, int x, int y)
 	return (0);
 }
 
+/**
+ * @brief   Check if there's a bad caract if the map
+ *
+ * @param   map the map to check
+ * @return  0 when there is no bad caract or 1 when there's one
+ */
 int	ft_check_map_charset(char **map)
 {
 	int	i;
@@ -170,6 +218,14 @@ int	ft_check_map_charset(char **map)
 	return (0);
 }
 
+/**
+ * @brief   Check if the map is good
+ *
+ * @param   game struct of the game
+ * @param   i	 the start of the map
+ *
+ * @return  0 when everything is ok or 1 when there's an error
+ */
 int	ft_check_map(t_game *game, int i)
 {
 	char	**cpy;
@@ -189,12 +245,12 @@ int	ft_check_map(t_game *game, int i)
 	if (ft_flood_fill(cpy, game->p->p_x, game->p->p_y))
 		return (printf("error: map not playable\n"), ft_clean_tab(cpy), 1);
 	/*test*/
-	int l = 0;
-	while(cpy[l])
-	{
-		printf("%s\n", cpy[l]);
-		l++;
-	}
+	// int l = 0;
+	// while(cpy[l])
+	// {
+	// 	printf("%s\n", cpy[l]);
+	// 	l++;
+	// }
 	/*---*/
 	ft_clean_tab(cpy);
 	return (0);

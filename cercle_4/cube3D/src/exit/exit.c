@@ -1,8 +1,11 @@
 
 #include "../includes/cube3d.h"
 
-
-/*utilise dans check colors*/
+/**
+ * @brief   Function to free a tab **
+ * @param   tab the array to free
+ * @return  none
+ */
 void	ft_clean_tab(char **tab)
 {
 	int	i;
@@ -18,6 +21,11 @@ void	ft_clean_tab(char **tab)
 	free(tab);
 }
 
+/**
+ * @brief   Free the textures of file.cub in the struct
+ * @param   game the struct of the game
+ * @return  none
+ */
 void	ft_free_textures_colors(t_game *game)
 {
 	if (!game)
@@ -36,6 +44,11 @@ void	ft_free_textures_colors(t_game *game)
 		(free(game->C), game->C = NULL);
 }
 
+/**
+ * @brief   Free all the alloc made during the program, at the end
+ * @param   game the struct of the game
+ * @return  none
+ */
 void	ft_clean(t_game *game)
 {
 	if (!game)

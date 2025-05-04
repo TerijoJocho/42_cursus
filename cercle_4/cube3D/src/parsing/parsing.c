@@ -6,7 +6,7 @@
  * @brief   add a new line to the array
  *
  * @param   lines  an array to save the lines of the file
- * @param   line  the line to save in the array
+ * @param   line  the new line to save in the array
  * @param   line_count  number of lines
  *
  * @return  the new array or NULL
@@ -33,11 +33,11 @@ char	**add_line(char **lines, char *line, int line_count)
 }
 
 /**
- * @brief   Read the file to have an aray of the file's lines then parse it
+ * @brief   Read the file and save its contents in an array
  *
  * @param   game struct of the game
  *
- * @return  0 when everything is good or an error
+ * @return  0 when everything is good or 1 when there is an error
  */
 int	ft_get_file(t_game *game)
 {
@@ -53,7 +53,7 @@ int	ft_get_file(t_game *game)
 	{
 		game->file_tab = add_line(game->file_tab, line, line_count);
 		if (!game->file_tab)
-			return (printf("error: malloc\n"));
+			return (printf("error: malloc\n"), close(fd), 1);
 		line_count++;
 		free(line);
 	}

@@ -6,12 +6,21 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:54:27 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/02 16:49:50 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/04 17:34:05 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cube3d.h"
 
+/**
+ * @brief   Save the texture in the game struct
+ *
+ * @param   game struct of the game
+ * @param   line a line in the file that is a texture
+ * @param   f	 the texture to save
+ *
+ * @return  0 when everything is ok or 1 if no texture has been saved
+ */
 int	ft_save_textures(char *f, char *line, t_game *game)
 {
 	if (!ft_strncmp(line, "NO", 2) && !game->NO)
@@ -27,6 +36,13 @@ int	ft_save_textures(char *f, char *line, t_game *game)
 	return (0);
 }
 
+/**
+ * @brief   Check if the file is a .xpm
+ *
+ * @param   file to check
+ *
+ * @return  0 if it is a .xpm or 1 if not
+ */
 int	ft_is_xpm(char *file)
 {
 	char	*str;
@@ -39,6 +55,13 @@ int	ft_is_xpm(char *file)
 	return (0);
 }
 
+/**
+ * @brief   Check if the line has a texture
+ *
+ * @param   line to check
+ *
+ * @return  1 if there is a texture or 0 if not
+ */
 int	ft_is_texture(char *line)
 {
 	while (*line == ' ' || *line == '\t')
@@ -53,6 +76,14 @@ int	ft_is_texture(char *line)
 	return (0);
 }
 
+/**
+ * @brief   Function to get the path of the texture
+ *
+ * @param   line the line where is the texture
+ * @param   flag to know if we have to ignore two caracters
+ *
+ * @return  the path of the texture
+ */
 char	*ft_get_texture_path(char *line, int flag)
 {
 	while (*line == ' ' || *line == '\t')
@@ -66,6 +97,15 @@ char	*ft_get_texture_path(char *line, int flag)
 	return (ft_strtrim(line, " \t\n"));
 }
 
+/**
+ * @brief   Check if the the textures are good
+ *
+ * @param   game struct of the game
+ * @param   len	 lenght of the file to check
+ * @param   i	 the start of the file
+ *
+ * @return  0 when everything is ok or 1 when there's an error
+ */
 int	ft_check_texture(t_game *game, int len, int i)
 {
 	int		fd;

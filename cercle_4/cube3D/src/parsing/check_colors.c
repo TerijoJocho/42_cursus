@@ -6,12 +6,21 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:48 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/02 14:54:23 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/04 17:40:30 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cube3d.h"
 
+/**
+ * @brief   Save the colors in the game struct
+ *
+ * @param   game struct of the game
+ * @param   line a line in the file that is a color
+ * @param   f	 the color to save
+ *
+ * @return  0 when everything is ok or 1 if no colors has been saved
+ */
 int	ft_save_colors(char *f, char *line, t_game *game)
 {
 	if (!ft_strncmp(line, "F", 1) && !game->F)
@@ -23,6 +32,13 @@ int	ft_save_colors(char *f, char *line, t_game *game)
 	return (0);
 }
 
+/**
+ * @brief   Check if the string is a number
+ *
+ * @param   f string to check
+ *
+ * @return  0 if it is or 1 if it is not
+ */
 int	ft_is_num(char *f)
 {
 	int	i;
@@ -38,6 +54,13 @@ int	ft_is_num(char *f)
 	return (0);
 }
 
+/**
+ * @brief   Get the lenght of the colors array
+ *
+ * @param   tab the array
+ *
+ * @return  0 if the lenght is == 3 or 1 if it's not
+ */
 int	ft_tab_len(char **tab)
 {
 	int	i;
@@ -50,6 +73,13 @@ int	ft_tab_len(char **tab)
 	return (0);
 }
 
+/**
+ * @brief   Check if it is a color
+ *
+ * @param   f the string to check
+ *
+ * @return  0 when it is a color or 1 if it is not
+ */
 int	ft_is_color(char *f)
 {
 	char **tab;
@@ -73,6 +103,14 @@ int	ft_is_color(char *f)
 	return (0);
 }
 
+/**
+ * @brief   Check if the the colors are good
+ *
+ * @param   game struct of the game
+ * @param   len	 lenght of the file to check
+ *
+ * @return  0 when everything is ok or 1 when there's an error
+ */
 int	ft_check_colors(t_game *game, int len)
 {
 	int		i;
