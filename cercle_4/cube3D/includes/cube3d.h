@@ -39,6 +39,13 @@ int	ft_check_void(char *str);
 int	ft_check_texture(t_game *game, int len, int i);
 int	ft_check_colors(t_game *game, int len);
 int	ft_check_map(t_game *game, int i);
+int	ft_check_map_charset(char **map);
+int	ft_is_map(char *line);
+int	ft_is_line_empty(char *line);
+int	ft_get_maplen(char **map);
+int	ft_fill_line(char **map, int i, int max_len, char *tmp);
+int	ft_find_map_bounds(t_game *game, int *start, int *end);
+int	ft_check_map_square(char **map);
 
 /*init*/
 int	ft_init_game(t_game *game, char *argv);

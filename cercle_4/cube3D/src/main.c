@@ -1,5 +1,14 @@
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 14:39:08 by daavril           #+#    #+#             */
+/*   Updated: 2025/05/05 14:39:12 by daavril          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 // valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./cube3D maps/file.cub
 // valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cube3D maps/file_for_bonus.cub

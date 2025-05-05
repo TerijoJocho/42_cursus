@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:43:07 by daavril           #+#    #+#             */
-/*   Updated: 2024/09/12 14:13:41 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:16:41 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	ft_atoi(const char *str)
 		nb = (nb * 10) + (str[i] - '0');
 		i++;
 	}
+	if (str[i] != '\0')
+		return (-1);
 	return (nb * sign);
 }
 /*#include <stdio.h>

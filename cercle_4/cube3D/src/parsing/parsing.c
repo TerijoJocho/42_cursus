@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 14:39:19 by daavril           #+#    #+#             */
+/*   Updated: 2025/05/05 15:11:14 by daavril          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/cube3d.h"
 
@@ -43,21 +53,23 @@ char	**add_line(char **lines, char *line, int line_count)
  */
 int	ft_get_file(t_game *game)
 {
-	int fd;
-	char *line;
-	int line_count;
+	int		fd;
+	char	*line;
+	int		line_count;
 
 	line_count = 0;
 	fd = open(game->file_name, O_RDONLY);
 	if (fd < 0)
 		return (printf("error: .cub file not found\n"), 1);
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		game->file_tab = add_line(game->file_tab, line, line_count);
 		if (!game->file_tab)
 			return (printf("error: malloc\n"), close(fd), 1);
 		line_count++;
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
 	if (line_count == 0)

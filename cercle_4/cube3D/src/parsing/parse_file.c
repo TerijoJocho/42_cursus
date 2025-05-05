@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 14:39:26 by daavril           #+#    #+#             */
+/*   Updated: 2025/05/05 15:20:39 by daavril          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/cube3d.h"
 
@@ -67,8 +77,9 @@ int	ft_is_map(char *line)
 		free(str);
 		return (0);
 	}
-	if (!ft_strncmp(str, "F", 1) || !ft_strncmp(str, "C", 1) || !ft_strncmp(str, "NO", 2)
-		|| !ft_strncmp(str, "SO", 2) || !ft_strncmp(str, "WE", 2) || !ft_strncmp(str, "EA", 2))
+	if (!ft_strncmp(str, "F", 1) || !ft_strncmp(str, "C", 1) || !ft_strncmp(str,
+			"NO", 2) || !ft_strncmp(str, "SO", 2) || !ft_strncmp(str, "WE", 2)
+		|| !ft_strncmp(str, "EA", 2))
 	{
 		free(str);
 		return (0);
@@ -86,43 +97,22 @@ int	ft_is_map(char *line)
  */
 int	ft_parse_file(t_game *game)
 {
+	int	start;
+	int	end;
 	int	i;
-	int	start_map;
-	int	end_map;
 
-	i = 0;
-	start_map = -1;
-	end_map = -1;
-	while(game->file_tab[i])
-	{
-		while(!ft_check_void(game->file_tab[i]))
-			i++;
-		if (ft_is_map(game->file_tab[i]))
-		{
-			start_map = i;			
-			break ;
-		}
-		i++;
-	}
-	if (start_map == -1)
-		return (printf("error: no map found\n"), 1);
-	i = start_map;
-	while(game->file_tab[i])
-	{
-		if (ft_is_line_empty(game->file_tab[i]))
-			break ;
-		(end_map = i, i++);
-	}
-	if (ft_check_texture(game, start_map, 0) || ft_check_colors(game, start_map))
+	if (ft_find_map_bounds(game, &start, &end))
 		return (1);
-	i = end_map + 1;
-	while(game->file_tab[i])
+	if (ft_check_texture(game, start, 0) || ft_check_colors(game, start))
+		return (1);
+	i = end + 1;
+	while (game->file_tab[i])
 	{
 		if (!ft_is_line_empty(game->file_tab[i]))
 			return (printf("error: bad map\n"), 1);
 		i++;
 	}
-	if (ft_check_map(game, start_map))
+	if (ft_check_map(game, start))
 		return (1);
 	return (0);
 }

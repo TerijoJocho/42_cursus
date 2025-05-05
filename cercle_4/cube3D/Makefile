@@ -1,10 +1,23 @@
-NAME = cube3D
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/05/05 15:13:42 by daavril           #+#    #+#              #
+#    Updated: 2025/05/05 15:13:44 by daavril          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = cub3D
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes -g
 
 SRC = src/main.c src/parsing/parsing.c src/parsing/parse_file.c src/exit/exit.c src/init/init.c \
-		src/parsing/check_texture.c src/parsing/check_colors.c src/parsing/check_map.c
+		src/parsing/check_texture.c src/parsing/check_colors.c src/parsing/check_map.c \
+		src/parsing/check_map_utils.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)

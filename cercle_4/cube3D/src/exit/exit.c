@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 14:38:50 by daavril           #+#    #+#             */
+/*   Updated: 2025/05/05 14:38:52 by daavril          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/cube3d.h"
 
@@ -30,17 +41,17 @@ void	ft_free_textures_colors(t_game *game)
 {
 	if (!game)
 		return ;
-	if(game->NO !=  NULL)
+	if (game->NO != NULL)
 		(free(game->NO), game->NO = NULL);
-	if(game->SO !=  NULL)
+	if (game->SO != NULL)
 		(free(game->SO), game->SO = NULL);
-	if(game->WE !=  NULL)
+	if (game->WE != NULL)
 		(free(game->WE), game->WE = NULL);
-	if(game->EA !=  NULL)
+	if (game->EA != NULL)
 		(free(game->EA), game->EA = NULL);
-	if(game->F !=  NULL)
+	if (game->F != NULL)
 		(free(game->F), game->F = NULL);
-	if(game->C !=  NULL)
+	if (game->C != NULL)
 		(free(game->C), game->C = NULL);
 }
 
