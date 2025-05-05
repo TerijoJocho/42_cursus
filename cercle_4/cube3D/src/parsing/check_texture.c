@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:54:27 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/04 17:34:05 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/05 14:17:04 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  *
  * @param   game struct of the game
  * @param   line a line in the file that is a texture
- * @param   f	 the texture to save
+ * @param   f		the texture to save
  *
  * @return  0 when everything is ok or 1 if no texture has been saved
  */
@@ -66,12 +66,10 @@ int	ft_is_texture(char *line)
 {
 	while (*line == ' ' || *line == '\t')
 		line++;
-	if (!ft_strncmp(line, "NO", 2)
-			|| !ft_strncmp(line, "SO", 2)
-			|| !ft_strncmp(line, "WE", 2)
-			|| !ft_strncmp(line, "EA", 2))
+	if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2)
+		|| !ft_strncmp(line, "WE", 2) || !ft_strncmp(line, "EA", 2))
 	{
-		return(1);
+		return (1);
 	}
 	return (0);
 }
@@ -90,9 +88,9 @@ char	*ft_get_texture_path(char *line, int flag)
 		line++;
 	if (flag == 1)
 	{
-		line +=2;
+		line += 2;
 		while (*line == ' ' || *line == '\t')
-			line++;	
+			line++;
 	}
 	return (ft_strtrim(line, " \t\n"));
 }
@@ -101,8 +99,8 @@ char	*ft_get_texture_path(char *line, int flag)
  * @brief   Check if the the textures are good
  *
  * @param   game struct of the game
- * @param   len	 lenght of the file to check
- * @param   i	 the start of the file
+ * @param   len		lenght of the file to check
+ * @param   i		the start of the file
  *
  * @return  0 when everything is ok or 1 when there's an error
  */
@@ -110,22 +108,26 @@ int	ft_check_texture(t_game *game, int len, int i)
 {
 	int		fd;
 	char	*f;
+	char	*f2;
 
 	while (game->file_tab[i] && i < len)
 	{
 		if (ft_is_texture(game->file_tab[i]))
 		{
 			f = ft_get_texture_path(game->file_tab[i], 1);
-			if (!f)
+			f2 = ft_get_texture_path(game->file_tab[i], 0);
+			if (!f || !f2)
 				return (printf("error: malloc fail\n"), 1);
 			if (ft_is_xpm(f))
-				return (printf("error: %s is not a .xpm file\n", f), free(f), 1);
+				return (printf("error: %s is not a .xpm\n", f), free(f), 1);
 			fd = open(f, O_RDONLY);
 			if (fd == -1)
 				return (printf("error: %s can not be opened\n", f), free(f), 1);
-			if (ft_save_textures(f, ft_get_texture_path(game->file_tab[i], 0), game))
-				return (printf("error: duplicate texture: %s", game->file_tab[i]), free(f), 1);
-			free(f);
+			if (ft_save_textures(f, f2, game))
+				return (printf("error: duplicate texture"), free(f), free(f2),
+					close(fd), 1);
+			close(fd);
+			(free(f), free(f2));
 		}
 		i++;
 	}

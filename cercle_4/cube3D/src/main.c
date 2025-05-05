@@ -1,5 +1,8 @@
 
 
+
+// valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./cube3D maps/file.cub
+// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cube3D maps/file_for_bonus.cub
 #include "../includes/cube3d.h"
 
 /**
@@ -36,5 +39,6 @@ int	main(int argc, char **argv)
 		return (ft_clean(game), 1);
 	if (ft_get_file(game))
 		return (ft_clean(game), 1);
+	ft_clean(game);
 	return (0);
 }

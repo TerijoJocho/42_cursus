@@ -26,6 +26,8 @@ char	**add_line(char **lines, char *line, int line_count)
 		i++;
 	}
 	new_lines[line_count] = ft_strdup(line);
+	if (!new_lines[line_count])
+		return (NULL);
 	new_lines[line_count + 1] = NULL;
 	if (lines)
 		free(lines);

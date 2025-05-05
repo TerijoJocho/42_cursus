@@ -56,5 +56,6 @@ void	ft_clean(t_game *game)
 	ft_free_textures_colors(game);
 	ft_clean_tab(game->file_tab);
 	ft_clean_tab(game->map);
+	free(game->p);
 	free(game);
 }
