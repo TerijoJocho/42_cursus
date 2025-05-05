@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:42:45 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/05 16:37:18 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/05 17:12:35 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,12 +153,12 @@ int	ft_check_map_square(char **map)
 		{
 			if (map[i][j] == '0')
 			{
-				if (map[i + 1][j] == 'x' || map[i][j + 1] == 'x')
+				if (!map[i + 1] || !map[i - 1] || !map[i][j + 1] || !map[i][j - 1])
 					return (1);
-				if (i > 0 && map[i - 1][j] == 'x')
+				if (map[i + 1][j] == 'x' || map[i - 1][j] == 'x' ||
+					map[i][j + 1] == 'x' || map[i][j - 1] == 'x')
 					return (1);
 			}
-				return (1);
 			j++;
 		}
 		i++;

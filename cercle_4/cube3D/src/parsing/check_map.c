@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:00:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/05 16:22:59 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/05 17:12:59 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ int	ft_rectangularize(char **map, int max_len, int i, int len)
 		else
 			free(tmp);
 		i++;
+	}
+	int l = 0;
+	while (map[l])
+	{
+		printf("caca: %s\n", map[l]);
+		l++;
 	}
 	if (ft_check_map_square(map))
 		return (1);
