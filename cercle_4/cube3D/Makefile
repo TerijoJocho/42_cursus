@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
+#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/05 15:13:42 by daavril           #+#    #+#              #
-#    Updated: 2025/05/05 15:13:44 by daavril          ###   ########.fr        #
+#    Updated: 2025/05/06 13:56:02 by terijo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,13 +47,13 @@ clean:
 	@$(MAKE) clean -C $(GNL_DIR)
 	@$(MAKE) clean -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_DIR)
-	@echo "🧹 CUBE3D : Clean done"
+	@echo "🧹 CUBD : Clean done"
 
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C $(GNL_DIR)
 	@$(MAKE) fclean -C $(LIBFT_DIR)
-	@echo "🔥 CUBE3D : clean done"
+	@echo "🔥 CUBD : clean done"
 
 re: fclean all
 

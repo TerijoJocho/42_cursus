@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:00:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/05 17:12:59 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:15:13 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,11 @@ char	**ft_dup_map(char **tab, int i, char *tmp)
  */
 int	ft_rectangularize(char **map, int max_len, int i, int len)
 {
-	int		j;
 	char	*tmp;
 
-	j = 0;
 	while (map[i])
 	{
-		tmp = ft_strtrim(map[i], " ");
+		tmp = ft_strdup(map[i]);
 		if (!tmp)
 			return (1);
 		len = ft_strlen(map[i]);
@@ -80,12 +78,6 @@ int	ft_rectangularize(char **map, int max_len, int i, int len)
 		else
 			free(tmp);
 		i++;
-	}
-	int l = 0;
-	while (map[l])
-	{
-		printf("caca: %s\n", map[l]);
-		l++;
 	}
 	if (ft_check_map_square(map))
 		return (1);
