@@ -16,10 +16,42 @@
 
 typedef struct s_player
 {
-	int	p_x;
-	int	p_y;
+	double	p_x;
+	double	p_y;
 	char	p_dir;
+
+	double	dir_x;
+	double	dir_y;
+
+	double	plane_x;
+	double	plane_y;
 }	t_player;
+
+typedef struct s_ray
+{
+	double	ray_dir_x;
+	double	ray_dir_y;
+
+	int		map_x;
+	int		map_y;
+
+	double	delta_dist_x;
+	double	delta_dist_y;
+
+	double	side_dist_x;
+	double	side_dist_y;
+
+	int		step_x;
+	int		step_y;
+	int		side;
+
+	double	wall_dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+
+	double	wall_x;
+}	t_ray;
 
 typedef struct s_img
 {
@@ -39,17 +71,22 @@ typedef struct s_game
 {
 	char		*file_name;
 	char		**file_tab;
+
 	char		**map;
+
 	void		*mlx;
 	void		*wdw;
+
 	char		*NO;
 	char		*SO;
 	char		*WE;
 	char		*EA;
 	char		*F;
 	char		*C;
+
 	t_img		img;
 	t_player	*p;
+	t_ray		ray;	
 }			t_game;
 
 /*parsing*/
@@ -69,6 +106,7 @@ int	ft_check_map_square(char **map);
 
 /*init*/
 int	ft_init_game(t_game *game, char *argv);
+void    ft_init_splayer(t_game *game);
 
 /*exit*/
 void	ft_clean(t_game *game);

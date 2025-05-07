@@ -3,14 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:01 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/05 18:40:54 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/07 01:40:38 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cube3d.h"
+
+/**
+ * @brief   Init the structure player
+ *
+ * @param   game struct of the game
+ *
+ * @return
+ */
+ void    ft_init_splayer(t_game *game)
+ {
+	 if (game->player->p_dir == 'N')
+	 {
+		 game->player->dir_x = 0;
+		 game->player->dir_y = -1;
+		 game->player->plane_x = 0.66;
+		 game->player->plane_y = 0;
+	 }
+	 else if (game->player->p_dir == 'S')
+	 {
+		 game->player->dir_x = 0;
+		 game->player->dir_y = 1;
+		 game->player->plane_x = -0.66;
+		 game->player->plane_y = 0;
+	 }
+	 else if (game->player->p_dir == 'E')
+	 {
+		 game->player->dir_x = 1;
+		 game->player->dir_y = 0;
+		 game->player->plane_x = 0;
+		 game->player->plane_y = 0.66;
+	 }
+	 else if (game->player->p_dir == 'W')
+	 {
+		 game->player->dir_x = -1;
+		 game->player->dir_y = 0;
+		 game->player->plane_x = 0;
+		 game->player->plane_y = -0.66;
+	 }
+ }
 
 /**
  * @brief   Initalize the structure game

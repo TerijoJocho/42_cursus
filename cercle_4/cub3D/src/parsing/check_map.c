@@ -6,7 +6,7 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:00:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/06 14:15:13 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/07 00:44:32 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int	ft_get_player(char **map, t_game *game, int i, int count)
 			{
 				if (count == 0)
 				{
-					game->p->p_x = i;
-					game->p->p_y = j;
+					game->p->p_x = (double)i + 0.5;
+					game->p->p_y = (double)j + 0.5;
 					game->p->p_dir = map[i][j];
 				}
 				count++;
