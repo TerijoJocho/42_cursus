@@ -4,8 +4,12 @@
 class Sample {
     public:
 
-        Sample(void);
-        ~Sample(void);
+        int foo;
+
+        Sample(void);//constructor
+        ~Sample(void);//destructor
+
+        void    bar(void);//member function
 };
 
 #endif
