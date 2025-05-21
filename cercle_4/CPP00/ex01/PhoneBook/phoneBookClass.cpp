@@ -1,0 +1,4 @@
+void ft(void)
+{
+    return ;
+}
