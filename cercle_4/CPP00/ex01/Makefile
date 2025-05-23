@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
+#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/22 00:52:43 by terijo            #+#    #+#              #
-#    Updated: 2025/05/22 01:55:57 by terijo           ###   ########.fr        #
+#    Updated: 2025/05/23 12:58:46 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ CC	 = g++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
 #directories
-SRC_DIR = Contact/ PhoneBook/
+SRC_DIR = Contact/ phoneBook/
 OBJ_DIR = obj/
-INC_DIR = Contact/
+INC_DIR = Contact/ phoneBook/
 
 #controll codes
 RESET		=	\033[0m
@@ -33,12 +33,12 @@ SRC_FILES = contactClass.cpp phoneBookClass.cpp main.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
-SRC_PATH = Contact/contactClass.cpp PhoneBook/phoneBookClass.cpp main.cpp
+SRC_PATH = Contact/contactClass.cpp phoneBook/phoneBookClass.cpp main.cpp
 OBJ_PATH = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 #all rule
 all: $(NAME)
-		@printf "$(BLUE)Welcome to EX00 of CPP\n$(RESET)"
+		@printf "$(BLUE)Welcome to EX01 of CPP00\n$(RESET)"
 
 #compile the executable
 $(NAME): $(OBJ_PATH)
@@ -50,17 +50,17 @@ $(NAME): $(OBJ_PATH)
 $(OBJ_DIR)%.o: Contact/%.cpp
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(YELLOW)Compiling Contact [$<]...$(RESET)"
-	@$(CC) $(CFLAGS) -I Contact/ -I PhoneBook/ -c $< -o $@
+	@$(CC) $(CFLAGS) -I Contact/ -I phoneBook/ -c $< -o $@
 
-$(OBJ_DIR)%.o: Phonebook/%.cpp
+$(OBJ_DIR)%.o: phoneBook/%.cpp
 	@mkdir -p $(OBJ_DIR)
-	@echo "$(YELLOW)Compiling Phonebook [$<]...$(RESET)"
-	@$(CC) $(CFLAGS) -I Contact/ -I PhoneBook/ -c $< -o $@
-	
+	@echo "$(YELLOW)Compiling phoneBook [$<]...$(RESET)"
+	@$(CC) $(CFLAGS) -I Contact/ -I phoneBook/ -c $< -o $@
+
 $(OBJ_DIR)%.o: %.cpp
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(YELLOW)Compiling [$@]...$(RESET)"
-	@$(CC) $(CFLAGS) -I Contact/ -I Phonebook/ -o $@ -c $<
+	@$(CC) $(CFLAGS) -I Contact/ -I phoneBook/ -o $@ -c $<
 	@printf "$(UP)$(CUT)"
 	@echo "$(GREEN)Finished [$@]$(RESET)"
 	@printf "$(UP)$(CUT)"

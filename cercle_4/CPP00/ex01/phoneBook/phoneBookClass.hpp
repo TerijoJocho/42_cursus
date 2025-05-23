@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   contactClass.hpp                                   :+:      :+:    :+:   */
+/*   phoneBookClass.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 00:55:53 by terijo            #+#    #+#             */
-/*   Updated: 2025/05/23 19:41:23 by daavril          ###   ########.fr       */
+/*   Created: 2025/05/22 16:18:09 by terijo            #+#    #+#             */
+/*   Updated: 2025/05/23 19:11:28 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACT_CLASS_H
-# define CONTACT_CLASS_H
+#ifndef PHONEBOOK_CLASS_H
+# define PHONEBOOK_CLASS_H
 
-# include <string>
+# include "contactClass.hpp"
 
-class Contact
+class phoneBook
 {
   public:
-	Contact();
-	Contact(std::string firstName, std::string lastName, std::string nickname,
-		std::string phoneNumber, std::string darkSecret);
-	~Contact(void);
-	int index;
+	phoneBook(void);
+	~phoneBook(void);
 
-	std::string firstName;
-	std::string lastName;
-	std::string nickname;
-	std::string phoneNumber;
-	std::string darkSecret;
+	bool ft_add_contact(std::string fN, std::string lN, std::string nn,
+		std::string pN, std::string dS);
+	bool ft_search_contact(phoneBook &repertoire) const;
+
+  private:
+	int 	count;
+	Contact contact[8];
 };
 
 #endif

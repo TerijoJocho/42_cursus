@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:08 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/07 00:14:47 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:38:50 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./cube3D maps/file.cub
-// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cube3D maps/file_for_bonus.cub
 #include "../includes/cube3d.h"
 
 /**
@@ -36,29 +34,27 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	// parsing
 	if (argc < 2)
 		return (printf("error: argument missing\n"), 1);
 	else if (argc > 2)
 		return (printf("error: too much arguments\n\n"), 1);
 	ft_init_game(&game, argv[1]);
 	if (ft_is_cub(game.file_name))
-		return (ft_clean(&game), 1);
+		return (ft_clean_parse(&game, 1), 1);
 	if (ft_get_file(&game))
-		return (ft_clean(&game), 1);
-		
-	// exec game
+		return (ft_clean_parse(&game, 1), 1);
 	game.mlx = mlx_init();
 	if (game.mlx == NULL)
 		return (0);
 	ft_define_img(&game);
-	game.wdw = mlx_new_window(game.mlx, 600, 800, "cub3D");
+	game.wdw = mlx_new_window(game.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (game.wdw == NULL)
-		ft_cleanup_mess(&game);
-	// mlx_loop_hook(game->mlx, &ft_render_map, &data);
-	// mlx_hook(game->wdw, KeyRelease, KeyReleaseMask, &ft_input_to_event, &data);
-	mlx_hook(game.wdw, 17, 1L << 17, &ft_cleanup_mess, &game);
+		ft_clean(&game);
+	ft_init_splayer(&game);
+	mlx_loop_hook(game.mlx, &ft_raycasting, &game);
+	mlx_hook(game.wdw, KeyPress, KeyPressMask, &ft_input_to_event, &game);
+	mlx_hook(game.wdw, 17, 1L << 17, &ft_clean, &game);
 	mlx_loop(game.mlx);
-	ft_cleanup_mess(&game);
+	ft_clean(&game);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:00:47 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/07 00:44:32 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/16 18:07:51 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int	ft_get_player(char **map, t_game *game, int i, int count)
 			{
 				if (count == 0)
 				{
-					game->p->p_x = (double)i + 0.5;
-					game->p->p_y = (double)j + 0.5;
+					game->p->p_y = (double)i + 0.5;
+					game->p->p_x = (double)j + 0.5;
 					game->p->p_dir = map[i][j];
 				}
 				count++;
@@ -181,23 +181,8 @@ int	ft_check_map(t_game *game, int i)
 	if (ft_get_player(cpy, game, 0, 0))
 		return (printf("error: cannot get player position\n"),
 			ft_clean_tab(cpy), 1);
-	if (ft_flood_fill(cpy, game->p->p_x, game->p->p_y))
+	if (ft_flood_fill(cpy, game->p->p_y, game->p->p_x))
 		return (printf("error: map not playable\n"), ft_clean_tab(cpy), 1);
-	/*test*/
-	int l = 0;
-	while (cpy[l])
-	{
-		printf("cpy: %s\n", cpy[l]);
-		l++;
-	}
-	l = 0;
-	printf("\n");
-	while (game->map[l])
-	{
-		printf("map: %s\n", game->map[l]);
-		l++;
-	}
-	/*---*/
 	ft_clean_tab(cpy);
 	return (0);
 }

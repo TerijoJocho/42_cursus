@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:42:45 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/06 14:14:58 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/19 15:32:23 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,8 @@ int	ft_find_map_bounds(t_game *game, int *start, int *end)
  */
 int	ft_check_map_square(char **map)
 {
-	int	i, j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map[i])
@@ -147,13 +148,13 @@ int	ft_check_map_square(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == '0' || map[i][j] == 'N' ||
-				map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W')
+			if (map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S'
+				|| map[i][j] == 'E' || map[i][j] == 'W')
 			{
 				if (i == 0 || j == 0 || !map[i + 1] || !map[i][j + 1])
 					return (1);
-				if (map[i - 1][j] == 'x' || map[i + 1][j] == 'x' ||
-					map[i][j - 1] == 'x' || map[i][j + 1] == 'x')
+				if (map[i - 1][j] == 'x' || map[i + 1][j] == 'x' || map[i][j
+					- 1] == 'x' || map[i][j + 1] == 'x')
 					return (1);
 			}
 			j++;

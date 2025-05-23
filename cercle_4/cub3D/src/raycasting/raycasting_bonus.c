@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:12:00 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/19 18:20:04 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:29:54 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,48 @@ void	ft_display_slice(t_game *game, int x)
 	}
 }
 
+void	ft_minimap(t_game *game)
+{
+	int	x;
+	int	y;
+	int height_start;
+	int width_start;
+	int ratio;
+	int a;
+	int b;
+
+	height_start = 50;
+	width_start = 50;
+	ratio = 10;
+	y = 0;
+	while (y < game->m_line)
+	{
+		b = 0;
+		while (b < ratio)
+		{
+			x = 0;
+			while (x < (int)ft_strlen(game->map[y]))
+			{
+				a = 0;
+				while (a < ratio)
+				{
+					game->img->frm->frame_addr[height_start * (game->img->frm->size_line / 4) + width_start]
+						= 0x00FFFFFF;
+					a++;
+					width_start++;
+				}				
+				x++;
+			}
+			height_start++;
+			width_start = 50;
+			b++;
+		}
+		width_start = 50;
+		y++;
+	}
+	return ;
+}
+
 /**
  * @brief   Raycasting engine
  *
@@ -175,6 +217,7 @@ int	ft_raycasting(t_game *game)
 		ft_display_slice(game, x);
 		x++;
 	}
+	ft_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->wdw, game->img->frm->frame, 0, 0);
 	return (0);
 }

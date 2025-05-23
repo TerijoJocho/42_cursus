@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:26 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/05 15:20:39 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/19 14:44:42 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_parse_file(t_game *game)
 
 	if (ft_find_map_bounds(game, &start, &end))
 		return (1);
-	if (ft_check_texture(game, start, 0) || ft_check_colors(game, start))
+	if (ft_check_texture(game, start, 0, 0) || ft_check_colors(game, start))
 		return (1);
 	i = end + 1;
 	while (game->file_tab[i])
@@ -112,6 +112,7 @@ int	ft_parse_file(t_game *game)
 			return (printf("error: bad map\n"), 1);
 		i++;
 	}
+	game->m_line = end - start;
 	if (ft_check_map(game, start))
 		return (1);
 	return (0);

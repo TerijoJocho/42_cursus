@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:54:27 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/05 14:17:04 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/19 15:07:57 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,8 @@ char	*ft_get_texture_path(char *line, int flag)
  *
  * @return  0 when everything is ok or 1 when there's an error
  */
-int	ft_check_texture(t_game *game, int len, int i)
+int	ft_check_texture(t_game *game, int len, int i, int fd)
 {
-	int		fd;
 	char	*f;
 	char	*f2;
 
@@ -119,19 +118,17 @@ int	ft_check_texture(t_game *game, int len, int i)
 			if (!f || !f2)
 				return (printf("error: malloc fail\n"), 1);
 			if (ft_is_xpm(f))
-				return (printf("error: %s is not a .xpm\n", f), free(f), 1);
+				return (printf("error: %s is not a .xpm\n", f), ff(f, f2, -1),
+					1);
 			fd = open(f, O_RDONLY);
 			if (fd == -1)
-				return (printf("error: %s can not be opened\n", f), free(f), 1);
+				return (printf("error: %s can not be opened\n", f), ff(f, f2,
+						-1), 1);
 			if (ft_save_textures(f, f2, game))
-				return (printf("error: duplicate texture"), free(f), free(f2),
-					close(fd), 1);
-			close(fd);
-			(free(f), free(f2));
+				return (printf("error: duplicate texture\n"), ff(f, f2, fd), 1);
+			ff(f, f2, fd);
 		}
 		i++;
 	}
-	if (!game->NO || !game->SO || !game->WE || !game->EA)
-		return (printf("error: one or more textures are missing\n"), 1);
-	return (0);
+	return (ft_final_check_texture(game) || 0);
 }

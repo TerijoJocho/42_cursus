@@ -6,11 +6,26 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:19 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/05 15:11:14 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/19 15:53:38 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cube3d.h"
+
+int	ft_final_check_texture(t_game *game)
+{
+	if (!game->NO || !game->SO || !game->WE || !game->EA)
+		return (printf("error: one or more textures are missing\n"), 1);
+	return (0);
+}
+
+void	ff(char *f, char *f2, int fd)
+{
+	free(f);
+	free(f2);
+	if (fd != -1)
+		close(fd);
+}
 
 /**
  * @brief   add a new line to the array
@@ -74,6 +89,7 @@ int	ft_get_file(t_game *game)
 	close(fd);
 	if (line_count == 0)
 		return (printf("error: empty .cub file\n"), 1);
-	ft_parse_file(game);
+	if (ft_parse_file(game))
+		ft_clean_parse(game, 1);
 	return (0);
 }

@@ -3,53 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:01 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/07 01:40:38 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/19 18:03:31 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cube3d.h"
 
+void	ft_init_player_part_two(t_game *game)
+{
+	if (game->p->p_dir == 'E')
+	{
+		game->p->dir_x = 1;
+		game->p->dir_y = 0;
+		game->p->plane_x = 0;
+		game->p->plane_y = 0.66;
+	}
+	else if (game->p->p_dir == 'W')
+	{
+		game->p->dir_x = -1;
+		game->p->dir_y = 0;
+		game->p->plane_x = 0;
+		game->p->plane_y = -0.66;
+	}
+}
+
 /**
- * @brief   Init the structure player
+ * @brief   Init the structure p for the raycasting
  *
  * @param   game struct of the game
  *
  * @return
  */
- void    ft_init_splayer(t_game *game)
- {
-	 if (game->player->p_dir == 'N')
-	 {
-		 game->player->dir_x = 0;
-		 game->player->dir_y = -1;
-		 game->player->plane_x = 0.66;
-		 game->player->plane_y = 0;
-	 }
-	 else if (game->player->p_dir == 'S')
-	 {
-		 game->player->dir_x = 0;
-		 game->player->dir_y = 1;
-		 game->player->plane_x = -0.66;
-		 game->player->plane_y = 0;
-	 }
-	 else if (game->player->p_dir == 'E')
-	 {
-		 game->player->dir_x = 1;
-		 game->player->dir_y = 0;
-		 game->player->plane_x = 0;
-		 game->player->plane_y = 0.66;
-	 }
-	 else if (game->player->p_dir == 'W')
-	 {
-		 game->player->dir_x = -1;
-		 game->player->dir_y = 0;
-		 game->player->plane_x = 0;
-		 game->player->plane_y = -0.66;
-	 }
- }
+void	ft_init_splayer(t_game *game)
+{
+	if (game->p->p_dir == 'N')
+	{
+		game->p->dir_x = 0;
+		game->p->dir_y = -1;
+		game->p->plane_x = 0.66;
+		game->p->plane_y = 0;
+	}
+	else if (game->p->p_dir == 'S')
+	{
+		game->p->dir_x = 0;
+		game->p->dir_y = 1;
+		game->p->plane_x = -0.66;
+		game->p->plane_y = 0;
+	}
+	else
+		ft_init_player_part_two(game);
+}
 
 /**
  * @brief   Initalize the structure game
@@ -69,9 +75,15 @@ int	ft_init_game(t_game *game, char *argv)
 	game->EA = NULL;
 	game->F = NULL;
 	game->C = NULL;
+	game->minimap = malloc(sizeof(t_minimap));
+	if (!game->minimap)
+		return (printf("error: malloc minimap failed\n"), 1);
 	game->p = malloc(sizeof(t_player));
 	if (!game->p)
 		return (printf("error: malloc player failed\n"), 1);
+	game->ray = malloc(sizeof(t_ray));
+	if (!game->ray)
+		return (printf("error: malloc ray failed\n"), 1);
 	game->p->p_dir = 0;
 	game->p->p_x = -1;
 	game->p->p_y = -1;

@@ -13,6 +13,32 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <math.h>
+
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 600
+#define NUM_TEXTURES 4
+#define TEXTURE_WIDTH 64
+#define TEXTURE_HEIGHT 64
+#define TEXTURE_SIZE (TEXTURE_WIDTH * TEXTURE_HEIGHT)
+#define MN_WIDTH 200
+#define MN_HEIGHT 100
+
+typedef enum e_direction
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}	e_direction;
+
+typedef struct s_minimap
+{
+	int		minimap_width;
+	int		minimap_height;
+	int		mn_pos_x;
+	int		mn_pos_y;
+}	t_minimap;
 
 typedef struct s_player
 {
@@ -53,18 +79,26 @@ typedef struct s_ray
 	double	wall_x;
 }	t_ray;
 
+typedef struct s_frame
+{
+	void	*frame;
+	int		*frame_addr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+}	t_frame;
+
 typedef struct s_img
 {
-	int				img_length;
+	int				img_width;
 	int				img_height;
+	t_frame			*frm;
 
 	int				*floor_color;
 	int				*ceiling_color;
 
-	void			*north_wall_img;
-	void			*south_wall_img;
-	void			*east_wall_img;
-	void			*west_wall_img;
+	void			*texture_img[NUM_TEXTURES];
+	int 			**texture_buffer;
 }					t_img;
 
 typedef struct s_game
@@ -73,6 +107,7 @@ typedef struct s_game
 	char		**file_tab;
 
 	char		**map;
+	int			m_line;
 
 	void		*mlx;
 	void		*wdw;
@@ -84,16 +119,19 @@ typedef struct s_game
 	char		*F;
 	char		*C;
 
-	t_img		img;
+	t_img		*img;
 	t_player	*p;
-	t_ray		ray;	
+	t_ray		*ray;
+	t_minimap	*minimap;
 }			t_game;
 
 /*parsing*/
 int	ft_get_file(t_game *game);
 int	ft_parse_file(t_game *game);
 int	ft_check_void(char *str);
-int	ft_check_texture(t_game *game, int len, int i);
+int	ft_check_texture(t_game *game, int len, int i, int fd);
+int	ft_final_check_texture(t_game *game);
+void	ff(char *f, char *f2, int fd);
 int	ft_check_colors(t_game *game, int len);
 int	ft_check_map(t_game *game, int i);
 int	ft_check_map_charset(char **map);
@@ -105,17 +143,26 @@ int	ft_find_map_bounds(t_game *game, int *start, int *end);
 int	ft_check_map_square(char **map);
 
 /*init*/
-int	ft_init_game(t_game *game, char *argv);
+int		ft_init_game(t_game *game, char *argv);
 void    ft_init_splayer(t_game *game);
 
 /*exit*/
-void	ft_clean(t_game *game);
+int		ft_clean(t_game *game);
 void	ft_clean_tab(char **tab);
+void	ft_free_textures_colors(t_game *game);
+void	ft_clean_parse(t_game *game, int flag);
 
 /*exec*/
-void	ft_define_img(t_game *game);
+int		ft_define_img(t_game *game);
+int		ft_raycasting(t_game *game);
+int		ft_rgb_to_int(int rgb_tab[3]);
+int		ft_looking_where(t_game *game);
+void	ft_get_ray_dir(t_game *game, int x);
+void	ft_get_delta_dist(t_game *game);
+int		ft_input_to_event(int keycode, t_game *game);
+void	ft_rotate_player_left(t_game *game);
+void	ft_rotate_player_right(t_game *game);
+int		ft_what_color(t_game *game, int y, int tex_x, int tex_y);
 
-/*exit_exec*/
-int		ft_cleanup_mess(t_game *game);
 
 #endif

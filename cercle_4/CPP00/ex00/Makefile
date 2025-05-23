@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
+#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/22 00:30:23 by terijo            #+#    #+#              #
-#    Updated: 2025/05/22 00:47:24 by terijo           ###   ########.fr        #
+#    Updated: 2025/05/23 11:37:12 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,12 +33,12 @@ SRC_FILES = megaphone.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
-SRC_PATH = $(addprefix $(SRC_DIR), $(SRC_FILES)) 
+SRC_PATH = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ_PATH = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 #all rule
 all: $(NAME)
-		@printf "$(BLUE)Welcome to EX00 of CPP\n$(RESET)"
+		@printf "$(BLUE)Welcome to EX00 of CPP00\n$(RESET)"
 
 #compile the executable
 $(NAME): $(OBJ_PATH)
