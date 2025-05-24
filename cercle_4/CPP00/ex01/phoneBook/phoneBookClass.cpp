@@ -6,7 +6,7 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:18:11 by terijo            #+#    #+#             */
-/*   Updated: 2025/05/24 03:03:07 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:20:26 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 bool	ft_is_digit(std::string str);
 
-phoneBook::phoneBook(void) : count(0)
+phoneBook::phoneBook(void) : count(0), index(0)
 {
 	std::clog << "Constructor phoneBook" << std::endl;
 	return ;
@@ -29,17 +29,6 @@ phoneBook::~phoneBook(void)
 {
 	std::clog << "Destructor phoneBook" << std::endl;
 	return ;
-}
-
-bool phoneBook::ft_add_contact(std::string fN, std::string lN, std::string nn,
-	std::string pN, std::string dS)
-{
-	// if (this->count > 7)
-	// 	return (false);//mettre un message d'erreur ou effacer le 1er contact pour le remplacer
-	this->contact[this->count] = Contact(fN, lN, nn, pN, dS);
-	this->count++;
-	std::clog << "Contact added: " << fN << std::endl;
-	return (true);
 }
 
 std::string ft_truncate(std::string str)
@@ -105,13 +94,30 @@ std::string    ft_get_contact(int contactNumber)
     return (input);
 }
 
-bool phoneBook::ft_search_contact(phoneBook &repertoire) const
+bool phoneBook::ft_add_contact(std::string fN, std::string lN, std::string nn,
+	std::string pN, std::string dS)
+{
+	this->contact[this->index] = Contact(fN, lN, nn, pN, dS);
+    this->index = (this->index + 1) % 8;
+    if (this->count < 8)
+        this->count++;
+	std::clog << "Contact added: " << fN << std::endl;
+	return (true);
+}
+
+void phoneBook::ft_search_contact(phoneBook &repertoire) const
 {    
-    std::string input;
 	(void)repertoire;
+    std::string input;
+    
+    std::cout << "|" << std::setw(10) << "Index" << "|" 
+                        << std::setw(10) << "First name" << "|" 
+                        << std::setw(10) << "Last name" << "|"
+                        << std::setw(10) << "Nickname" << "|"
+                << std::endl;
 	for (int i = 0; i < this->count; i++)
 	{
-		std::cout << "|" << i + 1 
+		std::cout << "|" << std::setw(10) << i + 1 
                     << "|" << std::setw(10) << ft_truncate(this->contact[i].firstName) 
                     << "|" << std::setw(10) << ft_truncate(this->contact[i].lastName) 
                     << "|" << std::setw(10) << ft_truncate(this->contact[i].nickname) << "|" << std::endl;
@@ -122,5 +128,5 @@ bool phoneBook::ft_search_contact(phoneBook &repertoire) const
     std::cout << this->contact[ft_str_to_int(input) - 1].nickname << std::endl;
     std::cout << this->contact[ft_str_to_int(input) - 1].phoneNumber << std::endl;
     std::cout << this->contact[ft_str_to_int(input) - 1].darkSecret << std::endl;
-	return (true);
+	return ;
 }
