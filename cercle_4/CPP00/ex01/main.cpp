@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:26:00 by terijo            #+#    #+#             */
-/*   Updated: 2025/05/23 20:03:37 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/24 03:07:33 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,9 @@ void	ft_add(phoneBook &repertoire)
 	std::cout << "Phonenumber: ";
 	ft_check_input(phoneNumber, "Phonenumber: ");
 	std::cout << "Dark secret: ";
-	ft_check_input(darkSecret, "Dark secret: ");
+	ft_check_input(darkSecret, "Dark secret: ");//il faut que ce soit un long input pas juste une string
 	repertoire.ft_add_contact(firstName, lastName, nickname, phoneNumber,
 		darkSecret);
-}
-
-void	ft_search(phoneBook &repertoire)
-{
-	repertoire.ft_search_contact(repertoire);
-	return ;
 }
 
 int	main(void)
@@ -96,7 +90,7 @@ int	main(void)
 	while (1)
 	{
 		std::cout << "Put a command (ADD, SEARCH, EXIT): ";
-		std::getline(std::cin, input);
+		getline(std::cin, input);
 		if (input.empty() || input[0] == '\0' || input[0] == ' ')
 		{
 			std::cerr << "error: Missing arugment [ADD|SEARCH|EXIT]" << std::endl;
@@ -105,7 +99,7 @@ int	main(void)
 		if (!strcmp(input.c_str(), "ADD"))
 			ft_add(repertoire);
 		else if (!strcmp(input.c_str(), "SEARCH"))
-			ft_search(repertoire);
+			repertoire.ft_search_contact(repertoire);
 		else if (!strcmp(input.c_str(), "EXIT"))
 		{
 			std::cout << "PhoneBook lost forever" << std::flush;

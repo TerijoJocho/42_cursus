@@ -10,6 +10,12 @@ Constructor phoneBook
 Constructor Contact called
 Destructor Contact called
 Contact added: Daryl
-Constructor Contact called
+Destructor phoneBook
 Destructor Contact called
-Contact added: Matthieu
+Destructor Contact called
+Destructor Contact called
+Destructor Contact called
+Destructor Contact called
+Destructor Contact called
+Destructor Contact called
+Destructor Contact called
