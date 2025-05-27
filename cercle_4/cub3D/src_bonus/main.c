@@ -6,7 +6,7 @@
 /*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:08 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 14:22:24 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:21:15 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv)
 	ft_init_splayer(&game);
 	mlx_hook(game.wdw, KeyPress, KeyPressMask, ft_key_press, &game);
 	mlx_hook(game.wdw, KeyRelease, KeyReleaseMask, ft_key_release, &game);
-	mlx_loop_hook(game.mlx, ft_keys_loop, &game);
+	mlx_loop_hook(game.mlx, ft_keys_loop_bonus, &game);
 	mlx_hook(game.wdw, 17, 1L << 17, &ft_clean, &game);
 	mlx_loop(game.mlx);
 	return (ft_clean(&game), 0);

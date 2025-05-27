@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:12:00 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 14:46:19 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:33:25 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ int	ft_raycasting(t_game *game)
 		ft_display_slice(game, x);
 		x++;
 	}
+	ft_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->wdw, game->img->frm->frame, 0, 0);
 	return (0);
 }

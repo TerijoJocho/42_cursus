@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:01 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 16:00:39 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:10:45 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_init_game(t_game *game, char *argv)
 	game->keys = malloc(sizeof(t_keys));
 	game->minimap = malloc(sizeof(t_minimap));
 	if (!game->keys || !game->minimap)
-		return (printf("error: malloc keys or minimap failed\n"), 1);
+		return (printf("error: malloc keysor minimap failed\n"), 1);
 	ft_init_keys(game->keys);
 	game->p = malloc(sizeof(t_player));
 	if (!game->p)

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:48 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 16:08:15 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:11:13 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_save_colors(char *f, char *line, t_game *game)
 }
 
 /**
- * @brief   check if the string is a number
+ * @brief   Check if the string is a number
  *
  * @param   f string to check
  *
@@ -82,7 +82,7 @@ int	ft_tab_len(char **tab)
 }
 
 /**
- * @brief   check if it is a color
+ * @brief   Check if it is a color
  *
  * @param   f the string to check
  *
@@ -114,7 +114,7 @@ int	ft_is_color(char *f)
 }
 
 /**
- * @brief   check if the the colors are good
+ * @brief   Check if the the colors are good
  *
  * @param   game struct of the game
  * @param   len		lenght of the file to check

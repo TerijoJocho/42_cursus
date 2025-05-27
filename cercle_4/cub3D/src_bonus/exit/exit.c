@@ -6,14 +6,14 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:38:50 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 16:04:28 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:10:19 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cube3d.h"
 
 /**
- * @brief   function to free a tab **
+ * @brief   Function to free a tab **
  * @param   tab the array to free
  * @return  none
  */
@@ -33,7 +33,7 @@ void	ft_clean_tab(char **tab)
 }
 
 /**
- * @brief   free the textures of file.cub in the struct
+ * @brief   Free the textures of file.cub in the struct
  * 			free all visual associated data from file.cub or converted by MLX
  * @param   game the struct of the game
  * @return  none
@@ -55,6 +55,13 @@ void	ft_free_textures_colors(t_game *game)
 		mlx_destroy_image(game->mlx, game->img->texture_img[WEST]);
 	if (game->img->frm->frame)
 		mlx_destroy_image(game->mlx, game->img->frm->frame);
+}
+
+void	ft_free_minimap(t_game *game)
+{
+	if (game->minimap)
+		free(game->minimap);
+	return ;
 }
 
 void	ft_clean_parse(t_game *game, int flag)
@@ -82,7 +89,7 @@ void	ft_clean_parse(t_game *game, int flag)
 }
 
 /**
- * @brief   free all the alloc made during the program, at the end
+ * @brief   Free all the alloc made during the program, at the end
  * @param   game the struct of the game
  * @return  0 because MLX requires it or 1 for an error
  */

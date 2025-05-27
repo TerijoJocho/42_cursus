@@ -12,8 +12,8 @@ int main(void)
     std::cout << "instance.publicFoo = " << instance.publicFoo << std::endl;
     instance.publicBar();
     //Dans le privé non
-    instance._privateFoo = 42;
-    std::cout << "instance._privateFoo = " << instance._privateFoo << std::endl;
-    instance._privateBar();
+    //instance._privateFoo = 42;
+    //std::cout << "instance._privateFoo = " << instance._privateFoo << std::endl;
+    //instance._privateBar();
     return(0);
 }
