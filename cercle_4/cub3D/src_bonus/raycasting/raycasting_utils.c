@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:23:04 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 15:59:11 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/28 15:11:38 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	ft_rgb_to_int(int rgb_tab[3])
 int	ft_looking_where(t_game *game)
 {
 	if (game->ray->side == 0 && game->ray->ray_dir_x < 0)
-		return (NORTH);
+		return (EAST);
 	else if (game->ray->side == 0 && game->ray->ray_dir_x > 0)
-		return (SOUTH);
-	else if (game->ray->side == 1 && game->ray->ray_dir_y < 0)
 		return (WEST);
-	return (EAST);
+	else if (game->ray->side == 1 && game->ray->ray_dir_y < 0)
+		return (NORTH);
+	return (SOUTH);
 }
 
 int	ft_what_color(t_game *game, int y, int tex_x, int tex_y)

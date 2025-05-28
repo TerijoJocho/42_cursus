@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   img_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:41:17 by aistierl          #+#    #+#             */
-/*   Updated: 2025/05/21 16:19:40 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/23 18:55:36 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,20 @@ void	ft_init_tmp(t_game *game, char **tmp)
 	tmp[4] = NULL;
 }
 
+void	ft_init_textures(t_game *game)
+{
+	game->img->ceiling_color = NULL;
+	game->img->floor_color = NULL;
+	game->img->texture_img[NORTH] = NULL;
+	game->img->texture_img[SOUTH] = NULL;
+	game->img->texture_img[EAST] = NULL;
+	game->img->texture_img[WEST] = NULL;
+	game->img->texture_buffer[NORTH] = NULL;
+	game->img->texture_buffer[SOUTH] = NULL;
+	game->img->texture_buffer[EAST] = NULL;
+	game->img->texture_buffer[WEST] = NULL;
+}
+
 int	ft_xpm_to_image(t_game *game, t_img *img, int i)
 {
 	char	*tmp[5];
@@ -51,6 +65,8 @@ int	ft_xpm_to_image(t_game *game, t_img *img, int i)
 	int		tmp_endian;
 
 	ft_init_tmp(game, tmp);
+	game->img->img_height = TEXTURE_HEIGHT;
+	game->img->img_width = TEXTURE_WIDTH;
 	while (i < NUM_TEXTURES)
 	{
 		img->texture_img[i] = mlx_xpm_file_to_image(game->mlx, tmp[i],
@@ -59,6 +75,8 @@ int	ft_xpm_to_image(t_game *game, t_img *img, int i)
 			return (printf("error: mlx_xpm_file_to_image failed\n"), 1);
 		img->texture_buffer[i] = (int *)mlx_get_data_addr(img->texture_img[i],
 				&tmp_bpp, &tmp_sl, &tmp_endian);
+		if (!img->texture_buffer[i])
+			return (printf("error: mlx_get_data_addr failed\n"), 1);
 		i++;
 	}
 	return (0);
@@ -69,8 +87,6 @@ int	ft_define_img(t_game *game)
 	game->img = malloc(sizeof(t_img));
 	if (!game->img)
 		return (printf("error: malloc failed\n"), 1);
-	game->img->img_height = TEXTURE_HEIGHT;
-	game->img->img_width = TEXTURE_WIDTH;
 	game->img->frm = malloc(sizeof(t_frame));
 	if (!game->img->frm)
 		return (printf("error: malloc failed\n"), 1);
@@ -83,12 +99,14 @@ int	ft_define_img(t_game *game)
 	game->img->frm->frame_addr = (int *)mlx_get_data_addr(game->img->frm->frame,
 			&game->img->frm->bits_per_pixel, &game->img->frm->size_line,
 			&game->img->frm->endian);
-	ft_xpm_to_image(game, game->img, 0);
+	if (!game->img->frm->frame_addr)
+		return (printf("error: mlx_get_data_addr failed\n"), 1);
+	ft_init_textures(game);
+	if (ft_xpm_to_image(game, game->img, 0))
+		return (1);
 	game->img->ceiling_color = ft_tab_rgb(game->c);
-	if (!game->img->ceiling_color)
-		return (printf("error: malloc failed\n"), 1);
 	game->img->floor_color = ft_tab_rgb(game->f);
-	if (!game->img->floor_color)
-		return (printf("error: malloc failed\n"), 1);
+	if (!game->img->ceiling_color || !game->img->floor_color)
+		return (printf("error: ceiling or floor malloc failed\n"), 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:12:00 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 14:33:25 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:54:00 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ int	ft_raycasting(t_game *game)
 	game->img->frm->frame_addr = (int *)mlx_get_data_addr(game->img->frm->frame,
 			&game->img->frm->bits_per_pixel, &game->img->frm->size_line,
 			&game->img->frm->endian);
+	if (!game->img->frm->frame_addr)
+		return (printf("error: mlx_get_data_addr failed\n"), 1);
 	while (x < WIN_WIDTH)
 	{
 		ft_get_ray_dir(game, x);

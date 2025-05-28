@@ -6,7 +6,7 @@
 /*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:42:45 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 14:45:47 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:37:23 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,14 @@ int	ft_find_map_bounds(t_game *game, int *start, int *end)
 
 	i = 0;
 	*start = -1;
-	while (game->file_tab[i])
+	while (game->file_tab && game->file_tab[i])
 	{
 		while (!ft_check_void(game->file_tab[i]))
+		{
+			if (!game->file_tab[i + 1])
+				return (printf("error: no map found\n"), 1);
 			i++;
+		}
 		if (ft_is_map(game->file_tab[i]))
 		{
 			*start = i;

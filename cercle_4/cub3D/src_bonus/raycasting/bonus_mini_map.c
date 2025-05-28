@@ -6,7 +6,7 @@
 /*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 20:20:23 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 14:42:10 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/23 19:38:04 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,43 @@ int	ft_color(t_game *game, char tile, int y, int x)
 		return (0x00000000);
 }
 
+void	ft_draw_tile(t_game *game, int y, int x, int color)
+{
+	int	a;
+	int	b;
+
+	b = 0;
+	while (b < RATIO)
+	{
+		a = 0;
+		while (a < RATIO)
+		{
+			game->img->frm->frame_addr[(y + b) * (game->img->frm->size_line / 4)
+				+ x + a] = color;
+			a++;
+		}
+		b++;
+	}
+}
+
 void	ft_draw_tile_row(t_game *game, int y, int start_y)
 {
 	int	x;
 	int	start_x;
 	int	color;
-	int	a;
-	int	b;
 
 	x = 0;
 	while (x < (int)ft_strlen(game->map[y]))
 	{
 		start_x = 50 + x * RATIO;
-		color = ft_color(game, game->map[y][x], y, x);
-		b = 0;
-		while (b < RATIO)
+		if (game->map[y][x] == ' ' || game->map[y][x] == '\t'
+			|| game->map[y][x] == '\n')
 		{
-			a = 0;
-			while (a < RATIO)
-			{
-				game->img->frm->frame_addr[(start_y + b)
-					* (game->img->frm->size_line / 4) + start_x + a] = color;
-				a++;
-			}
-			b++;
+			x++;
+			continue ;
 		}
+		color = ft_color(game, game->map[y][x], y, x);
+		ft_draw_tile(game, start_y, start_x, color);
 		x++;
 	}
 }

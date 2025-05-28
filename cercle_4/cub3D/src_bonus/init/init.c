@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:01 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 16:10:45 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:54:49 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,18 @@ void	ft_init_keys(t_keys *keys)
 	keys->right = 0;
 }
 
+void	ft_init_vars(t_game *game)
+{
+	game->file_tab = NULL;
+	game->map = NULL;
+	game->no = NULL;
+	game->so = NULL;
+	game->we = NULL;
+	game->ea = NULL;
+	game->f = NULL;
+	game->c = NULL;
+}
+
 /**
  * @brief   Initalize the structure game
  *
@@ -77,18 +89,13 @@ void	ft_init_keys(t_keys *keys)
 int	ft_init_game(t_game *game, char *argv)
 {
 	game->file_name = argv;
-	game->file_tab = NULL;
-	game->map = NULL;
-	game->no = NULL;
-	game->so = NULL;
-	game->we = NULL;
-	game->ea = NULL;
-	game->f = NULL;
-	game->c = NULL;
+	ft_init_vars(game);
 	game->keys = malloc(sizeof(t_keys));
+	if (!game->keys)
+		return (printf("error: malloc keys failed\n"), 1);
 	game->minimap = malloc(sizeof(t_minimap));
-	if (!game->keys || !game->minimap)
-		return (printf("error: malloc keysor minimap failed\n"), 1);
+	if (!game->minimap)
+		return (printf("error: minimap failed\n"), 1);
 	ft_init_keys(game->keys);
 	game->p = malloc(sizeof(t_player));
 	if (!game->p)

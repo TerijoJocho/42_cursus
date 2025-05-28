@@ -6,7 +6,7 @@
 /*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:08 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 14:21:15 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/23 19:09:28 by aistierl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	if (argc < 2)
-		return (printf("error: argument missing\n"), 1);
-	else if (argc > 2)
-		return (printf("error: too much arguments\n\n"), 1);
+	if (argc != 2)
+		return (printf("error: wrong number of arguments\n"), 1);
 	ft_init_game(&game, argv[1]);
 	if (ft_is_cub(game.file_name))
 		return (ft_clean_parse(&game, 1), 1);
@@ -46,10 +44,11 @@ int	main(int argc, char **argv)
 	game.mlx = mlx_init();
 	if (game.mlx == NULL)
 		return (0);
-	ft_define_img(&game);
 	game.wdw = mlx_new_window(game.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (game.wdw == NULL)
 		ft_clean(&game);
+	if (ft_define_img(&game))
+		return (ft_clean(&game), 1);
 	ft_init_splayer(&game);
 	mlx_hook(game.wdw, KeyPress, KeyPressMask, ft_key_press, &game);
 	mlx_hook(game.wdw, KeyRelease, KeyReleaseMask, ft_key_release, &game);
