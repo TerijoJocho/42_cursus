@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:24:15 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/28 16:49:26 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/28 16:57:13 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	main(void)
 {
 	Zombie	*p = newZombie("Jean");
 
-	randomChump("Charles");//Charles meurt directement apres
+	randomChump("Charles");
 	p->announce();
-	delete p;//Jean meurt ici
+	delete p;
 	return (0);
 }
