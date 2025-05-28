@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:45:51 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/27 15:46:23 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/28 13:46:19 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 Zombie	*newZombie(std::string name)
 {
-	Zombie	z(name);
-	return (&z);
+	Zombie	*p = new Zombie(name);
+
+	return (p);
 }
