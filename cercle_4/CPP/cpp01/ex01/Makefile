@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
+#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/28 16:31:16 by daavril           #+#    #+#              #
-#    Updated: 2025/05/28 16:37:56 by daavril          ###   ########.fr        #
+#    Updated: 2025/05/29 23:02:35 by terijo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = main.cpp newZombie.cpp randomChump.cpp Zombie.cpp
+SRC_FILES = main.cpp zombieHorde.cpp Zombie.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
@@ -38,7 +38,7 @@ OBJ_PATH = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 #all rule
 all: $(NAME)
-		@printf "$(BLUE)Welcome to EX00 of CPP01\n$(RESET)"
+		@printf "$(BLUE)Welcome to EX01 of CPP01\n$(RESET)"
 
 #compile the executable
 $(NAME): $(OBJ_PATH)
@@ -59,16 +59,16 @@ $(OBJ_DIR)%.o: %.cpp
 clean:
 	@if [ -d "$(OBJ_DIR)" ]; then \
 	rm -rf $(OBJ_DIR); \
-	echo "$(BLUE)Deleting all objects from /ex00...$(RESET)"; else \
-	echo "No objects to remove from /ex00."; \
+	echo "$(BLUE)Deleting all objects from /ex01...$(RESET)"; else \
+	echo "No objects to remove from /ex01."; \
 	fi;
 
 #fclean rule
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
 	rm -f $(NAME); \
-	echo "$(BLUE)Deleting $(NAME) from ex02...$(RESET)"; else \
-	echo "No Executable to remove from ex02."; \
+	echo "$(BLUE)Deleting $(NAME) from ex01...$(RESET)"; else \
+	echo "No Executable to remove from ex01."; \
 	fi;
 
 #re rule

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
+#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/28 16:31:16 by daavril           #+#    #+#              #
-#    Updated: 2025/05/28 16:37:56 by daavril          ###   ########.fr        #
+#    Updated: 2025/05/29 23:03:51 by terijo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,8 +67,8 @@ clean:
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
 	rm -f $(NAME); \
-	echo "$(BLUE)Deleting $(NAME) from ex02...$(RESET)"; else \
-	echo "No Executable to remove from ex02."; \
+	echo "$(BLUE)Deleting $(NAME) from ex00...$(RESET)"; else \
+	echo "No Executable to remove from ex00."; \
 	fi;
 
 #re rule

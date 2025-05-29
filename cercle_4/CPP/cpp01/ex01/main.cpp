@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:24:15 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/28 16:57:13 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/29 23:00:57 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	main(void)
 {
-	Zombie	*p = newZombie("Jean");
-
-	randomChump("Charles");
-	p->announce();
-	delete p;
+	Zombie	*p = zombieHorde(5, "José");
+	
+	for (int i = 0; i < 5; i++)
+	{
+		p->announce();
+	}
 	return (0);
 }
