@@ -6,7 +6,7 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:24:15 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/29 23:00:57 by terijo           ###   ########.fr       */
+/*   Updated: 2025/05/29 23:07:19 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int	main(void)
 {
-	Zombie	*p = zombieHorde(5, "José");
+	int		nb = 5;
+	Zombie	*p = zombieHorde(nb, "José");
 	
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < nb; i++)
 	{
 		p->announce();
 	}
+	delete[] p;
 	return (0);
 }
