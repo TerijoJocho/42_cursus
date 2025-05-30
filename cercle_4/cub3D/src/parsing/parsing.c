@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:19 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 16:02:03 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/30 20:17:43 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int	ft_final_check_texture(t_game *game)
 
 void	ff(char *f, char *f2, int fd)
 {
-	free(f);
-	free(f2);
+	if (f)
+		free(f);
+	if (f2)
+		free(f2);
 	if (fd != -1)
 		close(fd);
 }
@@ -90,6 +92,6 @@ int	ft_get_file(t_game *game)
 	if (line_count == 0)
 		return (printf("error: empty .cub file\n"), 1);
 	if (ft_parse_file(game))
-		ft_clean_parse(game, 1);
+		return (1);
 	return (0);
 }

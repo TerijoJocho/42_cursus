@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:08 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/23 19:08:59 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:07:50 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (printf("error: wrong number of arguments\n"), 1);
-	ft_init_game(&game, argv[1]);
+	if (ft_init_game(&game, argv[1]))
+		return (ft_clean_parse(&game, 1), 1);
 	if (ft_is_cub(game.file_name))
 		return (ft_clean_parse(&game, 1), 1);
 	if (ft_get_file(&game))

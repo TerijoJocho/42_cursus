@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   img_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:41:17 by aistierl          #+#    #+#             */
-/*   Updated: 2025/05/23 19:05:16 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:44:19 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,6 @@ int	ft_define_img(t_game *game)
 	game->img->frm = malloc(sizeof(t_frame));
 	if (!game->img->frm)
 		return (printf("error: malloc failed\n"), 1);
-	game->img->texture_buffer = malloc(sizeof(int *) * NUM_TEXTURES);
-	if (!game->img->texture_buffer)
-		return (printf("error: malloc failed\n"), 1);
 	game->img->frm->frame = mlx_new_image(game->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!game->img->frm->frame)
 		return (printf("error: mlx_new_image failed\n"), 1);
@@ -101,6 +98,9 @@ int	ft_define_img(t_game *game)
 			&game->img->frm->endian);
 	if (!game->img->frm->frame_addr)
 		return (printf("error: mlx_get_data_addr failed\n"), 1);
+	game->img->texture_buffer = malloc(sizeof(int *) * NUM_TEXTURES);
+	if (!game->img->texture_buffer)
+		return (printf("error: malloc failed\n"), 1);
 	ft_init_textures(game);
 	if (ft_xpm_to_image(game, game->img, 0))
 		return (1);

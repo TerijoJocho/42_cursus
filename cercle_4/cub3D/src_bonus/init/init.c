@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:01 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/23 16:54:49 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:00:53 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ void	ft_init_vars(t_game *game)
 	game->ea = NULL;
 	game->f = NULL;
 	game->c = NULL;
+	game->keys = NULL;
+	game->ray = NULL;
+	game->p = NULL;
+	game->minimap = NULL;
 }
 
 /**

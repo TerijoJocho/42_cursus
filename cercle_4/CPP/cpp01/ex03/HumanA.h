@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   HumanA.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 15:24:15 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/30 13:07:21 by daavril          ###   ########.fr       */
+/*   Created: 2025/05/30 14:18:31 by daavril           #+#    #+#             */
+/*   Updated: 2025/05/30 14:21:08 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#ifndef HUMANA_H
+# define HUMANA_H
 
-int	main(void)
+# pragma once
+
+#include "Weapon.h"
+
+class HumanA
 {
-	int		nb = 5;
-	Zombie	*p = zombieHorde(nb, "José");
+	public:
+		HumanA();
+		~HumanA();
+		Weapon	weapon;
+		void	attack(void) const;
+	private:
+};
 
-	for (int i = 0; i < nb; i++)
-	{
-		p->announce();
-	}
-	delete[] p;
-	return (0);
-}
+#endif

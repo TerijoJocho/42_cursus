@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:46:48 by daavril           #+#    #+#             */
-/*   Updated: 2024/09/30 15:24:58 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/30 18:23:54 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 1024
 # endif
 
 char	*get_next_line(int fd);

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:48 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 16:11:13 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/30 20:14:34 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ int	ft_is_color(char *f)
 	while (tab[i])
 	{
 		num = ft_atoi(tab[i]);
-		if (num == -1)
-			return (ft_clean_tab(tab), 1);
 		if (tab[i][0] == '0' && ft_strlen(tab[i]) > 1)
 			return (ft_clean_tab(tab), 1);
 		if (num < 0 || num > 255)

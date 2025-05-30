@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:39:01 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/23 16:50:08 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:54:00 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ void	ft_init_vars(t_game *game)
 	game->ea = NULL;
 	game->f = NULL;
 	game->c = NULL;
+	game->keys = NULL;
+	game->ray = NULL;
+	game->p = NULL;
 }
 
 /**
@@ -93,9 +96,6 @@ int	ft_init_game(t_game *game, char *argv)
 	game->keys = malloc(sizeof(t_keys));
 	if (!game->keys)
 		return (printf("error: malloc keys failed\n"), 1);
-	game->minimap = malloc(sizeof(t_minimap));
-	if (!game->minimap)
-		return (printf("error: minimap failed\n"), 1);
 	ft_init_keys(game->keys);
 	game->p = malloc(sizeof(t_player));
 	if (!game->p)

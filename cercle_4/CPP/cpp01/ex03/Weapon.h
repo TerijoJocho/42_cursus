@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Weapon.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 15:24:15 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/30 13:07:21 by daavril          ###   ########.fr       */
+/*   Created: 2025/05/30 13:42:58 by daavril           #+#    #+#             */
+/*   Updated: 2025/05/30 14:13:04 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#ifndef WEAPON_H
+# define WEAPON_H
 
-int	main(void)
+# pragma once
+
+#include <iostream>
+
+class Weapon
 {
-	int		nb = 5;
-	Zombie	*p = zombieHorde(nb, "José");
+	public:
+		Weapon();
+		~Weapon();
+		const	std::string &getType(void) const;
+		void	setType(std::string weapon);
 
-	for (int i = 0; i < nb; i++)
-	{
-		p->announce();
-	}
-	delete[] p;
-	return (0);
-}
+	private:
+		std::string	type;
+};
+
+#endif

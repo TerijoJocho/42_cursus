@@ -6,38 +6,35 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:43:07 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/05 16:16:41 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/30 20:20:54 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	i;
-	int	sign;
-	int	nb;
+	int		i;
+	long	nb;
 
 	i = 0;
-	sign = 1;
 	nb = 0;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-')
-	{
-		sign *= -1;
-		i++;
-	}
+		return (-1);
 	else if (str[i] == '+')
 		i++;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		nb = (nb * 10) + (str[i] - '0');
+		if (nb > __INT_MAX__)
+			return (-1);
 		i++;
 	}
 	if (str[i] != '\0')
 		return (-1);
-	return (nb * sign);
+	return (nb);
 }
 /*#include <stdio.h>
 int	main(int argc, char **argv)

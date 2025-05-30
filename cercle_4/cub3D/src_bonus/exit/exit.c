@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistierl <aistierl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:38:50 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/23 19:09:59 by aistierl         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:59:46 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,8 @@ void	ft_clean_tab(char **tab)
  */
 void	ft_free_textures_colors(t_game *game)
 {
-	ft_clean_parse(game, 0);
-	if (game->img->floor_color)
-		(free(game->img->floor_color), game->img->floor_color = NULL);
-	if (game->img->ceiling_color)
-		(free(game->img->ceiling_color), game->img->ceiling_color = NULL);
+	if (game->img->frm->frame)
+		mlx_destroy_image(game->mlx, game->img->frm->frame);
 	if (game->img->texture_img[NORTH])
 		mlx_destroy_image(game->mlx, game->img->texture_img[NORTH]);
 	if (game->img->texture_img[SOUTH])
@@ -53,15 +50,10 @@ void	ft_free_textures_colors(t_game *game)
 		mlx_destroy_image(game->mlx, game->img->texture_img[EAST]);
 	if (game->img->texture_img[WEST])
 		mlx_destroy_image(game->mlx, game->img->texture_img[WEST]);
-	if (game->img->frm->frame)
-		mlx_destroy_image(game->mlx, game->img->frm->frame);
-}
-
-void	ft_free_minimap(t_game *game)
-{
-	if (game->minimap)
-		free(game->minimap);
-	return ;
+	if (game->img->floor_color)
+		(free(game->img->floor_color), game->img->floor_color = NULL);
+	if (game->img->ceiling_color)
+		(free(game->img->ceiling_color), game->img->ceiling_color = NULL);
 }
 
 void	ft_clean_parse(t_game *game, int flag)
@@ -80,10 +72,14 @@ void	ft_clean_parse(t_game *game, int flag)
 		(free(game->c), game->c = NULL);
 	ft_clean_tab(game->file_tab);
 	ft_clean_tab(game->map);
-	free(game->ray);
-	free(game->p);
-	free(game->keys);
-	free(game->minimap);
+	if (game->keys)
+		free(game->keys);
+	if (game->p)
+		free(game->p);
+	if (game->ray)
+		free(game->ray);
+	if (game->minimap)
+		free(game->minimap);
 	if (flag == 1)
 		exit(1);
 }
@@ -97,10 +93,17 @@ int	ft_clean(t_game *game)
 {
 	if (!game)
 		return (1);
-	ft_free_textures_colors(game);
-	free(game->img->texture_buffer);
-	free(game->img->frm);
-	free(game->img);
+	ft_clean_parse(game, 0);
+	if (game->wdw != NULL && game->img != NULL)
+	{
+		if (game->img->frm)
+		{
+			ft_free_textures_colors(game);
+			free(game->img->frm);
+			free(game->img->texture_buffer);
+		}
+		free(game->img);
+	}
 	if (game->wdw)
 		mlx_destroy_window(game->mlx, game->wdw);
 	mlx_destroy_display(game->mlx);

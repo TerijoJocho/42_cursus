@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:54:27 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 16:12:39 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/30 20:01:32 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	ft_check_texture(t_game *game, int len, int i, int fd)
 			f = ft_get_texture_path(game->file_tab[i], 1);
 			f2 = ft_get_texture_path(game->file_tab[i], 0);
 			if (!f || !f2)
-				return (printf("error: malloc fail\n"), 1);
+				return (printf("error: malloc fail\n"), ff(f, f2, -1), 1);
 			if (ft_is_xpm(f))
 				return (printf("error: %s is not a .xpm\n", f), ff(f, f2, -1),
 					1);

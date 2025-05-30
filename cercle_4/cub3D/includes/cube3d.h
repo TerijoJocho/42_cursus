@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:56:48 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/21 16:00:06 by daavril          ###   ########.fr       */
+/*   Updated: 2025/05/30 19:58:09 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,9 @@ typedef struct s_game
 	char		*c;
 
 	t_img		*img;
+	t_minimap	*minimap;
 	t_player	*p;
 	t_ray		*ray;
-	t_minimap	*minimap;
 	t_keys		*keys;
 }				t_game;
 
