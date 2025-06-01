@@ -6,7 +6,7 @@
 /*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:03:41 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/01 18:22:14 by terijo           ###   ########.fr       */
+/*   Updated: 2025/06/01 23:13:56 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int main(int argc, char **argv)
             //on ecrit la line dans le flus de sortie
             ofs << line << std::endl;
         }
+        ifs.close();
+        ofs.close();
     } 
     return (0);
 }
