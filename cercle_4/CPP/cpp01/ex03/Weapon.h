@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Weapon.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:42:58 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/30 14:13:04 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/01 15:08:08 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ class Weapon
 {
 	public:
 		Weapon();
+		Weapon(std::string	type);
 		~Weapon();
 		const	std::string &getType(void) const;
 		void	setType(std::string weapon);

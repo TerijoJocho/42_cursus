@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   Weapon.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:47:43 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/30 14:13:07 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/01 15:14:22 by terijo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Weapon.h"
 
 Weapon::Weapon()
+{
+}
+
+Weapon::Weapon(std::string	type) : type(type)
 {
 }
 
