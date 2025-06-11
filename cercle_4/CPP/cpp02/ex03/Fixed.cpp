@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:42:09 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/11 15:08:04 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/11 14:24:03 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ Fixed Fixed::operator*(const Fixed &other) const
 {
 	Fixed	multiplication;
 
-	multiplication.setRawBits((long long)(this->_rawBits * other._rawBits) >> _fractionalBits); //on divise une fois par la precision pour revenir a une bonne echelle
+	multiplication.setRawBits((this->_rawBits * other._rawBits) >> _fractionalBits); //on divise une fois par la precision pour revenir a une bonne echelle
 	return (multiplication);
 }
 
