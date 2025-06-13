@@ -20,13 +20,6 @@ Point &Point::operator=(Point const &other)
 	return (*this);
 }
 
-Point Point::operator-(const Point &other) const
-{
-	Point	soustraction(getX() - other._x, this->_y - other._y);
-
-	return (soustraction);
-}
-
 Point::~Point()
 {
 

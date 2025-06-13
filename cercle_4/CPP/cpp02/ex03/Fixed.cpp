@@ -6,11 +6,13 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:42:09 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/11 14:24:03 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/13 19:17:23 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
+#include "Point.hpp"
+
 
 // initialise la valeur à 0
 Fixed::Fixed(void) : _rawBits(0)

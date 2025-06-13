@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:18:18 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/11 17:00:31 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/13 19:38:34 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main( void )
 	Point	a(1.2, 3.1);
 	Point	b(5.3, 9.6);
 	Point	c;
-	Point	point(5.3, 0.0);
+	Point	point(1.2, 3.1);
 
 	std::cout << "a.x: " << a.getX() << ", a.y: " << a.getY() << std::endl;
 	std::cout << "b.x: " << b.getX() << ", b.y: " << b.getY() << std::endl;
