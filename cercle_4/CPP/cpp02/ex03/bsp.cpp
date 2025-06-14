@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:13:04 by daavril           #+#    #+#             */
-/*   Updated: 2025/06/13 19:39:09 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/14 16:26:39 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ bool	bsp(Point const a, Point const b, Point const c, Point const point)
 	Fixed	cross1 = cross(ab, ap);
 	Fixed	cross2 = cross(bc, bp);
 	Fixed	cross3 = cross(ca, cp);
+
+	if (cross1 == 0 || cross2 == 0 || cross3 == 0)
+		return (false);
 
 	bool	has_neg = (cross1 < 0 || cross2 < 0 || cross3 < 0);
 	bool	has_pos = (cross1 > 0 || cross2 > 0 || cross3 > 0);

@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:25:26 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/28 16:34:12 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/13 15:11:55 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Zombie
 		void	announce(void) const;
 
 	private:
-		std::string name;
+		std::string _name;
 		Zombie(void);
 };
 

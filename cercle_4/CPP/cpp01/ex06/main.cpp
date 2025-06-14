@@ -1,21 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/01 23:48:24 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/02 01:25:18 by terijo           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Harl.hpp"
 
-int main(void)
+int	main(int argc, char **argv)
 {
-    Harl    harl;
+	if (argc != 2)
+	{
+		std::cout << "error: choose one of them level: DEBUG, INFO, WARNING, ERROR" << std::endl;
+		return (1);
+	}
 
-    harl.complainFilter("");
-    return (0);
+	Harl		harl;
+	std::string	level;
+
+	level = argv[1];
+	harl.complainFilter(level);
+	return (0);
 }

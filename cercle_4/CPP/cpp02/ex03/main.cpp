@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:18:18 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/13 19:38:34 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:22:29 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ bool	bsp(Point const a, Point const b, Point const c, Point const point);
 
 int main( void )
 {
-	Point	a(1.2, 3.1);
-	Point	b(5.3, 9.6);
-	Point	c;
-	Point	point(1.2, 3.1);
+	Point	a(0.0f, 0.0f);
+	Point	b(4.0f, 0.0f);
+	Point	c(2.0f, 4.0f);
+	Point	point(2.0f, 0.0f);
 
 	std::cout << "a.x: " << a.getX() << ", a.y: " << a.getY() << std::endl;
 	std::cout << "b.x: " << b.getX() << ", b.y: " << b.getY() << std::endl;

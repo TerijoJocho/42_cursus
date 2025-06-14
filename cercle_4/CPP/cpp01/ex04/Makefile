@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
+#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 17:27:49 by terijo            #+#    #+#              #
-#    Updated: 2025/06/01 17:28:40 by terijo           ###   ########.fr        #
+#    Updated: 2025/06/14 14:33:31 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = FileReplace
+NAME = FileToReplace
 CC	 = g++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
@@ -67,6 +67,7 @@ clean:
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
 	rm -f $(NAME); \
+	rm -f "file.replace" \
 	echo "$(BLUE)Deleting $(NAME) from ex04...$(RESET)"; else \
 	echo "No Executable to remove from ex04."; \
 	fi;

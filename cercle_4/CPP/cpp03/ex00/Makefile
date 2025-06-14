@@ -1,4 +1,4 @@
-NAME = Zombie
+NAME = ClapTrap
 CC	 = g++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
@@ -17,7 +17,7 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = main.cpp newZombie.cpp randomChump.cpp Zombie.cpp
+SRC_FILES = main.cpp ClapTrap.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
@@ -26,7 +26,7 @@ OBJ_PATH = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 #all rule
 all: $(NAME)
-		@printf "$(BLUE)Welcome to EX00 of CPP01\n$(RESET)"
+		@printf "$(BLUE)Welcome to EX00 of CPP03\n$(RESET)"
 
 #compile the executable
 $(NAME): $(OBJ_PATH)

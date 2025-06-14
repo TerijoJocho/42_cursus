@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:24:15 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/30 13:07:21 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/14 14:51:02 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	main(void)
 {
-	int		nb = 5;
+	int		nb = 10;
 	Zombie	*p = zombieHorde(nb, "José");
 
 	for (int i = 0; i < nb; i++)
 	{
-		p->announce();
+		p[i].announce();
 	}
 	delete[] p;
 	return (0);

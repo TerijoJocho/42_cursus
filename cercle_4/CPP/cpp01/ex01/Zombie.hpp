@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:25:26 by daavril           #+#    #+#             */
-/*   Updated: 2025/05/29 22:59:57 by terijo           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:18:27 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ class Zombie
 		~Zombie();
 		void	announce(void) const;
 		void	setName(std::string name);
-		
+
 	private:
-		std::string name;
+		std::string _name;
 };
 
 Zombie	*newZombie(std::string name);
