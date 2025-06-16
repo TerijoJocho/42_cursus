@@ -77,8 +77,6 @@ void	ClapTrap::beRepaired(unsigned int amount)
 	}
 
 	this->_HitPoints += amount;
-	if (this->_HitPoints > 10)
-		this->_HitPoints = 10;
 	this->_EnergyPoints--;
 
 	std::cout << "\nClapTrap " << this->_Name 
