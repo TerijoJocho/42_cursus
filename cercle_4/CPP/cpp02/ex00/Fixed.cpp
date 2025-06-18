@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:42:09 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/07 01:15:37 by terijo           ###   ########.fr       */
+/*   Updated: 2025/06/18 12:10:45 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Fixed::Fixed(void) : _rawBits(0)
 Fixed::Fixed(const Fixed &cpy)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	// copie la valeur _rawBits de l'objet en pram dans le nouvelle objet
+	// copie la valeur _rawBits de l'objet en param dans le nouvelle objet
 	this->_rawBits = cpy.getRawBits();
 }
 

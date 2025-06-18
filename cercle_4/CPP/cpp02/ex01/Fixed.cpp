@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terijo <terijo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:42:09 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/07 02:25:02 by terijo           ###   ########.fr       */
+/*   Updated: 2025/06/18 12:44:14 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ Fixed::Fixed(void) : _rawBits(0)
 Fixed::Fixed(const Fixed &cpy)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	// copie la valeur _rawBits de l'objet en pram dans le nouvelle objet
-	this->_rawBits = cpy.getRawBits();
+	// copie en appelant l'operateur d'affectation surhargee
+	*this = cpy;
 }
 
 // prend un obejt deja existant
@@ -45,7 +45,7 @@ Fixed &Fixed::operator=(const Fixed &other)
 Fixed::Fixed(const float floatVal)
 {
 	std::cout << "Float constructor called" << std::endl;
-	this->_rawBits = std::roundf(floatVal * (1 << _fractionalBits));
+	this->_rawBits = (int)(floatVal * (1 << _fractionalBits));
 }
 
 //converti le nb a virgule fixe en float

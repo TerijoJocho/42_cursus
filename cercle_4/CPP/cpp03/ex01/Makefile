@@ -1,5 +1,5 @@
 NAME = ScavTrap
-CC	 = g++
+CC	 = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
 #directories
@@ -17,7 +17,7 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = main.cpp ClapTrap.cpp ScavTrap.cpp
+SRC_FILES = main.cpp ClapTrapClass/ClapTrap.cpp ScavTrapClass/ScavTrap.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
@@ -36,7 +36,7 @@ $(NAME): $(OBJ_PATH)
 
 #compile objects
 $(OBJ_DIR)%.o: %.cpp
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling [$@]...$(RESET)"
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@printf "$(UP)$(CUT)"

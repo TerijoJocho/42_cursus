@@ -6,12 +6,12 @@
 #    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/22 00:52:43 by terijo            #+#    #+#              #
-#    Updated: 2025/05/23 12:58:46 by daavril          ###   ########.fr        #
+#    Updated: 2025/06/16 16:01:01 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Repertoire
-CC	 = g++
+CC	 = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
 #directories
@@ -29,7 +29,7 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = contactClass.cpp phoneBookClass.cpp main.cpp
+SRC_FILES = contactClass.cpp phoneBookClass.cpp phoneBookUtils.cpp main.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths

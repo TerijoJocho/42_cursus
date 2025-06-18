@@ -1,17 +1,5 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/05 12:06:45 by terijo            #+#    #+#              #
-#    Updated: 2025/06/11 16:16:48 by daavril          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = bsp
-CC	 = g++
+CC	 = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
 #directories
@@ -29,7 +17,7 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = main.cpp Fixed.cpp Point.cpp bsp.cpp
+SRC_FILES = main.cpp FixedClass/Fixed.cpp PointClass/Point.cpp bsp.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
@@ -48,7 +36,7 @@ $(NAME): $(OBJ_PATH)
 
 #compile objects
 $(OBJ_DIR)%.o: %.cpp
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling [$@]...$(RESET)"
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@printf "$(UP)$(CUT)"

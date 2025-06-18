@@ -8,7 +8,10 @@
 class ClapTrap
 {
   public:
+	ClapTrap();
 	ClapTrap(std::string Name);
+	ClapTrap(const ClapTrap &cpy);
+	ClapTrap &operator=(const ClapTrap &other);
 	~ClapTrap();
 
 	void	attack(const std::string &target);

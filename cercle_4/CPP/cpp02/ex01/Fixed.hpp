@@ -8,7 +8,7 @@
 class Fixed
 {
   public:
-	Fixed(void);                          // constructeur par defaut
+	Fixed();                          // constructeur par defaut
 	Fixed(const Fixed &cpy);              // constructeur de recopie
 	Fixed &operator=(const Fixed &other); // surcharge de l'operateur d'affectation (=)
 	Fixed(const int intVal);              // constructeur qui convertit nbToFix en virgule fixe

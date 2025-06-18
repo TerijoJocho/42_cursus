@@ -1,17 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Fixed.cpp                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 12:42:09 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/13 19:17:23 by daavril          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Fixed.hpp"
-#include "Point.hpp"
+#include "../PointClass/Point.hpp"
 
 
 // initialise la valeur à 0
@@ -25,8 +13,7 @@ Fixed::Fixed(void) : _rawBits(0)
 Fixed::Fixed(const Fixed &cpy)
 {
 	// std::cout << "Copy constructor called" << std::endl;
-	// copie la valeur _rawBits de l'objet en pram dans le nouvelle objet
-	this->_rawBits = cpy.getRawBits();
+	*this = cpy;
 }
 
 // prend un obejt deja existant
@@ -182,7 +169,7 @@ Fixed &Fixed::min(Fixed &first, Fixed &second)
 	return (second);
 }
 
-const Fixed &Fixed::minConst(Fixed const &first, Fixed const &second)
+const Fixed &Fixed::min(Fixed const &first, Fixed const &second)
 {
 	return ((first < second) ? first : second);
 }
@@ -194,7 +181,7 @@ Fixed &Fixed::max(Fixed &first, Fixed &second)
 	return (second);
 }
 
-const Fixed &Fixed::maxConst(Fixed const &first, Fixed const &second)
+const Fixed &Fixed::max(Fixed const &first, Fixed const &second)
 {
 	return ((first > second) ? first : second);
 }

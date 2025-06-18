@@ -3,23 +3,26 @@
 
 # pragma once
 
-#include <iostream>
+# include <iostream>
 
 class ClapTrap
 {
   public:
+	ClapTrap();
 	ClapTrap(std::string Name);
+	ClapTrap(const ClapTrap &cpy);
+	ClapTrap &operator=(const ClapTrap &other);
 	~ClapTrap();
 
-	void	attack(const std::string &target);
-	void	takeDamage(unsigned int amount);
-	void	beRepaired(unsigned int amount);
+	void attack(const std::string &target);
+	void takeDamage(unsigned int amount);
+	void beRepaired(unsigned int amount);
 
   private:
-	std::string	_Name;
-	int			_HitPoints;
-	int			_EnergyPoints;
-	int			_AttackDamage;
+	std::string _Name;
+	int _HitPoints;
+	int _EnergyPoints;
+	int _AttackDamage;
 };
 
 #endif

@@ -11,9 +11,10 @@ Point::Point(float const x, float const y) : _x(x), _y(y)
 
 Point::Point(Point const &cpy) : _x(cpy.getX()), _y(cpy.getY())
 {
-
+	// *this = cpy; pas bon
 }
 
+//impossible d'utiliser car x et y const
 Point &Point::operator=(Point const &other)
 {
 	(void)other;
@@ -34,3 +35,4 @@ Fixed Point::getY(void) const
 {
 	return (this->_y);
 }
+

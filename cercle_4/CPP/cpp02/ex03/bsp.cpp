@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   bsp.cpp                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 16:13:04 by daavril           #+#    #+#             */
-/*   Updated: 2025/06/14 16:26:39 by daavril          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "Point.hpp"
+#include "PointClass/Point.hpp"
 
 Fixed	cross(Point const &v1, Point const &v2)
 {
@@ -47,6 +35,8 @@ bool	bsp(Point const a, Point const b, Point const c, Point const point)
 	bool	has_neg = (cross1 < 0 || cross2 < 0 || cross3 < 0);
 	bool	has_pos = (cross1 > 0 || cross2 > 0 || cross3 > 0);
 
+	//si diff return true
+	//si neg et pos return false
 	return !(has_neg && has_pos);
 }
 

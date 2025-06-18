@@ -6,18 +6,11 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:18:11 by terijo            #+#    #+#             */
-/*   Updated: 2025/05/27 09:51:54 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/16 15:57:33 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phoneBookClass.hpp"
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-#include <string>
-
-bool	ft_is_digit(std::string str);
 
 phoneBook::phoneBook(void) : count(0), index(0)
 {
@@ -31,69 +24,82 @@ phoneBook::~phoneBook(void)
 	return ;
 }
 
-std::string ft_truncate(std::string str)
-{
-	if (str.length() > 10)
-		return (str.substr(0, 9) + ".");
-	return (str);
-}
+/*----------------------ADD----------------------*/
 
-bool	ft_is_contact(char c)
+void	phoneBook::setFirstName(std::string &str, const std::string input) const
 {
-	for (int i = 0; i < 8; i++)
+	while (str.empty() || !isAlpha(str))
 	{
-		if (c < 49 || c > 56)
-			return (false);
+		std::cout << input;
+		getline(std::cin, str);
+		if (std::cin.eof())
+			return ;
 	}
-	return (true);
 }
 
-int	ft_str_to_int(std::string str)
+void	phoneBook::setLastName(std::string &str, const std::string input) const
 {
-	int	number;
-
-	std::istringstream iss(str);
-	iss >> number;
-	return (number);
-}
-
-bool	ft_in_contact(std::string input, int contactNumber)
-{
-	for (int i = 0; i < contactNumber; i++)
+	while (str.empty() || !isAlphaSpace(str))
 	{
-		if (ft_str_to_int(input) == i + 1)
-			return (true);
+		std::cout << input;
+		getline(std::cin, str);
+		if (std::cin.eof())
+			return ;
 	}
-	return (false);
 }
 
-bool	ft_check_search_input(std::string input, int contactNumber)
+void	phoneBook::setNickName(std::string &str, const std::string input) const
 {
-	if (input.empty())
-		return (false);
-	else if (input.length() > 1 || !ft_is_contact(input[0])
-		|| !ft_is_digit(input) || !ft_in_contact(input, contactNumber))
+	while (str.empty() || !isAlphaPlus(str))
 	{
-		std::cout << "Please put a valid contact index...\n";
-		return (false);
+		std::cout << input;
+		getline(std::cin, str);
+		if (std::cin.eof())
+			return ;
 	}
-	return (true);
 }
 
-std::string ft_get_contact(int contactNumber)
+void	phoneBook::setPhoneNumber(std::string &str, const std::string input) const
 {
-	std::string input;
-	std::cout << "Choose a contact: ";
-	getline(std::cin, input);
-	while (!ft_check_search_input(input, contactNumber))
+	while (str.empty() || !isDigit(str))
 	{
-		std::cout << "Choose a contact: ";
-		getline(std::cin, input);
+		std::cout << input;
+		getline(std::cin, str);
+		if (std::cin.eof())
+			return ;
 	}
-	return (input);
 }
 
-bool phoneBook::ft_add_contact(std::string fN, std::string lN, std::string nn,
+void	phoneBook::setDarkSecret(std::string &str, const std::string input) const
+{
+	while (str.empty() || !isAlphaPlusWhitetSpace(str))
+	{
+		std::cout << input;
+		getline(std::cin, str);
+		if (std::cin.eof())
+			return ;
+	}
+}
+
+void	phoneBook::ft_check_input(std::string &str, const std::string input)
+{
+	getline(std::cin, str);
+	if (std::cin.eof())
+		return ;
+	std::string	inputLevel[] = {"Firstname: ", "Lastname: ", "Nickname: ", "Phonenumber: ", "Dark secret: "};
+	void (phoneBook::*functions[])(std::string &str, const std::string input) const = {&phoneBook::setFirstName, &phoneBook::setLastName, &phoneBook::setNickName, &phoneBook::setPhoneNumber, &phoneBook::setDarkSecret};
+	for (int i = 0; i < 4; i++)
+	{
+		if (input == inputLevel[i])
+		{
+			(this->*functions[i])(str, input);
+			return ;
+		}
+	}
+	return ;
+}
+
+bool phoneBook::addToPhoneBook(std::string fN, std::string lN, std::string nn,
 	std::string pN, std::string dS)
 {
 	this->contact[this->index] = Contact(fN, lN, nn, pN, dS);
@@ -104,9 +110,49 @@ bool phoneBook::ft_add_contact(std::string fN, std::string lN, std::string nn,
 	return (true);
 }
 
-void phoneBook::ft_search_contact(phoneBook &repertoire) const
+void	phoneBook::addContact()
 {
-	(void)repertoire;
+	std::string firstName;
+	std::string lastName;
+	std::string nickname;
+	std::string phoneNumber;
+	std::string darkSecret;
+	std::cout << "Firstname: ";
+	ft_check_input(firstName, "Firstname: ");
+	std::cout << "Lastname: ";
+	ft_check_input(lastName, "Lastname: ");
+	std::cout << "Nickname: ";
+	ft_check_input(nickname, "Nickname: ");
+	std::cout << "Phonenumber: ";
+	ft_check_input(phoneNumber, "Phonenumber: ");
+	std::cout << "Dark secret: ";
+	ft_check_input(darkSecret, "Dark secret: ");
+	this->addToPhoneBook(firstName, lastName, nickname, phoneNumber,
+		darkSecret);
+}
+
+
+/*----------------------SEARCH-----------------------------*/
+
+std::string getContact(int contactNumber)
+{
+	std::string input;
+	std::cout << "Choose a contact: ";
+	getline(std::cin, input);
+	if (std::cin.eof())
+		return ("NULL");
+	while (!checkSearchInput(input, contactNumber))
+	{
+		std::cout << "Choose a contact: ";
+		getline(std::cin, input);
+		if (std::cin.eof())
+			return ("NULL");
+	}
+	return (input);
+}
+
+void phoneBook::ft_search_contact(void) const
+{
 	std::string input;
 
 	std::cout << "|" << std::setw(10) << "Index"
@@ -117,15 +163,17 @@ void phoneBook::ft_search_contact(phoneBook &repertoire) const
 	for (int i = 0; i < this->count; i++)
 	{
 		std::cout << "|" << std::setw(10) << i
-			+ 1 << "|" << std::setw(10) << ft_truncate(this->contact[i].firstName)
-				<< "|" << std::setw(10) << ft_truncate(this->contact[i].lastName)
-				<< "|" << std::setw(10) << ft_truncate(this->contact[i].nickname) << "|" << std::endl;
+			+ 1 << "|" << std::setw(10) << truncate(this->contact[i].getFirstName())
+				<< "|" << std::setw(10) << truncate(this->contact[i].getLastName())
+				<< "|" << std::setw(10) << truncate(this->contact[i].getNickname()) << "|" << std::endl;
 	}
-	input = ft_get_contact(this->count);
-	std::cout << this->contact[ft_str_to_int(input) - 1].firstName << std::endl;
-	std::cout << this->contact[ft_str_to_int(input) - 1].lastName << std::endl;
-	std::cout << this->contact[ft_str_to_int(input) - 1].nickname << std::endl;
-	std::cout << this->contact[ft_str_to_int(input)- 1].phoneNumber << std::endl;
-	std::cout << this->contact[ft_str_to_int(input) - 1].darkSecret << std::endl;
+	input = getContact(this->count);
+	if (input == "NULL")
+		return ;
+	std::cout << this->contact[strToInt(input) - 1].getFirstName() << std::endl;
+	std::cout << this->contact[strToInt(input) - 1].getLastName() << std::endl;
+	std::cout << this->contact[strToInt(input) - 1].getNickname() << std::endl;
+	std::cout << this->contact[strToInt(input)- 1].getPhoneNumber() << std::endl;
+	std::cout << this->contact[strToInt(input) - 1].getDarkSecret() << std::endl;
 	return ;
 }

@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terijo <terijo@student.42.fr>              +#+  +:+       +#+         #
+#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/05 12:06:45 by terijo            #+#    #+#              #
-#    Updated: 2025/06/05 12:07:21 by terijo           ###   ########.fr        #
+#    Updated: 2025/06/18 12:32:13 by daavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Fixed
-CC	 = g++
+CC	 = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
 #directories

@@ -1,16 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 11:18:18 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/14 15:22:29 by daavril          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "Point.hpp"
+#include "PointClass/Point.hpp"
 
 bool	bsp(Point const a, Point const b, Point const c, Point const point);
 
@@ -19,7 +8,7 @@ int main( void )
 	Point	a(0.0f, 0.0f);
 	Point	b(4.0f, 0.0f);
 	Point	c(2.0f, 4.0f);
-	Point	point(2.0f, 0.0f);
+	Point	point(2.0f, 2.0f);
 
 	std::cout << "a.x: " << a.getX() << ", a.y: " << a.getY() << std::endl;
 	std::cout << "b.x: " << b.getX() << ", b.y: " << b.getY() << std::endl;
@@ -31,5 +20,14 @@ int main( void )
 	}
 	else
 		std::cout << "Point does not belongs to abc triangle" << std::endl;
+
+	{
+		std::cout << "\n TEST" << std::endl;
+		Point	a(54.2, 65.2);
+		Point	b(a);
+
+		std::cout << b.getX() << " " << b.getY() << std::endl;
+
+	}
 	return 0;
 }

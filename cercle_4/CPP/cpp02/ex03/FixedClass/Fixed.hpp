@@ -36,9 +36,9 @@ class Fixed
 	int		toInt(void)const;             //convertit la valeur en virgule fixe en nombre entier
 
 	static	Fixed &min(Fixed &first, Fixed &second);
-	static	const Fixed &minConst(Fixed const &first, Fixed const &second);
+	static	const Fixed &min(Fixed const &first, Fixed const &second);
 	static	Fixed &max(Fixed &first, Fixed &second);
-	static	const Fixed &maxConst(Fixed const &first, Fixed const &second);
+	static	const Fixed &max(Fixed const &first, Fixed const &second);
 
   private:
 	int _rawBits;                         //bits bruts du nb à virgule fixe
