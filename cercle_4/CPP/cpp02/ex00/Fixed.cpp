@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:42:09 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/18 12:10:45 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:54:01 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,4 @@ void Fixed::setRawBits(int const raw)
 	this->_rawBits = raw;
 }
 
-static const int _fractionalBits(8); //initialise le nb de bits de la partie fractionnaire
+//static const int _fractionalBits(8); //initialise le nb de bits de la partie fractionnaire

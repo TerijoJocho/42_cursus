@@ -1,16 +1,4 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: daavril <daavril@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/05 12:06:45 by terijo            #+#    #+#              #
-#    Updated: 2025/06/18 17:57:18 by daavril          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-NAME = Fixed
+NAME = Polymorphism
 CC	 = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
@@ -29,7 +17,8 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = main.cpp Fixed.cpp
+SRC_FILES = main.cpp animalClass/animalClass.cpp catClass/catClass.cpp dogClass/dogClass.cpp\
+			wrongClass/WrongAnimalClass.cpp wrongClass/WrongCatClass.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
@@ -38,7 +27,7 @@ OBJ_PATH = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 #all rule
 all: $(NAME)
-		@printf "$(BLUE)Welcome to EX00 of CPP02\n$(RESET)"
+		@printf "$(BLUE)Welcome to EX00 of CPP04\n$(RESET)"
 
 #compile the executable
 $(NAME): $(OBJ_PATH)
@@ -48,7 +37,7 @@ $(NAME): $(OBJ_PATH)
 
 #compile objects
 $(OBJ_DIR)%.o: %.cpp
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling [$@]...$(RESET)"
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@printf "$(UP)$(CUT)"
