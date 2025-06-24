@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:42:09 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/18 12:44:14 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/24 19:13:20 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ Fixed::Fixed(const Fixed &cpy)
 {
 	std::cout << "Copy constructor called" << std::endl;
 	// copie en appelant l'operateur d'affectation surhargee
-	*this = cpy;
+	// *this = cpy;
+	this->_rawBits = cpy.getRawBits();
 }
 
 // prend un obejt deja existant
@@ -45,7 +46,7 @@ Fixed &Fixed::operator=(const Fixed &other)
 Fixed::Fixed(const float floatVal)
 {
 	std::cout << "Float constructor called" << std::endl;
-	this->_rawBits = (int)(floatVal * (1 << _fractionalBits));
+	this->_rawBits = roundf(floatVal * (1 << _fractionalBits));
 }
 
 //converti le nb a virgule fixe en float
@@ -85,9 +86,6 @@ void Fixed::setRawBits(int const rawBits)
 {
 	this->_rawBits = rawBits;
 }
-
-//precision des nvf
-const int Fixed::_fractionalBits = 8;
 
 //operateur << doit afficher la valeur float du nvf
 std::ostream	&operator<<(std::ostream &out, const Fixed &value)

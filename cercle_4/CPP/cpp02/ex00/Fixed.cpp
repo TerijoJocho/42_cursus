@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:42:09 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/18 17:54:01 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/24 17:52:11 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ Fixed::Fixed(const Fixed &cpy)
 	std::cout << "Copy constructor called" << std::endl;
 	// copie la valeur _rawBits de l'objet en param dans le nouvelle objet
 	this->_rawBits = cpy.getRawBits();
+	// *this = cpy;
 }
 
 // prend un obejt deja existant
@@ -59,5 +60,3 @@ void Fixed::setRawBits(int const raw)
 {
 	this->_rawBits = raw;
 }
-
-//static const int _fractionalBits(8); //initialise le nb de bits de la partie fractionnaire

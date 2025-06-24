@@ -21,13 +21,5 @@ int main( void )
 	else
 		std::cout << "Point does not belongs to abc triangle" << std::endl;
 
-	{
-		std::cout << "\n TEST" << std::endl;
-		Point	a(54.2, 65.2);
-		Point	b(a);
-
-		std::cout << b.getX() << " " << b.getY() << std::endl;
-
-	}
 	return 0;
 }

@@ -23,7 +23,7 @@ class Fixed
 
   private:
 	int _rawBits;                         //bits bruts du nb à virgule fixe
-	static const int _fractionalBits;     //bits fractionnaire du nb à virgule fixe
+	static const int _fractionalBits = 8;     //bits fractionnaire du nb à virgule fixe
 };
 
 std::ostream	&operator<<(std::ostream &out, const Fixed &value);

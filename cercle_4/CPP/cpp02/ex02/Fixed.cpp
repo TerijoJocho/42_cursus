@@ -184,9 +184,6 @@ const Fixed &Fixed::max(Fixed const &first, Fixed const &second)
 	return ((first > second) ? first : second);
 }
 
-//precision des nvf
-const int Fixed::_fractionalBits = 8;
-
 //operateur << doit afficher la valeur float du nvf
 std::ostream	&operator<<(std::ostream &out, const Fixed &value)
 {

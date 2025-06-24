@@ -6,7 +6,7 @@
 /*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:18:18 by terijo            #+#    #+#             */
-/*   Updated: 2025/06/18 12:37:47 by daavril          ###   ########.fr       */
+/*   Updated: 2025/06/24 17:57:05 by daavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,3 @@ int main( void )
 	// }
 	return 0;
 }
-
-// Default constructor called
-// Int constructor called
-// Float constructor called
-// Copy constructor called
-// Copy assignment operator called /*j'ai pas ca, et je ne vois pas comment il se creer ici*/
-// Float constructor called
-// Copy assignment operator called
-// Destructor called
-// a is 1234.43
-// b is 10
-// c is 42.4219
-// d is 10
-// a is 1234 as integer
-// b is 10 as integer
-// c is 42 as integer
-// d is 10 as integer
-// Destructor called
-// Destructor called
-// Destructor called
-// Destructor called

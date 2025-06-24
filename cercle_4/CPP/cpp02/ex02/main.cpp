@@ -38,7 +38,7 @@ int main( void )
 		std::cout << "c: " << c << std::endl;
 		std::cout << "a + c : " << (a + c) << std::endl;
 		std::cout << "a - c : " << (a - c) << std::endl;
-		std::cout << "a * c : " << (a * c) << std::endl;//belek overflow invisible ; solution: staticcast int64(?)
+		std::cout << "a * c : " << (a * c) << std::endl;
 		std::cout << "a / c : " << (a / c) << std::endl;
 
 		std::cout << "\nFor a and c:" << std::endl;
