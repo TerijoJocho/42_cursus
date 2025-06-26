@@ -17,7 +17,8 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = main.cpp AMateriaClass/AMateria.cpp MateriaClasses/Cure.cpp MateriaClasses/Ice.cpp
+SRC_FILES = main.cpp AMateriaClass/AMateria.cpp MateriaClasses/Cure.cpp MateriaClasses/Ice.cpp \
+			CharacterClass/Character.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths

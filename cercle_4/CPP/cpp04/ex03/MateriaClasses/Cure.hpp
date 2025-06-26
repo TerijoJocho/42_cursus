@@ -13,7 +13,7 @@ class Cure : public AMateria
 	~Cure();
 
 	AMateria *clone() const;
-	// void use(ICharacter &target);
+	void use(ICharacter &target);
 
   private:
 

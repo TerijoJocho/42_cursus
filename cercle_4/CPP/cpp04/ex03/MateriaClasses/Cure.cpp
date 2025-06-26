@@ -2,12 +2,12 @@
 
 Cure::Cure() : AMateria("cure")
 {
-	std::cout << "Cure has been created." << std::endl;
+	std::cout << this->getType() << " has been created." << std::endl;
 }
 
 Cure::~Cure()
 {
-	std::cout << "Cure has been destroyed." << std::endl;
+		std::cout << this->getType() << " has been destroyed." << std::endl;
 }
 
 Cure::Cure(const Cure &other) : AMateria(other)
@@ -33,7 +33,7 @@ AMateria *Cure::clone() const
 	return (ptr);
 }
 
-// void Cure::use(ICharacter &target)
-// {
-// 	std::cout << "\'* heals" << target.getName() << "\'s wounds *\'" << std::endl;
-// }
+void Cure::use(ICharacter &target)
+{
+	std::cout << "\'* heals " << target.getName() << "\'s wounds *\'" << std::endl;
+}

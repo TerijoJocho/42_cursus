@@ -1,6 +1,7 @@
 #include "AMateriaClass/AMateria.hpp"
 #include "MateriaClasses/Cure.hpp"
 #include "MateriaClasses/Ice.hpp"
+#include "CharacterClass/Character.hpp"
 
 int main(void)
 {
@@ -24,6 +25,36 @@ int main(void)
 		delete a;
 		delete c;
 		delete d;
+	}
+	{
+		std::cout << "\n\n---Second main---" << std::endl;
+		AMateria*	ice = new Ice();
+		AMateria*	iceClone = ice->clone();
+		AMateria*	cure = new Cure();
+		AMateria*	cureClone = cure->clone();
+		AMateria*	ice2 = new Ice();
+		AMateria*	ice2Clone = ice2->clone();
+		Character	player("Jhon");
+		Character	player2("Dylan");
+		std::cout << "\n" << std::endl;
+		player.unequip(0);
+		player.use(4, player2);
+		std::cout << "\n" << std::endl;
+		player.equip(ice);
+		player.equip(iceClone);
+		player.equip(cure);
+		player.equip(cureClone);
+		player.equip(ice2);
+		player2.equip(ice2Clone);
+		std::cout << "\n" << std::endl;
+		player2.use(2, player);
+		player.use(1, player2);
+		player2.use(0,player2);
+		player.unequip(2);
+		std::cout << "\n" << std::endl;
+
+		delete ice2;
+
 	}
 	return (0);
 }

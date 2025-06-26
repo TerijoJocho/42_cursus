@@ -2,12 +2,12 @@
 
 Ice::Ice() : AMateria("ice")
 {
-	std::cout << "Ice has been created." << std::endl;
+	std::cout << this->getType() << " has been created." << std::endl;
 }
 
 Ice::~Ice()
 {
-	std::cout << "Ice has been destroyed." << std::endl;
+	std::cout << this->getType() << " has been destroyed." << std::endl;
 }
 
 Ice::Ice(const Ice &cpy) : AMateria(cpy)
@@ -29,7 +29,7 @@ AMateria *Ice::clone() const
 	return (new Ice());
 }
 
-// void Ice::use(ICharacter &target)
-// {
-// 	std::cout << "\'* shoots an ice bolt at " << target.getName() << " *\'" << std::endl;
-// }
+void Ice::use(ICharacter &target)
+{
+	std::cout << "\'* shoots an ice bolt at " << target.getName() << " *\'" << std::endl;
+}

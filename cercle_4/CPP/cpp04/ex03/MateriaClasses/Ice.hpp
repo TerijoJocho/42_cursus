@@ -3,7 +3,7 @@
 
 # pragma once
 # include "../AMateriaClass/AMateria.hpp"
-
+// #include "../CharacterClass/ICharacter.hpp"
 
 class Ice : public AMateria
 {
@@ -14,7 +14,7 @@ class Ice : public AMateria
 	~Ice();
 
 	AMateria *clone() const;
-	// void use(ICharacter &target);
+	void use(ICharacter &target);
 
   private:
 };
