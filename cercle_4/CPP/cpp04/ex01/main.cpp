@@ -31,6 +31,7 @@ int main(void)
 
 		cat.getBrain()->setIdea(0, "FOOOOOOOD !!");
 		std::cout << "Cat idea: " << cat.getBrain()->getIdea(0) << std::endl;
+		std::cout << "CopyCat idea: " << cpyCat.getBrain()->getIdea(0) << std::endl;
 		cpyCat = cat;
 		std::cout << "CopyCat idea: " << cpyCat.getBrain()->getIdea(0) << std::endl;
 	}
@@ -39,7 +40,7 @@ int main(void)
 		const Animal* j = new Dog();
 		const Animal* i = new Cat();
 
-		delete j;//should not create a leak
+		delete j;
 		delete i;
 	}
 }
