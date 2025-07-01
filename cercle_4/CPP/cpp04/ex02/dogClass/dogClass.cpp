@@ -1,6 +1,6 @@
 #include "dogClass.hpp"
 
-Dog::Dog() : _type("Dog")
+Dog::Dog() : AAnimal(), _type("Dog")
 {
 	this->brainPtr = new Brain();
 	std::cout << "A " << this->_type << " has been adopted." << std::endl;
