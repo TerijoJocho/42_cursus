@@ -1,4 +1,4 @@
-NAME = Bureaucrat
+NAME = Forms
 CC	 = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
@@ -17,7 +17,7 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = main.cpp Bureaucrat.cpp
+SRC_FILES = main.cpp BureaucratClass/Bureaucrat.cpp FormClass/Form.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
@@ -26,7 +26,7 @@ OBJ_PATH = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 #all rule
 all: $(NAME)
-		@printf "$(BLUE)Welcome to EX00 of CPP05\n$(RESET)"
+		@printf "$(BLUE)Welcome to EX01 of CPP05\n$(RESET)"
 
 #compile the executable
 $(NAME): $(OBJ_PATH)
@@ -36,7 +36,7 @@ $(NAME): $(OBJ_PATH)
 
 #compile objects
 $(OBJ_DIR)%.o: %.cpp
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling [$@]...$(RESET)"
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@printf "$(UP)$(CUT)"
@@ -47,16 +47,16 @@ $(OBJ_DIR)%.o: %.cpp
 clean:
 	@if [ -d "$(OBJ_DIR)" ]; then \
 	rm -rf $(OBJ_DIR); \
-	echo "$(BLUE)Deleting all objects from /ex00...$(RESET)"; else \
-	echo "No objects to remove from /ex00."; \
+	echo "$(BLUE)Deleting all objects from /ex01...$(RESET)"; else \
+	echo "No objects to remove from /ex01."; \
 	fi;
 
 #fclean rule
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
 	rm -f $(NAME); \
-	echo "$(BLUE)Deleting $(NAME) from ex00...$(RESET)"; else \
-	echo "No Executable to remove from ex00."; \
+	echo "$(BLUE)Deleting $(NAME) from ex01...$(RESET)"; else \
+	echo "No Executable to remove from ex01."; \
 	fi;
 
 #re rule

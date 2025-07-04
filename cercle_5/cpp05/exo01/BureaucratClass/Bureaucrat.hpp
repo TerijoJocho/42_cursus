@@ -10,7 +10,7 @@ class Bureaucrat
 	class GradeTooLowException : public std::exception
 	{
 		public:
-			const char* what() const throw(); //affiche un message d'erreur par rapport a l'execption thrown, sans faire une autre exception
+			const char* what() const throw();
 	};
 
 	class GradeTooHighException : public std::exception
@@ -29,6 +29,8 @@ class Bureaucrat
 
 	void	gradeUp();
 	void	gradeDown();
+
+	void	signForm() const;
 
   private:
 	int _grade;
