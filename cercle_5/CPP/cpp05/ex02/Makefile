@@ -17,7 +17,10 @@ UP			=	\033[A
 CUT			=	\033[K
 
 #sources files
-SRC_FILES = main.cpp BureaucratClass/Bureaucrat.cpp FormClass/Form.cpp
+SRC_FILES = main.cpp BureaucratClass/Bureaucrat.cpp FormClass/AForm.cpp \
+			ShrubberyCreationFormClass/ShrubberyCreationForm.cpp \
+			PresidentialPardonFormClass/PresidentialPardonForm.cpp \
+			RobotomyRequestFormClass/RobotomyRequestForm.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 #paths
@@ -26,7 +29,7 @@ OBJ_PATH = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 #all rule
 all: $(NAME)
-		@printf "$(BLUE)Welcome to EX01 of CPP05\n$(RESET)"
+		@printf "$(BLUE)Welcome to EX02 of CPP05\n$(RESET)"
 
 #compile the executable
 $(NAME): $(OBJ_PATH)
@@ -47,16 +50,16 @@ $(OBJ_DIR)%.o: %.cpp
 clean:
 	@if [ -d "$(OBJ_DIR)" ]; then \
 	rm -rf $(OBJ_DIR); \
-	echo "$(BLUE)Deleting all objects from /ex01...$(RESET)"; else \
-	echo "No objects to remove from /ex01."; \
+	echo "$(BLUE)Deleting all objects from /ex02...$(RESET)"; else \
+	echo "No objects to remove from /ex02."; \
 	fi;
 
 #fclean rule
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
 	rm -f $(NAME); \
-	echo "$(BLUE)Deleting $(NAME) from ex01...$(RESET)"; else \
-	echo "No Executable to remove from ex01."; \
+	echo "$(BLUE)Deleting $(NAME) from ex02...$(RESET)"; else \
+	echo "No Executable to remove from ex02."; \
 	fi;
 
 #re rule

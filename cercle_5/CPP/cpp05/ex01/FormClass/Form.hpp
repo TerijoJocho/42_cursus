@@ -2,23 +2,25 @@
 # define FORM_HPP
 
 # pragma once
-# include "../BureaucratClass/Bureaucrat.hpp"
 # include <iostream>
+
+class Bureaucrat;
 
 class Form
 {
   public:
-	Form(std::string const name, int const gradeToSign,
-		int const gradeToExecute);
+	Form(std::string const name, int const gradeToSign, int const gradeToExecute);
 	Form(const Form &other);
 	Form &operator=(const Form &other);
 	~Form();
 
+	/*GETTER*/
 	std::string const getName() const;
 	bool getIsSigned() const;
 	int getGradeToSign() const;
 	int getGradeToExecute() const;
 
+	/*EXCEPTION*/
 	class GradeTooHighException : public std::exception
 	{
 		public:
@@ -31,6 +33,7 @@ class Form
 		const char *what() const throw();
 	};
 
+	/*MEMBER FUNCTION*/
 	void beSigned(const Bureaucrat &other);
 
   private:

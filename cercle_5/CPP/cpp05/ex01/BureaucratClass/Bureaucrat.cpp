@@ -12,12 +12,12 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return ("Grade is too high.");
+	return ("Bureaucrat exception: Grade is too high.");
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return ("Grade is too low.");
+	return ("Bureaucrat exception: Grade is too low.");
 }
 
 Bureaucrat::~Bureaucrat()
@@ -58,18 +58,38 @@ std::string const &Bureaucrat::getName() const
 
 void	Bureaucrat::gradeUp()
 {
+	std::cout << this->getName() << " is trying to upgrade his grade." << std::endl;
 	if (this->getGrade() - 1 < 1)
+	{
+		std::cout << this->getName() << " didn't manage to upgrade his grade because: ";
 		throw GradeTooHighException();
+	}
 	else
+	{
 		this->_grade--;
+		std::cout << this->getName() << " manage to upgrade his grade ; grade: " << this->getGrade() << std::endl;
+	}
 }
 
 void	Bureaucrat::gradeDown()
 {
+	std::cout << this->getName() << " is trying to downgrade his grade." << std::endl;
 	if (this->getGrade() + 1 > 150)
+	{
+		std::cout << this->getName() << " didn't manage to downgrade his grade because: ";
 		throw GradeTooLowException();
+	}
 	else
+	{
 		this->_grade++;
+		std::cout << this->getName() << " manage to downgrade his grade ; grade: " << this->getGrade() << std::endl;
+	}
+}
+
+void	Bureaucrat::signForm(Form& other) const
+{
+	std::cout << this->getName() << " is trying to sign " << other.getName() << "." << std::endl;
+	other.beSigned(*this);
 }
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &someone)
@@ -77,7 +97,3 @@ std::ostream &operator<<(std::ostream &out, const Bureaucrat &someone)
 	return out << someone.getName() << ", bureaucrat grade " << someone.getGrade() << std::endl;
 }
 
-void	Bureaucrat::signForm() const
-{
-	
-}

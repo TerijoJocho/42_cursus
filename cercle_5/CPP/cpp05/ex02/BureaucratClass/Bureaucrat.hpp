@@ -3,6 +3,7 @@
 
 # pragma once
 # include <iostream>
+#include "../FormClass/AForm.hpp"
 
 class Bureaucrat
 {
@@ -30,7 +31,9 @@ class Bureaucrat
 	void	gradeUp();
 	void	gradeDown();
 
-	void	signForm() const;
+	void	signForm(AForm &) const;
+
+	void	executeForm(AForm const & form) const;
 
   private:
 	int _grade;

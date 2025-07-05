@@ -1,4 +1,5 @@
 #include "Form.hpp"
+# include "../BureaucratClass/Bureaucrat.hpp"
 
 Form::Form(std::string const name, int const gradeToSign, int const gradeToExecute)
 		: _name(name), _gradeToSign(gradeToSign),
@@ -34,12 +35,12 @@ Form &Form::operator=(const Form &other)
 
 const char* Form::GradeTooHighException::what() const throw()
 {
-	return ("Grade is too high.");
+	return ("Form exception: Grade is too high.");
 }
 
 const char* Form::GradeTooLowException::what() const throw()
 {
-	return ("Grade is too Low.");
+	return ("Form exception: Grade is too Low.");
 }
 
 std::string const Form::getName() const
@@ -64,10 +65,18 @@ int Form::getGradeToExecute() const
 
 void Form::beSigned(const Bureaucrat &other)
 {
-	if (other.getGrade() <= this->getGradeToSign())
+	if (this->_isSigned)
+		std::cout << "Form is already signed." << std::endl;
+	else if (other.getGrade() <= this->getGradeToSign())
+	{
 		this->_isSigned = true;
+		std::cout << other.getName() << " signed " << this->getName() << std::endl;
+	}
 	else
+	{
+		std::cout << other.getName() << " couldn't sign " << this->getName() << " because: ";
 		throw Form::GradeTooLowException();
+	}
 }
 
 std::ostream &operator<<(std::ostream &out, const Form &other)
