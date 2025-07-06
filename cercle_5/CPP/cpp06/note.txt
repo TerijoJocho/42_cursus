@@ -1,0 +1,40 @@
+-wno-convertion : interdit les conversions cast implicite 
+exemple :
+double a = 42;
+int    b = a; -> pas bon
+int    b = (int)a; -> cast explicite, bof si on perd de la precision mais le compilateur accepte car on est en charge de la convertion
+
+* static_cast -> cast comme en C (cast simple de tout type) 
+                          mais verifie si par exemple la class qu'on veut cast appartient
+                          au meme arbre de hierarchie que le parametre
+
+
+* dynamic_cast -> Cast qui se fait a l'execution et pas a la compilation
+                  donc belek car s'il echoue il faut que le programme fasse un truc 
+                  Fonctionne que dans le cas d'une intance polymorphique
+                  cad qu'au moins une des fonctions membres est une methode
+                  Il cast que dans le cas d'un downcast et que pour des cast par pointeur ou reference
+                  on peut verifier si le dynamic_cast a echoué en pointeur avec p* == NULL et en ref avec l'exception bad_cast
+
+
+* reinterpret_cast -> Fonctionne comme un static_cast ???
+                      Pas compris a quoi il sert
+                      reinterpret ne change pas les bits donc c'est mieux d'utiliser
+                      avec des address ou ref??
+                    
+
+* const_cast -> cast de type qualifier
+                permet de cast un const sur un non const
+                genre int* a = const_cast<int *>(b);
+                b etant const
+                cast a ne pas trop utiliser car la logique du const c'est de ne pas pouvoir modifier la variable
+
+* operator -> dans une classe permet de cast un attribut implicitement lorsqu'on est dans le main par exemple
+
+* explicit -> interdit la construction implicit d'une classe a partir d'une autre
+
+🚨 Rappels importants
+	•	Utilise dynamic_cast uniquement avec des pointeurs ou références polymorphiques.
+	•	Évite reinterpret_cast sauf si tu bosses avec des API bas niveau ou des données binaires.
+	•	const_cast doit rester rare et jamais pour bypasser volontairement une vraie constante.
+	•	static_cast est le plus safe des quatre, tant que tu sais ce que tu fais.
