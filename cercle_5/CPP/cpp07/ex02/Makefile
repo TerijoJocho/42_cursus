@@ -1,4 +1,4 @@
-NAME = Iter
+NAME = Array
 CC	 = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
@@ -26,7 +26,7 @@ OBJ_PATH = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 #all rule
 all: $(NAME)
-		@printf "$(BLUE)Welcome to EX01 of CPP07\n$(RESET)"
+		@printf "$(BLUE)Welcome to EX02 of CPP07\n$(RESET)"
 
 #compile the executable
 $(NAME): $(OBJ_PATH)
@@ -47,16 +47,16 @@ $(OBJ_DIR)%.o: %.cpp
 clean:
 	@if [ -d "$(OBJ_DIR)" ]; then \
 	rm -rf $(OBJ_DIR); \
-	echo "$(BLUE)Deleting all objects from /ex01...$(RESET)"; else \
-	echo "No objects to remove from /ex01."; \
+	echo "$(BLUE)Deleting all objects from /ex02...$(RESET)"; else \
+	echo "No objects to remove from /ex02."; \
 	fi;
 
 #fclean rule
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
 	rm -f $(NAME); \
-	echo "$(BLUE)Deleting $(NAME) from ex01...$(RESET)"; else \
-	echo "No Executable to remove from ex01."; \
+	echo "$(BLUE)Deleting $(NAME) from ex02...$(RESET)"; else \
+	echo "No Executable to remove from ex02."; \
 	fi;
 
 #re rule
