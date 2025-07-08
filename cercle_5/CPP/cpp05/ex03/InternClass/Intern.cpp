@@ -26,11 +26,14 @@ AForm *Intern::makeForm(std::string form, std::string target) const
 {
 	std::string formList[] = {"shrubbery creation", "robotomy request", "presidential pardon"};
 
-	int idx = 0;
-	for (; idx < 3; idx++)
+	int idx = -1;
+	for (int i = 0; i < 3; i++)
 	{
-		if (form == formList[idx])
+		if (form == formList[i])
+		{
+			idx = i;
 			break ;
+		}
 	}
 
 	switch (idx)
@@ -38,15 +41,12 @@ AForm *Intern::makeForm(std::string form, std::string target) const
 	case 0:
 		std::cout << "Intern creates " << form << std::endl;
 		return (new ShrubberyCreationForm(target));
-		break ;
 	case 1:
 		std::cout << "Intern creates " << form << std::endl;
 		return (new RobotomyRequestForm(target));
-		break ;
 	case 2:
 		std::cout << "Intern creates " << form << std::endl;
 		return (new PresidentialPardonForm(target));
-		break ;
 	default:
 		std::cout << "Intern doesn't know the form " << form << std::endl;
 		break ;

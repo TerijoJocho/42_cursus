@@ -12,7 +12,13 @@ int	main(void)
 
 	std::cout << "----MAIN---" << std::endl;
 	Bureaucrat Jhon("Jhon", 1);
-	rrf = someRandomIntern.makeForm("caca", "Bender");
+	rrf = someRandomIntern.makeForm("robotomy reque", "Bender");
+	if (!rrf)
+	{
+		std::cout<< "Form creation failed" << std::endl;
+		return 1;
+	}
+
 	try
 	{
 		Jhon.signForm(*rrf);
@@ -30,8 +36,7 @@ int	main(void)
 		std::cerr << e.what() << "\n";
 	}
 
-	if (rrf)
-		delete rrf;
+	delete rrf;
 
 	return (0);
 }
