@@ -1,46 +1,37 @@
 #include "BureaucratClass/Bureaucrat.hpp"
 #include "FormClass/AForm.hpp"
-#include "ShrubberyCreationFormClass/ShrubberyCreationForm.hpp"
+#include "InternClass/Intern.hpp"
 #include "PresidentialPardonFormClass/PresidentialPardonForm.hpp"
 #include "RobotomyRequestFormClass/RobotomyRequestForm.hpp"
-#include "InternClass/Intern.hpp"
+#include "ShrubberyCreationFormClass/ShrubberyCreationForm.hpp"
 
-int main()
+int	main(void)
 {
-	{
-		std::cout << "----FIRST MAIN---" << std::endl;
-		
-		Intern someRandomIntern;
-		AForm* rrf;
-		Bureaucrat	Jhon("Jhon", 1);
+	Intern	someRandomIntern;
+	AForm	*rrf;
 
-		rrf = someRandomIntern.makeForm("robotomy request", "Bender");
-		try 
-		{
-			Jhon.signForm(*rrf);
-		}
-		catch (const std::exception& e)
-		{
-			std::cerr << e.what() << "\n";
-		}
-		try 
-		{
-			rrf->execute(Jhon);
-		}
-		catch (const std::exception& e)
-		{
-			std::cerr << e.what() << "\n";
-		}
+	std::cout << "----MAIN---" << std::endl;
+	Bureaucrat Jhon("Jhon", 1);
+	rrf = someRandomIntern.makeForm("caca", "Bender");
+	try
+	{
+		Jhon.signForm(*rrf);
 	}
+	catch (const std::exception &e)
 	{
-		std::cout << "\n\n----SECOND MAIN---" << std::endl;
-
-		
+		std::cerr << e.what() << "\n";
 	}
+	try
 	{
-		std::cout << "\n\n----THIRD MAIN---" << std::endl;
-
+		Jhon.executeForm(*rrf);
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << "\n";
 	}
 
-	return 0;
+	if (rrf)
+		delete rrf;
+
+	return (0);
 }

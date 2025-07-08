@@ -1,52 +1,50 @@
-# include "RobotomyRequestForm.hpp"
-# include "../BureaucratClass/Bureaucrat.hpp"
-# include <ctime>
-# include <cstdlib>
+#include "../BureaucratClass/Bureaucrat.hpp"
+#include "RobotomyRequestForm.hpp"
+#include <cstdlib>
+#include <ctime>
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target)
-		: AForm("RobotomyRequestForm", 72, 45), _target(target)
+			: AForm("RobotomyRequestForm", 72, 45), _target(target)
 {
-    std::srand(std::time(0));
-    //change la suite des nombres aleatoire de std::rand()
-    //a time(NULL) comme "seed" car cette valeur change tout le temps
+	std::srand(std::time(0));
+	// change la suite des nombres aleatoire de std::rand()
+	// a time(NULL) comme "seed" car cette valeur change tout le temps
 }
 
 RobotomyRequestForm::~RobotomyRequestForm()
 {
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other)
-		: AForm(other)
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other) : AForm(other)
 {
 }
 
 RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &other)
 {
 	(void)other;
-    AForm::operator=(other);
-	return *this;
+	AForm::operator=(other);
+	return (*this);
 }
 
 std::string const RobotomyRequestForm::getTarget() const
 {
-    return this->_target;
+	return (this->_target);
 }
 
-bool RobotomyRequestForm::execute(Bureaucrat const & executor) const
+bool RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
-    this->checkExecutable(executor);
-    //rand() donne un nombre entre 0 et RAND_MAX
-    //ici, nous donne soit 0 soit 1 avec une chance de ~50%
-    int result = std::rand() % 2;
+	this->checkExecutable(executor);
 
-    if (!result)
-    {
-        std::cout << "The robotomy has failed." << std::endl;
-        return false;
-    }
- 
-    std::cout << this->getTarget() << " has been robotomyzed succesfully." << std::endl;
-    return true;
+	// rand() donne un nombre entre 0 et RAND_MAX
+	// ici, nous donne soit 0 soit 1 avec une chance de ~50%
+	int result = std::rand() % 2;
+
+	if (result == 1)
+	{
+		std::cout << this->getTarget() << " has been robotomyzed succesfully." << std::endl;
+		return (true);
+	}
+
+	std::cout << "The robotomy has failed." << std::endl;
+	return (false);
 }
-
-

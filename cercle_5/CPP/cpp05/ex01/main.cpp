@@ -40,11 +40,14 @@ int main()
 		{
 			std::cerr << e.what() << '\n';
 		}
+
 		for(int i = 45; i >= 25; i--)
 		{
 			a.gradeUp();
 		}
+
 		std::cout << "\n" << a << std::endl;
+
 		try
 		{
 			a.signForm(b);
@@ -53,6 +56,7 @@ int main()
 		{
 			std::cerr << e.what() << '\n';
 		}
+
 		try
 		{
 			a.signForm(c);
@@ -61,6 +65,7 @@ int main()
 		{
 			std::cerr << e.what() << '\n';
 		}
+
 		try
 		{
 			a.signForm(c);
@@ -69,7 +74,7 @@ int main()
 		{
 			std::cerr << e.what() << '\n';
 		}
-		
+
 	}
 	{
 		std::cout << "\n\n----THIRD MAIN---" << std::endl;
@@ -90,9 +95,9 @@ int main()
 		{
 			std::cerr << "Exception: " << e.what() << std::endl;
 		}
-		
+
 		Form	c("Shoes", 22, 45);
-		
+
 		try
 		{
 			Form	d(c);
@@ -101,6 +106,7 @@ int main()
 		{
 			std::cerr << "Exception: " << e.what() << std::endl;
 		}
+		
 		Form	d(c);
 
 		std::cout << c << d << std::endl;

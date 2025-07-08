@@ -8,7 +8,7 @@ int main()
 {
 	{
 		std::cout << "----FIRST MAIN---" << std::endl;
-		
+
 		AForm* s = new ShrubberyCreationForm("home");
 		Bureaucrat	a("Jhon", 1);
 
@@ -29,7 +29,7 @@ int main()
 		{
 			std::cerr << e.what() << '\n';
 		}
-		
+
 		try
 		{
 			a.executeForm(*s);
@@ -38,7 +38,7 @@ int main()
 		{
 			std::cerr << e.what() << '\n';
 		}
-		
+
 		delete s;
 	}
 	{
@@ -64,7 +64,7 @@ int main()
 		{
 			std::cerr << e.what() << '\n';
 		}
-		
+
 		try
 		{
 			a.executeForm(*s);
@@ -80,7 +80,7 @@ int main()
 		std::cout << "\n\n----THIRD MAIN---" << std::endl;
 
 		AForm* s = new PresidentialPardonForm("CEO");
-		Bureaucrat	a("Jhon", 1);
+		Bureaucrat	a("Jhon", 20);
 
 		try
 		{
@@ -99,7 +99,7 @@ int main()
 		{
 			std::cerr << e.what() << '\n';
 		}
-		
+
 		try
 		{
 			a.executeForm(*s);
