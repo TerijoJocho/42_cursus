@@ -24,9 +24,6 @@ template <typename T> class Array
 	size_t _size;
 };
 
-template <typename T> void print(const T &x)
-{
-	std::cout << x << std::endl;
-}
+#include "Array.tpp"
 
 #endif
