@@ -85,8 +85,9 @@ void    BitcoinExchange::processInputFile() const
         std::stringstream   ss(line.substr(13));
         float               f;
         ss >> f;
-        std::cout << line.substr(0, 10) << " => " << line.substr(13) << " = " <<this->getExchangeRateForDate(line.substr(0, 10), f) << std::endl;
+        std::cout << line.substr(0, 10) << " => " << line.substr(13) << " = " << this->getExchangeRateForDate(line.substr(0, 10), f) << std::endl;
     }
+    fs.close();
 }
 
 float   BitcoinExchange::getExchangeRateForDate(const std::string& date, float& value) const

@@ -28,7 +28,4 @@ private:
     BitcoinExchange &operator=(const BitcoinExchange & other);
 };
 
-void    checkFile(std::fstream& fs);
-bool    isValidFormat(std::string const &line);
-
 #endif
