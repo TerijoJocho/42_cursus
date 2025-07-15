@@ -2,24 +2,34 @@
 # define PMERGEME_HPP
 
 # include <iostream>
-#include <stdexcept>
-#include <queue>
-#include <sstream>
-#include <string>
+# include <list>
+# include <queue>
+# include <sstream>
+# include <stdexcept>
+# include <string>
+# include <vector>
+#include <algorithm>
 
 class PmergeMe
 {
   public:
-	PmergeMe(std::string &input);
+	PmergeMe();
 	~PmergeMe();
 
-	void	processInput();
+	void processInput();
+	void pushIntoQueue(int x);
 
   private:
-	const std::string _input;
-	std::queue<int>	_inputQ;
+	std::queue<int> _inputQ;
+	std::list<int> _lMin;
+	std::list<int> _lMax;
+	std::vector<int> _vMin;
+	std::vector<int> _vMax;
+	int				_leftover;
 
-	bool	_isValidInput() const;
+	void displayQueue();
+	void createVandL();
+	void sortAndMergeVandL();
 
 	PmergeMe(const PmergeMe &other);
 	PmergeMe &operator=(const PmergeMe &other);

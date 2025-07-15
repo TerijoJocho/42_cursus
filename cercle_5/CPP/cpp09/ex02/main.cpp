@@ -1,7 +1,5 @@
 #include "PmergeMe.hpp"
 
-
-
 int	stringToInt(const std::string& str)
 {
 	std::stringstream	ss(str);
@@ -24,9 +22,9 @@ int	main(int argc, char **argv)
 	}
 
 
+	PmergeMe	instance;
 
 	std::string	input;
-	std::queue<int>	queue;
 	/*if input is like this: "1 2 3 4 5"*/
 	if (argc == 2)
 	{
@@ -38,17 +36,16 @@ int	main(int argc, char **argv)
 		{
 			try
 			{
-				queue.push(stringToInt(token));
+				instance.pushIntoQueue(stringToInt(token));
 			}
 			catch(const std::exception& e)
 			{
-				std::cerr << e.what() << '\n';
+				std::cerr << "Error: " << e.what() << '\n';
 				return 1;
 			}
 		}
 
 	}
-
 	/*if input is like this: 1 2 3 4 5*/
 	if (argc > 2)
 	{
@@ -56,7 +53,7 @@ int	main(int argc, char **argv)
 		{
 			try
 			{
-				queue.push(stringToInt(argv[i]));
+				instance.pushIntoQueue(stringToInt(argv[i]));
 			}
 			catch (const std::exception& e)
 			{
@@ -65,14 +62,7 @@ int	main(int argc, char **argv)
 			}
 		}
 	}
-
-	while (!queue.empty())
-	{
-		std::cout << queue.front() << " ";
-		queue.pop();
-	}
-
-	PmergeMe	instance(input);
+	/*process merging*/
 	try
 	{
 		instance.processInput();
