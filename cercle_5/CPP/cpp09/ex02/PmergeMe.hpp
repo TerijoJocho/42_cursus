@@ -9,6 +9,8 @@
 # include <string>
 # include <vector>
 #include <algorithm>
+#include <ctime>
+#include <iomanip>
 
 class PmergeMe
 {
@@ -26,6 +28,8 @@ class PmergeMe
 	std::vector<int> _vMin;
 	std::vector<int> _vMax;
 	int				_leftover;
+	clock_t	_endVector;
+	clock_t	_endList;
 
 	void displayQueue();
 	void createVandL();
