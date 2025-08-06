@@ -84,7 +84,12 @@ void    BitcoinExchange::processInputFile() const
         std::stringstream   ss(line.substr(13));
         float               f;
         ss >> f;
-        std::cout << line.substr(0, 10) << " => " << line.substr(13) << " = " << this->getExchangeRateForDate(line.substr(0, 10), f) << std::endl;
+
+		float	result = this->getExchangeRateForDate(line.substr(0, 10), f);
+		if ( result != -1)
+		{
+			std::cout << line.substr(0, 10) << " => " << line.substr(13) << " = " << result << std::endl;
+		}
     }
     fs.close();
 }
@@ -93,10 +98,16 @@ float   BitcoinExchange::getExchangeRateForDate(const std::string& date, float& 
 {
     std::map<std::string, float>::const_iterator    it = this->_database.upper_bound(date);
 
+	// std::cout << it->first << std::endl;
+
     if (it != this->_database.begin())
         it--;
     else
-        throw std::runtime_error("No earlier date available in database");
+	{
+        // throw std::runtime_error("No earlier date available in database");
+		std::cerr << "Error: No earlier date available in database." << std::endl;
+		return -1;
+	}
     return static_cast<float>(it->second * value);
 }
 

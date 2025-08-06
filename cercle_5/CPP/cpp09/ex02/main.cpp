@@ -2,6 +2,11 @@
 
 int	stringToInt(const std::string& str)
 {
+	for(size_t i = 0; i < str.size(); i++)
+	{
+		if (str[i] != ' ' && !isdigit(str[i]))
+			throw std::runtime_error("Invalid number format 2");
+	}
 	std::stringstream	ss(str);
 	int res;
 	ss >> res;

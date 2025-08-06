@@ -1,5 +1,7 @@
 #include "PmergeMe.hpp"
 
+int PmergeMe::jacobshtal[] = {0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525};
+
 PmergeMe::PmergeMe()
 {
 }
@@ -102,6 +104,66 @@ void	PmergeMe::createVandL()
 	// // /*----------------------------------------------------------------*/
 }
 
+std::vector<int>	PmergeMe::getOrder(size_t nb) const
+{
+	std::vector<int>	v;
+	if (nb == 0)
+		return v;
+	if (nb == 1)
+	{
+		v.push_back(0);
+		return v;
+	}
+	if (nb > 1)
+	{
+		v.push_back(0);
+		v.push_back(1);
+	}
+	for (size_t i = 2; i < nb; i++)
+	{
+		// std::cout << "i: " << i << std::endl;
+		// std::cout << "nb: " << nb << std::endl;
+
+		//nb = 8
+		size_t actual = jacobshtal[i]; //i = 4 et jb = 11
+		// std::cout << "actual: " << actual << std::endl;
+
+		size_t before = jacobshtal[i - 1]; // i = 3 et jb = 5
+		// std::cout << "before: " << before << std::endl;
+
+		if (actual > nb)
+		{
+			before++;
+			for (; before < nb; before++)
+			{
+				v.push_back(before);
+				// std::cout << "before in for()_2: " << before << std::endl;
+			}
+			break ;
+		}
+		else
+		{
+			v.push_back(actual);
+			before++;
+			for (; before < actual; before++)
+			{
+				v.push_back(before);
+				// std::cout << "before in for(): " << before << std::endl;
+			}
+		}
+	}
+
+	/*test*/
+	// std::cout << "\nTEST" << std::endl;
+	// for (size_t i = 0; i < v.size(); i++)
+	// {
+	// 	std::cout << v[i] << std::endl;
+	// }
+	/*----*/
+	return v;
+	//0 1 3 2 5 4
+}
+
 void	PmergeMe::sortAndMergeVandL()
 {
 	_lMax.sort();
@@ -127,16 +189,21 @@ void	PmergeMe::sortAndMergeVandL()
 	// std::cout << std::endl;
 	// /*----------------------------------------------------------------*/
 
-	for (size_t i = 0; i < _vMin.size(); ++i)
+	std::vector<int> order = this->getOrder(this->_vMin.size());
+
+	for (size_t i = 0; i < order.size(); ++i)
 	{
-		std::vector<int>::iterator lowVector = std::lower_bound(_vMax.begin(), _vMax.end(), _vMin[i]);
-		_vMax.insert(lowVector, _vMin[i]);
+		std::vector<int>::iterator lowVector = std::lower_bound(_vMax.begin(), _vMax.end(), _vMin[order[i]]);
+		_vMax.insert(lowVector, _vMin[order[i]]);
 	}
 	if (this->_leftover == -1)
 		_endVector = clock();
 
-	for (std::list<int>::iterator itMin = _lMin.begin(); itMin != _lMin.end(); itMin++)
+
+	for (size_t i = 0; i < order.size(); ++i)
 	{
+		std::list<int>::iterator itMin = _lMin.begin();
+		std::advance(itMin, order[i]);
 		std::list<int>::iterator pos = _lMax.begin();
 		while(pos != _lMax.end() && *pos < *itMin)
 			pos++;

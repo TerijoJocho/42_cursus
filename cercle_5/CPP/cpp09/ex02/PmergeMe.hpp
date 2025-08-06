@@ -33,7 +33,10 @@ class PmergeMe
 
 	void displayQueue();
 	void createVandL();
+	std::vector<int> getOrder(size_t) const;
 	void sortAndMergeVandL();
+
+	static int jacobshtal[];
 
 	PmergeMe(const PmergeMe &other);
 	PmergeMe &operator=(const PmergeMe &other);
