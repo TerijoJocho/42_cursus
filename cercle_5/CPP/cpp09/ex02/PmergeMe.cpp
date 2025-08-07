@@ -1,5 +1,13 @@
 #include "PmergeMe.hpp"
 
+int g_comp = 0;
+
+bool	comp(int i, int j)
+{
+	g_comp++;
+	return (i < j);
+}
+
 int PmergeMe::jacobshtal[] = {0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525};
 
 PmergeMe::PmergeMe()
@@ -23,6 +31,8 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 
 void	PmergeMe::processInput()
 {
+	if (this->_inputQ.size() == 1)
+		throw std::logic_error("There is only one element, can not process.");
 	std::cout << "Before: "; this->displayQueue(); std::cout << std::endl;
 
 	//start time
@@ -34,7 +44,6 @@ void	PmergeMe::processInput()
 	//sort max sequence
 	this->sortAndMergeVandL();
 
-
 	/*test-----------------------------------------------------------------------*/
 	// std::cout << "\nvMax total: ";
 	// for (std::vector<int>::iterator	it = _vMax.begin(); it != _vMax.end(); ++it)
@@ -45,6 +54,12 @@ void	PmergeMe::processInput()
 	// 	std::cout << *it << " ";
 	// std::cout << std::endl;
 	// /*--------------------------------------------------------------------------*/
+
+	if (!isSorted(_vMax.begin(), _vMax.end()))
+		throw std::runtime_error("Vector is not sorted.");
+	if (!isSorted(_lMax.begin(), _lMax.end()))
+		throw std::runtime_error("List is not sorted.");
+
 	while (!_inputQ.empty())
 	{
 		_inputQ.pop();
@@ -56,16 +71,20 @@ void	PmergeMe::processInput()
 	std::cout << "After: "; this->displayQueue(); std::cout << std::endl;
 	double	timeSpanVector = static_cast<double>(this->_endVector - startVector) / CLOCKS_PER_SEC * 1e6;
 	double	timeSpanList = static_cast<double>(this->_endList - startList) / CLOCKS_PER_SEC * 1000000.0;
-	std::cout << "Time to process a range of " << _inputQ.size() << " elements with std::vector<int> : "; std::cout << std::fixed << std::setprecision(3) << timeSpanVector << " us" << std::endl;
+	std::cout << "\nTime to process a range of " << _inputQ.size() << " elements with std::vector<int> : "; std::cout << std::fixed << std::setprecision(3) << timeSpanVector << " us" << std::endl;
 	std::cout << "Time to process a range of " << _inputQ.size() << " elements with std::list<int> : "; ; std::cout << std::fixed << std::setprecision(3) << timeSpanList<< " us" << std::endl;
+	std::cout << "\nNumber of comparaison with Ford-Johnson: " << g_comp << std::endl;
+	g_comp = 0;
+	std::sort(_forComp.begin(), _forComp.end(), comp);
+	std::cout << "Number of comparaison with sort: " << g_comp << std::endl;
 }
 
 void	PmergeMe::createVandL()
 {
 	while (_inputQ.size() >= 2)
 	{
-		int j = _inputQ.front(); _inputQ.pop();
-		int k = _inputQ.front(); _inputQ.pop();
+		int j = _inputQ.front(); this->_forComp.push_back(j); _inputQ.pop();
+		int k = _inputQ.front(); this->_forComp.push_back(k); _inputQ.pop();
 
 		if (j <= k)
 		{
@@ -161,14 +180,12 @@ std::vector<int>	PmergeMe::getOrder(size_t nb) const
 	// }
 	/*----*/
 	return v;
-	//0 1 3 2 5 4
 }
 
 void	PmergeMe::sortAndMergeVandL()
 {
 	_lMax.sort();
-	std::sort(_vMax.begin(), _vMax.end());
-
+	std::sort(_vMax.begin(), _vMax.end(), comp);
 	// /*test--------------------------------------------------------------*/
 	// std::cout << "\nvMax sorted: ";
 	// for (std::vector<int>::iterator	it = _vMax.begin(); it != _vMax.end(); ++it)
@@ -193,7 +210,7 @@ void	PmergeMe::sortAndMergeVandL()
 
 	for (size_t i = 0; i < order.size(); ++i)
 	{
-		std::vector<int>::iterator lowVector = std::lower_bound(_vMax.begin(), _vMax.end(), _vMin[order[i]]);
+		std::vector<int>::iterator lowVector = std::lower_bound(_vMax.begin(), _vMax.end(), _vMin[order[i]], comp);
 		_vMax.insert(lowVector, _vMin[order[i]]);
 	}
 	if (this->_leftover == -1)
@@ -214,7 +231,7 @@ void	PmergeMe::sortAndMergeVandL()
 
 	if (this->_leftover != -1)
 	{
-		std::vector<int>::iterator lowVector = std::lower_bound(_vMax.begin(), _vMax.end(), this->_leftover);
+		std::vector<int>::iterator lowVector = std::lower_bound(_vMax.begin(), _vMax.end(), this->_leftover, comp);
 		_vMax.insert(lowVector, this->_leftover);
 		_endVector = clock();
 
