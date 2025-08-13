@@ -1,6 +1,5 @@
 #include "BitcoinExchange.hpp"
 
-/*-----------------------------CLASS DEFINITION--------------------------------*/
 BitcoinExchange::BitcoinExchange(std::string& dbFilename) : _filename(dbFilename)
 {
     this->loadDatabase("data.csv");
@@ -24,10 +23,10 @@ BitcoinExchange::~BitcoinExchange()
 void    BitcoinExchange::loadDatabase(const std::string& filename)
 {
     std::fstream    fs;
-    fs.open(filename, std::fstream::in);
+    fs.open(filename.c_str(), std::fstream::in);
     if (!fs.is_open())
-        throw std::ios_base::failure("Failed to open file '" + filename + "'");    
-    
+        throw std::ios_base::failure("Failed to open file '" + filename + "'");
+
     std::string line;
     std::getline(fs, line);
     while(std::getline(fs, line))
@@ -35,7 +34,7 @@ void    BitcoinExchange::loadDatabase(const std::string& filename)
         if (line.empty())
             continue;
 
-        if (line.size() < 12 || line[10] != ',')    
+        if (line.size() < 12 || line[10] != ',')
         {
             std::cerr << "Error: Invalid format:" << line << std::endl;
             continue;
@@ -47,7 +46,7 @@ void    BitcoinExchange::loadDatabase(const std::string& filename)
         std::stringstream   ss(valueStr); //outils qui converti les str en numeric
         float   value;                    //variable pour stocker le numeric
         ss >> value;                      //balance le str dans le numeric
-        
+
         this->_database.insert(std::make_pair(date, value));
     }
 
@@ -59,7 +58,7 @@ void    BitcoinExchange::processInputFile() const
     this->checkInput(this->_filename);
 
     std::fstream    fs;
-    fs.open(this->_filename, std::fstream::in);
+    fs.open(this->_filename.c_str(), std::fstream::in);
 
     std::string line;
     std::getline(fs, line);
@@ -85,7 +84,12 @@ void    BitcoinExchange::processInputFile() const
         std::stringstream   ss(line.substr(13));
         float               f;
         ss >> f;
-        std::cout << line.substr(0, 10) << " => " << line.substr(13) << " = " << this->getExchangeRateForDate(line.substr(0, 10), f) << std::endl;
+
+		float	result = this->getExchangeRateForDate(line.substr(0, 10), f);
+		if ( result != -1)
+		{
+			std::cout << line.substr(0, 10) << " => " << line.substr(13) << " = " << result << std::endl;
+		}
     }
     fs.close();
 }
@@ -94,10 +98,16 @@ float   BitcoinExchange::getExchangeRateForDate(const std::string& date, float& 
 {
     std::map<std::string, float>::const_iterator    it = this->_database.upper_bound(date);
 
+	// std::cout << it->first << std::endl;
+
     if (it != this->_database.begin())
         it--;
     else
-        throw std::runtime_error("No earlier date available in database");
+	{
+        // throw std::runtime_error("No earlier date available in database");
+		std::cerr << "Error: No earlier date available in database." << std::endl;
+		return -1;
+	}
     return static_cast<float>(it->second * value);
 }
 
@@ -115,21 +125,25 @@ bool    BitcoinExchange::isValidDate(const std::string& line) const
         return false;
     return true;
 }
-    
+
 bool    BitcoinExchange::isValidValue(const std::string& value) const
 {
+	int point = 0;
     for (size_t i = 0; i < value.size(); i++)
     {
         std::stringstream   ss(value);
         float               f;
         ss >> f;
 
-        if (f < 0)
+		if (value[i] == '.')
+			point++;
+
+        if (f < 0 || point > 1 || (!isdigit(value[i]) && value[i] != '.'))
         {
             std::cerr << "Error: not a positive number." << std::endl;
             return false;
         }
-        
+
         if (f > 1000)
         {
             std::cerr << "Error: number too large." << std::endl;
@@ -148,9 +162,9 @@ void    BitcoinExchange::checkInput(std::string file) const
         std::cerr << "Warning: file does not have .txt extension. Proceeding anyway." << std::endl;
 
     std::fstream    fs;
-    fs.open(file, std::fstream::in);
+    fs.open(file.c_str(), std::fstream::in);
     if (!fs.is_open())
-        throw std::ios_base::failure("Failed to open file '" + file + "'");    
-    
+        throw std::ios_base::failure("Failed to open file '" + file + "'");
+
     fs.close();
 }
