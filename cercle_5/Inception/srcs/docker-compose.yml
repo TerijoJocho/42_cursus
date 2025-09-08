@@ -4,13 +4,15 @@ services:
     ports:
       - "443:443"
     volumes:
-      # - /home/daavril/data/wordpress:/var/www/html:ro
-      - wordpress_data:/var/www/html:ro
+      - /home/daavril/data/wordpress:/var/www/html:ro
+    #   - ./requirements/nginx/index.html:/var/www/html/index.html:ro #test
+      # - wordpress_data:/var/www/html:ro #on mac
     healthcheck:
-      test: ["CMD-SHELL", "curl -k -f https://localhost || exit 1"]
+      test: ["CMD-SHELL", "curl -k -f https://localhost:443 || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
     depends_on:
       wordpress:
         condition: service_healthy
@@ -20,6 +22,8 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
+    expose:
+      - "9000"
     env_file: .env
     secrets:
       - wp_admin_password
@@ -30,10 +34,10 @@ services:
       WP_ADMIN_PASSWORD_FILE: /run/secrets/wp_admin_password
       WP_USER_PASSWORD_FILE: /run/secrets/wp_user_password
     volumes:
-      # - /home/daavril/data/wordpress:/var/www/html
-      - wordpress_data:/var/www/html
+      - /home/daavril/data/wordpress:/var/www/html
+      # - wordpress_data:/var/www/html
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost/wp-login.php || exit 1"]
+      test: ["CMD", "pgrep", "php-fpm83"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -50,17 +54,18 @@ services:
     secrets:
       - db_root_password
       - db_password
+      - wp_user_password
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
       MYSQL_PASSWORD_FILE: /run/secrets/db_password
     volumes:
-      # - /home/daavril/data/maraidb:/var/lib/mysql
-      - mariadb_data:/var/lib/mysql
+      - /home/daavril/data/maraidb:/var/lib/mysql
+      # - mariadb_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h mariadb -uroot -p$(cat /run/secrets/db_root_password) || exit 1"]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$(cat /run/secrets/db_root_password) || exit 1"]
       interval: 5s
       timeout: 3s
-      retries: 10
+      retries: 5
     restart: unless-stopped
     networks:
       - inception
