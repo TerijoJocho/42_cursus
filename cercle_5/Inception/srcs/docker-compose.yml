@@ -59,7 +59,7 @@ services:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
       MYSQL_PASSWORD_FILE: /run/secrets/db_password
     volumes:
-      - /home/daavril/data/maraidb:/var/lib/mysql
+      - /home/daavril/data/mariadb:/var/lib/mysql
       # - mariadb_data:/var/lib/mysql
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$(cat /run/secrets/db_root_password) || exit 1"]
