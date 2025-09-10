@@ -4,15 +4,15 @@ MYSQL_USER_PASSWORD=$(cat /run/secrets/db_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 
-MYSQL_DATABASE=${MYSQL_DATABASE:-wp_db}
-MYSQL_USER=${MYSQL_USER:-wp_user}
-DOMAIN_NAME=${DOMAIN_NAME:-daavril.42.fr}
+# MYSQL_DATABASE=${MYSQL_DATABASE:-wp_db}
+# MYSQL_USER=${MYSQL_USER:-wp_user}
+# DOMAIN_NAME=${DOMAIN_NAME:-daavril.42.fr}
 
-WP_ADMIN_USER=${WP_ADMIN_USER:-daavril}
-WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL:-daril.avril@gmail.com}
+# WP_ADMIN_USER=${WP_ADMIN_USER:-daavril}
+# WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL:-daril.avril@gmail.com}
 
-WP_USER_NAME=${WP_USER_NAME:-test_user}
-WP_USER_EMAIL=${WP_USER_EMAIL:-test@example.com}
+# WP_USER_NAME=${WP_USER_NAME:-test_user}
+# WP_USER_EMAIL=${WP_USER_EMAIL:-test@example.com}
 
 echo "Fixing permissions on /var/www/html..."
 chown -R www-data:www-data /var/www/html

@@ -21,7 +21,7 @@ RUN mkdir -p /etc/nginx/ssl /var/log/nginx /var/run/nginx /var/www/html && \
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/nginx.key \
     -out /etc/nginx/ssl/nginx.crt \
-    -subj "/C=FR/ST=IDF/L=Paris/0=42/OU=42/CN=localhost"
+    -subj "/C=FR/ST=IDF/L=Paris/0=42/OU=42/CN=daavril.42.fr"
 
 #je copie ma config dans celle du conteneur
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
