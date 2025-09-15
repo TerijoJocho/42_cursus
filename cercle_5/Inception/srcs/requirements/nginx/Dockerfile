@@ -8,7 +8,6 @@ RUN apk update && apk add --no-cache nginx openssl curl
 RUN mkdir -p /etc/nginx/ssl /var/log/nginx /var/run/nginx /var/www/html && \
     chown -R nginx:nginx /var/log/nginx /var/run/nginx /var/www/html
 
-#creer le dossier ssl
 #lance la cmd openssl req pour creer un certificat auto-signé
 #en format X.509, standard pour tls/ssl
 #no des, ne chiffre pas la clé privée, donc pas de mdp a chaque demarage

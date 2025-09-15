@@ -1,4 +1,5 @@
 services:
+  #MANDATORY PART
   nginx:
     build: ./requirements/nginx
     ports:
@@ -69,6 +70,47 @@ services:
     restart: unless-stopped
     networks:
       - inception
+  #BONUS PART
+  adminer:
+    build: ./requirements/adminer
+    volumes:
+      - /home/daavril/data/wordpress:/var/www/html
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - inception
+
+  static-site:
+    build: ./requirements/static-site
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - inception
+
+  ftp-server:
+    build: ./requirements/ftp-server
+    env_file: .env
+    secrets:
+      - ftp_password
+    environment:
+      FTP_PASSWORD_FILE: /run/secrets/ftp_password
+    volumes:
+      - /home/daavril/data/wordpress:/var/www/html
+    ports:
+      - "21:21"
+      - "30000-30010:30000-30010"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - inception
+
+
 
 secrets:
   wp_admin_password:
@@ -79,6 +121,8 @@ secrets:
     file: ../secrets/db_root_password.txt
   db_password:
     file: ../secrets/db_password.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt
 
 volumes:
   wordpress_data:
@@ -86,3 +130,5 @@ volumes:
 
 networks:
   inception:
+
+

@@ -1,0 +1,77 @@
+Ah oui 👍 je vois exactement de quoi tu parles : les **bonus** du sujet Inception.
+On avait classé les services du plus simple au plus compliqué, et je t’avais expliqué par où commencer. Je vais te refaire un récap clair :
+
+---
+
+## 📌 Les bonus du sujet Inception
+
+### 1. **Adminer** (le plus facile ✅)
+
+* C’est une petite web-app PHP (un seul fichier `adminer.php`) pour gérer ta DB.
+* Très proche de phpMyAdmin, mais ultra-light.
+* Dockerfile basique : tu prends `php-fpm` ou même `php:alpine`, tu copies `adminer.php` dedans, tu exposes un port et tu pointes Nginx dessus.
+  👉 Très simple à mettre en place, bon pour se chauffer.
+
+---
+
+### 2. **Static Website** (simple aussi 🚀)
+
+* Un site HTML/CSS/JS basique (ex: ton CV, une page vitrine).
+* Dockerfile minimal : `nginx:alpine`, tu copies ton site dans `/usr/share/nginx/html`.
+* Expose un port (genre `8080`) pour y accéder.
+  👉 C’est surtout du copier-coller + config Nginx.
+
+---
+
+### 3. **FTP server (vsftpd ou pure-ftpd)** (un peu plus tricky ⚠️)
+
+* Permet d’accéder aux fichiers de ton WordPress (`/var/www/html`) via un client FTP.
+* Nécessite :
+
+  * Dockerfile avec `vsftpd` ou `pure-ftpd`
+  * Montée de volume `wordpress_data:/var/www/html`
+  * Configuration des utilisateurs FTP, gestion des permissions
+  * Ouverture du port `21` et parfois une plage de ports passifs (`20xxx`).
+    👉 Plus complexe car il faut bien gérer la sécurité et les utilisateurs.
+
+---
+
+### 4. **Redis cache** (plus avancé 🧠)
+
+* Redis sert à mettre en cache les requêtes DB de WordPress pour accélérer le site.
+* Il faut :
+
+  * Un conteneur Redis avec un volume pour persistance
+  * Le plugin **Redis Object Cache** dans WordPress
+  * Modifier `wp-config.php` pour activer Redis (`define('WP_REDIS_HOST', 'redis');`).
+    👉 Pas très compliqué techniquement, mais demande de bien relier Redis ↔ WordPress.
+
+---
+
+### 5. **Service libre (ton choix 🛠️)**
+
+* Ça peut être :
+
+  * Un monitoring (Prometheus + Grafana, Netdata)
+  * Un serveur mail (Postfix + Dovecot)
+  * Un moteur de recherche (Elasticsearch)
+  * Un gestionnaire de fichiers (Nextcloud, MinIO)
+* 👉 Le plus important c’est de savoir **justifier ton choix** pendant la soutenance : « Ce service est utile parce que … ».
+
+---
+
+## 💡 Stratégie (ordre conseillé)
+
+1. **Adminer** (tu comprends vite la mécanique des bonus)
+2. **Static website** (simple, 5 minutes de setup)
+3. **FTP server** (un peu plus de config, mais logique avec WP)
+4. **Redis cache** (tu touches à l’optimisation, plus technique)
+5. **Service libre** (celui que tu maîtrises le mieux pour briller à l’oral 😎)
+
+---
+
+👉 Comme ça, tu assures un minimum de bonus facilement (Adminer + site statique), puis tu montes en difficulté avec Redis et FTP.
+
+---
+
+Tu veux que je te fasse un **exemple concret de `docker-compose.yml`** avec un Adminer et un site statique pour que tu voies comment les brancher à ton projet actuel ?
