@@ -1,0 +1,18 @@
+FROM alpine:3.21
+
+RUN apk update && apk add --no-cache redis
+
+#on decommente les options importantes
+#redis va stocker 128mb de donnees (evite de prendre toute la RAM)
+#allkeys-lru ->strategie d'evcition last recently used -> redis supp les cles les moins utilisees quand la memoire est pleine
+#bind -> on commente le bind par default 127.0.0.1 sinon redis n'ecoutera qu'en local et pas depuis wp un autre container
+RUN sed -i 's/^# maxmemory <bytes>/maxmemory 128mb/' /etc/redis.conf && \
+    sed -i 's/^# maxmemory-policy noeviction/maxmemory-policy allkeys-lru/' /etc/redis.conf && \
+    sed -i 's/^bind 127.0.0.1 -::1/#bind 127.0.0.1 ::1/' /etc/redis.conf && \
+	sed -i 's/^protected-mode yes/protected-mode no/' /etc/redis.conf
+
+#port officile de redis
+EXPOSE 6379
+
+#demarre redis avec les conf qu'on a modifier dans RUN, en mode non proteger sinon redis refuse les co externes, sans mdp
+CMD ["redis-server", "/etc/redis.conf", "--bind", "0.0.0.0"]

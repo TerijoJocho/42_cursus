@@ -45,6 +45,8 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+      redis-cache:
+        condition: service_started
     restart: unless-stopped
     networks:
       - inception
@@ -110,6 +112,23 @@ services:
     networks:
       - inception
 
+  redis-cache:
+    build: ./requirements/redis-cache
+    expose:
+      - "6379"
+    restart: unless-stopped
+    networks:
+      - inception
+
+  uptime-kuma:
+    build: ./requirements/uptime-kuma
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    volumes:
+      - /home/daavril/data/uptime-kuma:/app/data
+    networks:
+      - inception
 
 
 secrets:
@@ -127,6 +146,7 @@ secrets:
 volumes:
   wordpress_data:
   mariadb_data:
+  uptime-kuma:
 
 networks:
   inception:
