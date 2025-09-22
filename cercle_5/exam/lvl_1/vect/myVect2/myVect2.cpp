@@ -63,14 +63,14 @@ int myVect2::getContainer_elements(int idx) const
         return (copy);
     }
 
-    myVect2 myVect2::operator+=(int add)
+    myVect2& myVect2::operator+=(int add)
     {
         this->_container[0] += add;
         this->_container[1] += add;
         return *this;
     }
 
-    myVect2 myVect2::operator+=(const myVect2 &add)
+    myVect2& myVect2::operator+=(const myVect2 &add)
     {
         this->_container[0] += add.getContainer_elements(0);
         this->_container[1] += add.getContainer_elements(1);
@@ -114,14 +114,14 @@ int myVect2::getContainer_elements(int idx) const
         return (copy);
     }
 
-    myVect2 myVect2::operator-=(int add)
+    myVect2& myVect2::operator-=(int add)
     {
         this->_container[0] -= add;
         this->_container[1] -= add;
         return *this;
     }
 
-    myVect2 myVect2::operator-=(const myVect2 &add)
+    myVect2& myVect2::operator-=(const myVect2 &add)
     {
         this->_container[0] -= add.getContainer_elements(0);
         this->_container[1] -= add.getContainer_elements(1);
@@ -149,7 +149,7 @@ int myVect2::getContainer_elements(int idx) const
         return copy;
     }
 
-    myVect2 myVect2::operator*=(int mult)
+    myVect2& myVect2::operator*=(int mult)
     {
         this->_container[0] *= mult;
         this->_container[1] *= mult;
@@ -157,7 +157,7 @@ int myVect2::getContainer_elements(int idx) const
         return *this;
     }
 
-    myVect2 myVect2::operator*=(const myVect2 &v)
+    myVect2& myVect2::operator*=(const myVect2 &v)
     {
         this->_container[0] *= v.getContainer_elements(0);
         this->_container[1] *= v.getContainer_elements(1);
@@ -168,10 +168,9 @@ int myVect2::getContainer_elements(int idx) const
 /*EQUAL*/
     myVect2& myVect2::operator=(const myVect2 &other)
     {
-        if (this == &other)
-            return *this;
-        
-        this->_container = other._container;
+        if (this != &other)
+            this->_container = other._container;
+            
         return *this;
     }
 
@@ -186,12 +185,17 @@ int myVect2::getContainer_elements(int idx) const
     bool myVect2::operator!=(const myVect2 &other) const
     {
         if ((this->getContainer_elements(0) != other.getContainer_elements(0)) 
-            && (this->getContainer_elements(1) != other.getContainer_elements(1)))
+            || (this->getContainer_elements(1) != other.getContainer_elements(1)))
             return true;
         return false;
     }
 
 /*FONCTION LIBRE*/
+    myVect2 operator-(const myVect2& v)
+    {
+        return v * -1;
+    }
+    
     myVect2 operator*(int mult, const myVect2 &v)
     {
         return v * mult;

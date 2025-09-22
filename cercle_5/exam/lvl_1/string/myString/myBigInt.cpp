@@ -56,13 +56,21 @@ myBigInt    myBigInt::operator+(const myBigInt& other) const
     return copy;
 }
 
-myBigInt    myBigInt::operator+=(const myBigInt& other)
+myBigInt&    myBigInt::operator+=(const myBigInt& other)
 {
     *this = *this + other;
     return *this;
 }
 
-myBigInt    myBigInt::operator++(int)
+myBigInt&   myBigInt::operator++(void)//pre
+{
+    myBigInt    add(1);
+
+    *this += add;
+    return *this;
+}
+
+myBigInt    myBigInt::operator++(int)//post
 {
     myBigInt    copy(*this);
     myBigInt    add(1);
@@ -71,13 +79,6 @@ myBigInt    myBigInt::operator++(int)
     return copy;
 }
 
-myBigInt&   myBigInt::operator++(void)
-{
-    myBigInt    add(1);
-
-    *this += add;
-    return *this;
-}
 
 myBigInt    myBigInt::operator<<(unsigned int value) const
 {
@@ -90,7 +91,7 @@ myBigInt    myBigInt::operator<<(unsigned int value) const
     return copy;
 }
 
-myBigInt    myBigInt::operator<<=(unsigned int value)
+myBigInt&    myBigInt::operator<<=(unsigned int value)
 {
     if (this->_string == "0")
         return *this;
@@ -99,7 +100,7 @@ myBigInt    myBigInt::operator<<=(unsigned int value)
     return *this;
 }
 
-myBigInt    myBigInt::operator>>=(const myBigInt& other)
+myBigInt&    myBigInt::operator>>=(const myBigInt& other)
 {
     if (this->_string == "0")
         return *this;
@@ -119,32 +120,15 @@ myBigInt    myBigInt::operator>>=(const myBigInt& other)
     return *this;
 }
 
-
-bool        myBigInt::operator>(const myBigInt& other)
+bool        myBigInt::operator>(const myBigInt& other) const
 {
-    if (this->_string.size() > other.getValue().size())
-        return true;
-    if (this->_string.size() < other.getValue().size())
-        return false;
-    
-    std::string x1 = this->_string;
-    std::string x2 = other.getValue();
+    if (this->_string.size() != other.getValue().size())
+        return this->_string.size() > other.getValue().size();
 
-    for (size_t i = 0; i < x1.size(); i++)
-    {
-        if (x1[i] != x2[i])
-        {
-            if (x1[i] > x2[i])
-                return true;
-            else
-                return false;
-        }
-    }
-
-    return false;
+    return this->_string > other.getValue(); //lexicographical compare
 }
 
-bool        myBigInt::operator<(const myBigInt& other)
+bool        myBigInt::operator<(const myBigInt& other) const
 {
     if (this->_string.size() != other.getValue().size())
         return this->_string.size() < other.getValue().size();
@@ -152,17 +136,17 @@ bool        myBigInt::operator<(const myBigInt& other)
     return this->_string < other.getValue(); //lexicographical compare
 }
 
-bool        myBigInt::operator==(const myBigInt& other)
+bool        myBigInt::operator==(const myBigInt& other) const
 {
     return this->_string == other.getValue();
 }
 
-bool        myBigInt::operator!=(const myBigInt& other)
+bool        myBigInt::operator!=(const myBigInt& other) const
 {
     return this->_string != other.getValue();
 }
 
-bool        myBigInt::operator<=(const myBigInt& other)
+bool        myBigInt::operator<=(const myBigInt& other) const
 {
     if (*this == other)
         return true;
@@ -171,7 +155,7 @@ bool        myBigInt::operator<=(const myBigInt& other)
     return false;
 }
 
-bool        myBigInt::operator>=(const myBigInt& other)
+bool        myBigInt::operator>=(const myBigInt& other) const
 {
     if (*this == other)
         return true;

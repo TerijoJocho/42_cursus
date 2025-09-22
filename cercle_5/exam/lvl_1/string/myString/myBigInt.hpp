@@ -17,19 +17,19 @@ class myBigInt
         std::string getValue() const;
 
         myBigInt    operator+(const myBigInt& other) const;
-        myBigInt    operator+=(const myBigInt& other);
-        myBigInt    operator++(int);
-        myBigInt&   operator++(void);
-        myBigInt    operator<<(unsigned int value) const;
-        myBigInt    operator<<=(unsigned int value);
-        myBigInt    operator>>=(const myBigInt& other);
+        myBigInt&   operator+=(const myBigInt& other);
+        myBigInt&   operator++(void);//pre
+        myBigInt    operator++(int);//post
+        myBigInt    operator<<(unsigned int value) const;//add 0, value times, return copy
+        myBigInt&   operator<<=(unsigned int value);//add 0, value times, return *this
+        myBigInt&    operator>>=(const myBigInt& other);//enleve 0, value fois, return *this
 
-        bool        operator>(const myBigInt& other);
-        bool        operator<(const myBigInt& other);
-        bool        operator==(const myBigInt& other);
-        bool        operator!=(const myBigInt& other);
-        bool        operator<=(const myBigInt& other);
-        bool        operator>=(const myBigInt& other);
+        bool        operator>(const myBigInt& other) const;
+        bool        operator<(const myBigInt& other) const;
+        bool        operator==(const myBigInt& other) const;
+        bool        operator!=(const myBigInt& other) const;
+        bool        operator<=(const myBigInt& other) const;
+        bool        operator>=(const myBigInt& other) const;
 };
 
 std::ostream&   operator<<(std::ostream& out, const myBigInt& other);
