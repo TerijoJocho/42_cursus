@@ -1,6 +1,6 @@
 FROM alpine:3.21
 
-RUN apk update && apk add --no-cache vsftpd tini bash
+RUN apk update && apk add --no-cache vsftpd shadow
 
 COPY ./conf/vsftpd.conf /etc/vsftpd/vsftpd.conf
 COPY ./tool/entrypoint.sh /usr/sbin/entrypoint.sh

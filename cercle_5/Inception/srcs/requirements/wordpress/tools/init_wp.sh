@@ -4,16 +4,6 @@ MYSQL_USER_PASSWORD=$(cat /run/secrets/db_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 
-# MYSQL_DATABASE=${MYSQL_DATABASE:-wp_db}
-# MYSQL_USER=${MYSQL_USER:-wp_user}
-# DOMAIN_NAME=${DOMAIN_NAME:-daavril.42.fr}
-
-# WP_ADMIN_USER=${WP_ADMIN_USER:-daavril}
-# WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL:-daril.avril@gmail.com}
-
-# WP_USER_NAME=${WP_USER_NAME:-test_user}
-# WP_USER_EMAIL=${WP_USER_EMAIL:-test@example.com}
-
 echo "Fixing permissions on /var/www/html..."
 chown -R www-data:www-data /var/www/html
 
@@ -54,3 +44,22 @@ if ! wp core is-installed --allow-root; then
 else
     echo "WordPress déjà installé."
 fi
+
+echo "Configuration Redis..."
+#nom du service docker + port + indique a wp que le cache dit etre actif globalement
+wp config set WP_REDIS_HOST redis-cache --allow-root
+wp config set WP_REDIS_PORT 6379 --allow-root
+wp config set WP_CACHE true --allow-root
+
+#wp en fr plutot qu'en anglais
+wp language core install fr_FR --allow-root
+wp language core activate fr_FR --allow-root
+
+#installe le plugin officiel redis object cache et l'active + active redis dans wp
+if ! wp plugin is-installed redis-cache --allow-root; then
+    wp plugin install redis-cache --activate --allow-root
+elif ! wp plugin is-active redis-cache --allow-root; then
+    wp plugin activate redis-cache --allow-root
+fi
+
+wp redis enable --allow-root
