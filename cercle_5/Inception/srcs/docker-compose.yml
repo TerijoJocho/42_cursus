@@ -5,9 +5,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /home/daavril/data/wordpress:/var/www/html:ro
-    #   - ./requirements/nginx/index.html:/var/www/html/index.html:ro #test
-      # - wordpress_data:/var/www/html:ro #on mac
+      - wordpress_data:/var/www/html:ro
     healthcheck:
       test: ["CMD-SHELL", "curl -k -f https://localhost:443 || exit 1"]
       interval: 10s
@@ -35,8 +33,7 @@ services:
       WP_ADMIN_PASSWORD_FILE: /run/secrets/wp_admin_password
       WP_USER_PASSWORD_FILE: /run/secrets/wp_user_password
     volumes:
-      - /home/daavril/data/wordpress:/var/www/html
-      # - wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html
     healthcheck:
       test: ["CMD", "pgrep", "php-fpm83"]
       interval: 10s
@@ -62,8 +59,7 @@ services:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
       MYSQL_PASSWORD_FILE: /run/secrets/db_password
     volumes:
-      - /home/daavril/data/mariadb:/var/lib/mysql
-      # - mariadb_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$(cat /run/secrets/db_root_password) || exit 1"]
       interval: 5s
@@ -76,7 +72,7 @@ services:
   adminer:
     build: ./requirements/adminer
     volumes:
-      - /home/daavril/data/wordpress:/var/www/html
+      - wordpress_data:/var/www/html
     depends_on:
       mariadb:
         condition: service_healthy
@@ -101,7 +97,7 @@ services:
     environment:
       FTP_PASSWORD_FILE: /run/secrets/ftp_password
     volumes:
-      - /home/daavril/data/wordpress:/var/www/html
+      - /home/daavril/data/wordpress/ftp_uploads:/var/www/html/ftp_uploads
     ports:
       - "21:21"
       - "30000-30010:30000-30010"
@@ -126,7 +122,7 @@ services:
       - "3001:3001"
     restart: unless-stopped
     volumes:
-      - /home/daavril/data/uptime-kuma:/app/data
+      - uptime-kuma:/app/data
     networks:
       - inception
 
@@ -144,11 +140,30 @@ secrets:
     file: ../secrets/ftp_password.txt
 
 volumes:
-  wordpress_data:
   mariadb_data:
+    name: srcs_mariadb_data
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/daavril/data/mariadb
+      o: bind
+
+  wordpress_data:
+    name: srcs_wordpress_data
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/daavril/data/wordpress
+      o: bind
+
   uptime-kuma:
+    name: srcs_uptime-kuma
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/daavril/data/uptime-kuma
+      o: bind
+
 
 networks:
   inception:
-
-

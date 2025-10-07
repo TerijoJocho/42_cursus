@@ -4,7 +4,7 @@ FROM alpine:3.21
 RUN apk update && apk add --no-cache \
     php php-fpm php-mysqli php-json php-curl php-xml \
     php-gd php-mbstring php-zip php-session  php-phar\
-    php-tokenizer php-redis php83-ctype wget tar curl less bash
+    php-tokenizer php-redis php83-ctype wget tar curl less
 
 #install wp
 WORKDIR /var/www/html

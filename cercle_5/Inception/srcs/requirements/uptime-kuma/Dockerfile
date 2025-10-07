@@ -1,7 +1,7 @@
 FROM alpine:3.21
 
 # Installer Node.js et dépendances pour builder
-RUN apk add --no-cache nodejs npm git bash python3 build-base
+RUN apk add --no-cache nodejs npm git python3 build-base
 
 WORKDIR /app
 
