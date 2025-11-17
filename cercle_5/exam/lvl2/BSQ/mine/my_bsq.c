@@ -1,5 +1,4 @@
 #include "my_bsq.h"
-// #include <stddef.h>
 
 /*---------UTILS----------*/
 char* ft_substr(char* line, int size)
