@@ -1,0 +1,358 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daavril <daavril@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/26 13:29:55 by aarmitan          #+#    #+#             */
+/*   Updated: 2025/11/12 13:43:20 by daavril          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "server.hpp"
+
+bool isSpecial(char c)
+{
+    // RFC: specials = []\`_^{}|
+    return c=='[' || c==']' || c=='\\' || c=='`' || c=='_' || c=='^' || c=='{' || c=='}' || c=='|';
+}
+bool isNickFirst(char c)
+{
+    return isalpha(c) || isSpecial(c);
+}
+bool isNickRest(char c)
+{
+    return isalnum(c) || isSpecial(c) || c=='-';
+}
+
+bool isValidNick(const std::string& s)
+{
+    if (s.empty())
+		return false;
+    if (!isNickFirst(s[0]))
+		return false;
+    for (size_t i = 1; i < s.size(); ++i)
+	{
+        if (!isNickRest(s[i]))
+			return false;
+	}
+    return true;
+}
+
+bool isSpecialUser(char c)
+{
+	return c == '-' || c == '_' || c == '.';
+}
+
+bool isValidUsername(const std::string& s)
+{
+	if (s.empty())
+		return false;
+	if (s.size() > 25)
+		return false;
+	for (size_t i = 0; i < s.size(); i++)
+	{
+		if(!isSpecialUser(s[i]) && !isalnum(s[i]))
+			return false;
+	}
+	return true;
+}
+
+bool channelHasFd(const channel* ch, int fd)
+{
+    std::list<client*> lst = ch->getClientList();
+    for (std::list<client*>::const_iterator it = lst.begin(); it != lst.end(); ++it)
+	{
+        if ((*it)->getFd() == fd)
+			return true;
+    }
+    return false;
+}
+
+bool sharesAChannelByFd(const client* a, const client* b,
+                               const std::list<channel*>& channels)
+{
+    if (!a || !b) return false;
+    const int fda = a->getFd();
+    const int fdb = b->getFd();
+    if (fda == fdb) return true;
+
+    for (std::list<channel*>::const_iterator it = channels.begin(); it != channels.end(); ++it)
+    {
+        if (channelHasFd((*it), fda) && channelHasFd((*it), fdb))
+            return true;
+    }
+    return false;
+}
+
+std::string userPrefix(const client* c)
+{
+	std::string prefix;
+	if (!(c->getNick().empty()))
+		prefix.append(":" + c->getNick());
+	if (!(c->getUser().empty()))
+		prefix.append("!" + c->getUser());
+	if (!(c->getHost().empty()))
+		prefix.append("@" + c->getHost());
+    return (prefix);
+}
+
+client* server::getClientByFd(int fd)
+{
+	for (std::list<client*>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		if ((*it)->getFd() == fd)
+			return (*it);
+	}
+	return NULL;
+}
+
+client* server::getClientByNick(const std::string& nick)
+{
+	for (std::list<client*>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		if ((*it)->getNick() == nick)
+			return (*it);
+	}
+	return NULL;
+}
+
+channel* server::getChannelByName(const std::string& name)
+{
+	for (std::list<channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
+	{
+		if ((*it)->getChannelName() == name)
+			return (*it);
+	}
+	return NULL;
+}
+/*-------------------------*/
+
+ /*-------------------UTILS------------------------*/
+
+bool server::isNickTaken(const std::string& nick) {
+    for (std::list<client*>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+        if ((*it)->getNick() == nick) return true;
+    return false;
+}
+
+void server::broadcastNickChange(client* cli, const std::string& oldNick, const std::string& newNick)
+{
+	(void)oldNick;
+
+    // Prépare la ligne NICK
+    const std::string line = userPrefix(cli) + " NICK :" + newNick + "\r\n";
+
+    // À soi
+    cli->enqueueLine(line);
+    polloutActivate(cli);
+
+    // À tous les autres clients qui partagent au moins un channel
+    for (std::list<client*>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+        if ((*it)->getFd() == cli->getFd())
+            continue;
+        if (sharesAChannelByFd(cli, (*it), _channels))
+		{
+            (*it)->enqueueLine(line);
+            polloutActivate((*it));
+        }
+    }
+}
+
+void        server::broadcastJoinZero(client *cli) {
+	for (std::list<std::string>::iterator chanIt = cli->getChannelList().begin(); chanIt != cli->getChannelList().end(); ++chanIt)
+	{
+		channel* found = getChannelByName(*chanIt);
+		std::string line = userPrefix(cli) + " PART " + (*chanIt) + "\r\n";
+		broadcastToChannel(found, line);
+	}
+	return ;
+}
+
+
+void server::broadcastJoin(client* cli, channel* chan)
+{
+	std::list<client*> chanCL = chan->getClientList();
+	std::string line;
+    for (std::list<client*>::iterator itChan = chanCL.begin(); itChan != chanCL.end(); ++itChan)
+	{
+		line = userPrefix(cli) + " JOIN :" + chan->getChannelName() + "\r\n";
+		(*itChan)->enqueueLine(line);
+		line.clear();
+        if ((*itChan)->getFd() == cli->getFd())
+		{
+			if (!chan->getTopic().empty())
+			{
+				line = this->_serverName + " 332 " + cli->getNick() + " " + chan->getChannelName() + " :" + chan->getTopic() + "\r\n";
+				cli->enqueueLine(line);
+				line.clear();
+				line = this->_serverName + " 333 " + cli->getNick() + " " + chan->getChannelName() + " " + chan->getTopicAuthor() + " " + chan->getTopicTimestampStr() + "\r\n";
+				cli->enqueueLine(line);
+				line.clear();
+			}
+			else
+			{
+				line = this->_serverName + " 331 " +  cli->getNick() + " " + chan->getChannelName() + " :No topic is set" + "\r\n";
+				cli->enqueueLine(line);
+				line.clear();
+			}
+			line = this->_serverName + " 353 " + cli->getNick() + " = " + chan->getChannelName() + ":";
+			for (std::list<client*>::iterator itPrint = chanCL.begin(); itPrint != chanCL.end(); ++itPrint)
+			{
+				std::string present = (*itPrint)->getNick();
+				if (std::find(chan->getOpList().begin(), chan->getOpList().end(), *itPrint) != chan->getOpList().end())
+					present.insert(present.begin(), '@');
+				line.append(" " + present);
+			}
+			line.append("\r\n");
+			cli->enqueueLine(line);
+			line.clear();
+			line = this->_serverName + " 366 " + cli->getNick() + " " + chan->getChannelName() + " :End of /NAMES list.\r\n";
+			cli->enqueueLine(line);
+			line.clear();
+		}
+		polloutActivate(*itChan);
+    }
+}
+
+std::string	intToString(int n)
+{
+	std::stringstream	oss;
+	oss << n;
+	return oss.str();
+}
+
+bool	server::isChannel(std::string str) const
+{
+	return str[0] == '#' || str[0] == '!' || str[0] == '+' || str[0] == '&';
+}
+
+// Envoi 001 à l’enregistrement
+void server::sendWelcomeIfRegistrationComplete(client* cli)
+{
+    if (!cli->getRegistered() && !cli->getNick().empty() && !cli->getUser().empty() && !cli->getPass().empty())
+    {
+        cli->setRegistered(true);
+
+        // Préfixe utilisateur pour le texte (nick!user@host)
+        std::string prefix = userPrefix(cli);
+
+        // RPL_WELCOME (001)
+        std::string line = ":" + _serverName + " 001 " + cli->getNick() + " :Welcome to the Internet Relay Network !!! " + prefix + "\r\n";
+        cli->enqueueLine(line);
+		line.clear();
+		//(002)
+		line = ":" + _serverName + " 002 " + cli->getNick() + " :Your host is " + _serverName + ", running version 1.0\r\n";
+		cli->enqueueLine(line);
+		line.clear();
+		//(003)
+		line = ":" + _serverName + " 003 " + cli->getNick() + " :This server was created " + this->getServerTime() + "\r\n";
+		cli->enqueueLine(line);
+		line.clear();
+		//(004)
+		line = ":" + _serverName + " 004 " + cli->getNick() + " " + _serverName + " " + "1.0 " + "o " + "itklo" + "\r\n";
+		cli->enqueueLine(line);
+		line.clear();
+		//infos
+		line = ":" + _serverName + " 321 " + cli->getNick() + " Channels :Users Topic\r\n";
+        cli->enqueueLine(line);
+		line.clear();
+
+		for (std::list<channel*>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++)
+		{
+			line = ":" + _serverName + " 322 " + cli->getNick() + " " + (*it)->getChannelName() + " " + intToString((*it)->getNumberOfCli()) + " :" + (*it)->getTopic() + "\r\n";
+	        cli->enqueueLine(line);
+			line.clear();
+		}
+		line = ":" + _serverName + " 323 " + cli->getNick() + " :End of /LIST\r\n";
+        cli->enqueueLine(line);
+		line.clear();
+        polloutActivate(cli);
+    }
+}
+
+bool	server::basicChecks(client* cli, message& msg)
+{
+	const std::string target = cli->getNick().empty() ? "*" : cli->getNick();
+
+	// if (cli->getRegistered())
+	// {
+	// 	std::string line = ":" + _serverName + " 462 " + target + " :You may not reregister\r\n";
+    //     cli->enqueueLine(line);
+    //     polloutActivate(cli);
+    //     return false;
+	// }
+    if (msg.getParams().empty())
+    {
+        std::string line = ":" + _serverName + " 431 " + target + " :No nickname given\r\n";
+        cli->enqueueLine(line);
+        polloutActivate(cli);
+        return false;
+    }
+	return true;
+}
+
+void server::broadcastToChannel(channel* ch, const std::string& line)
+{
+    if (!ch) return;
+
+    std::list<client*>& members = ch->getClientList();
+    for (std::list<client*>::iterator it = members.begin(); it != members.end(); ++it)
+    {
+        client* c = *it;
+        if (!c)
+			continue;
+        c->enqueueLine(line);
+        polloutActivate(c);
+    }
+}
+
+bool server::channelEmpty(channel* ch) const
+{
+    if (ch && ch->getClientList().empty())
+		return true;
+    return false;
+}
+
+void server::deleteChannel(channel* ch)
+{
+    if (!ch)
+		return;
+    const std::string& name = ch->name();
+
+    for (std::list<channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
+    {
+        if (*it == ch || (*it && (*it)->name() == name))
+        {
+            _channels.erase(it);
+            delete ch;
+            return;
+        }
+    }
+}
+
+void	server::polloutActivate(client* cli)
+{
+	for (size_t i = 0; i < this->_fds.size(); ++i){
+		if (this->_fds[i].fd == cli->getFd()) {
+            this->_fds[i].events |= POLLOUT;
+            break;
+		}
+	}
+	return;
+}
+
+bool isOP(client* cli, channel* ch)
+{
+    const std::list<client*>& opList = ch->getOpList();
+
+    for (std::list<client*>::const_iterator it = opList.begin(); it != opList.end(); ++it)
+    {
+        if (*it == cli)
+            return true;
+    }
+    return false;
+}
+
