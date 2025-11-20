@@ -172,7 +172,7 @@ int play(t_game* game)
 int main(int argc, char** argv)
 {
     if (argc != 4)
-        return (1);
+        return (-1);
     
     t_game  game;
     if (init_game(&game, argv) == -1)
