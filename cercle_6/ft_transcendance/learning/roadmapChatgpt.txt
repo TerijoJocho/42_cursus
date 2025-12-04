@@ -1,0 +1,374 @@
+Parfait, on va faire ça proprement.
+Je te prépare une roadmap d’apprentissage JavaScript sur 10 jours, spécialement optimisée pour ft_transcendence et ta montée en compétence future en TypeScript.
+
+Chaque jour comporte :
+✔ un plan de cours clair,
+✔ des exemples expliqués,
+✔ des exercices pratiques,
+✔ un mini-projet,
+✔ du temps de relecture MDN (bien ciblé pour ne pas se perdre).
+
+Et à la fin :
+✔ une structure de dossier recommandée pour ft_transcendence
+✔ les bases pour enchaîner sur TypeScript.
+
+⸻
+
+🎓 Roadmap JavaScript – 10 jours (niveau débutant → solide)
+
+⸻
+
+🟦 DAY 1 — Les bases essentielles du langage
+
+Objectif : comprendre la syntaxe, les variables, les types, les opérateurs.
+
+✔ Contenu
+	•	let, const, (et pourquoi éviter var)
+	•	Types primitifs : string, number, boolean, null, undefined, symbol
+	•	Concaténation / template literals
+	•	Opérateurs +, -, %, === vs ==, &&, ||
+	•	Notion d’expression vs instruction
+
+✔ Exemple essentiel
+
+let score = 0;
+const playerName = "Alice";
+
+if (score === 0) {
+  console.log(`${playerName} n'a pas encore marqué.`);
+}
+
+✔ Exercices
+	1.	Crée des variables représentant un joueur de Pong : nom, score, vitesse.
+	2.	Affiche une phrase dynamique utilisant un template literal.
+	3.	Compare deux valeurs en testant == puis === et observe la différence.
+
+✔ Mini-projet
+
+“Mini fiche joueur”
+Écris un script qui :
+	•	demande via prompt() le nom d’un joueur,
+	•	génère un score aléatoire,
+	•	affiche un message de présentation.
+
+⸻
+
+🟦 DAY 2 — Les fonctions, scopes et le mode strict
+
+Objectif : comprendre comment JS gère la portée et les fonctions.
+
+✔ Contenu
+	•	function vs fonctions fléchées
+	•	Paramètres, valeurs par défaut
+	•	Block scope ({})
+	•	Hoisting
+	•	use strict et pourquoi il existe
+
+✔ Exemple essentiel
+
+"use strict";
+
+function add(a, b = 1) {
+  return a + b;
+}
+
+console.log(add(4)); // 5
+
+✔ Exercices
+	1.	Écris une fonction movePaddle(speed) qui simule le déplacement d’une raquette.
+	2.	Transforme-la en fonction fléchée.
+	3.	Expérimente le hoisting avec une déclaration var.
+
+✔ Mini-projet
+
+“Gestionnaire de score”
+Écris un module contenant :
+	•	une fonction increase(score)
+	•	une fonction reset()
+	•	une fonction display(player, score)
+
+⸻
+
+🟦 DAY 3 — Les objets et les tableaux (absolument essentiels en TS aussi)
+
+✔ Contenu
+	•	objets littéraux
+	•	accéder / modifier des propriétés
+	•	tableaux et méthodes (push, map, filter, find)
+	•	spread operator { ...obj }
+
+✔ Exemple essentiel
+
+const player = {
+  name: "Bob",
+  score: 0,
+};
+
+const players = [player, { name: "Alice", score: 3 }];
+
+players.forEach(p => console.log(p.name));
+
+✔ Exercices
+	1.	Crée un tableau de 4 joueurs et trie-les par score.
+	2.	Crée une fonction qui ajoute un nouveau joueur dans un tableau.
+	3.	Duplique un objet avec {...monObjet} et modifie le clone.
+
+✔ Mini-projet
+
+“Gestionnaire de tournoi”
+Un script qui :
+	•	stocke une liste de joueurs
+	•	permet d’ajouter un joueur
+	•	trouve celui qui a le score max
+
+⸻
+
+🟦 DAY 4 — DOM : manipuler une page web
+
+Fondamental pour ta SPA ft_transcendence.
+
+✔ Contenu
+	•	document.querySelector
+	•	créer des éléments (document.createElement)
+	•	ajouter / retirer des classes
+	•	events : click, keydown
+
+✔ Exemple essentiel
+
+const btn = document.querySelector("#start");
+
+btn.addEventListener("click", () => {
+  console.log("Le match commence !");
+});
+
+✔ Exercices
+	1.	Crée un bouton “Start” qui change de couleur au clic.
+	2.	Crée dynamiquement un tableau HTML listant 3 joueurs.
+	3.	Écoute keydown pour détecter ArrowUp.
+
+✔ Mini-projet
+
+“Mini SPA – page joueur”
+Une page HTML avec JS qui :
+	•	génère un bloc “profil” en JS (pas en HTML)
+	•	met à jour le nom en fonction d’un input
+
+⸻
+
+🟦 DAY 5 — ES Modules, organisation du code
+
+Ton futur projet sera entièrement modulaire.
+
+✔ Contenu
+	•	export, import
+	•	rôle du fichier index.js
+	•	architecture de modules
+
+✔ Exemple essentiel
+
+game.js
+
+export function startGame() {
+  console.log("Game started");
+}
+
+main.js
+
+import { startGame } from "./game.js";
+startGame();
+
+✔ Exercices
+	1.	Exporte un tableau de joueurs puis importe-le dans un autre fichier.
+	2.	Crée un module “utils.js” avec 3 fonctions.
+	3.	Crée un module “ui.js” qui génère un bouton.
+
+✔ Mini-projet
+
+“Structure modulaire Pong”
+Crée une mini-architecture :
+
+/game
+  game.js
+  player.js
+/ui
+  buttons.js
+main.js
+
+
+⸻
+
+🟦 DAY 6 — Asynchrone (Promesses, async/await)
+
+✔ Contenu
+	•	callbacks → promises
+	•	fetch()
+	•	async / await
+	•	erreurs (try/catch)
+
+✔ Exemple essentiel
+
+async function getData() {
+  const res = await fetch("https://api.github.com/users/octocat");
+  return await res.json();
+}
+
+✔ Exercices
+	1.	Écris une fonction qui attend 2 secondes avant d’afficher un texte.
+	2.	Utilise fetch pour récupérer une API publique (Pokémon, GitHub).
+	3.	Crée une chaîne de .then() puis réécris-la en async.
+
+✔ Mini-projet
+
+“Mini tableau de stats”
+Récupère un JSON en ligne et affiche-le dans une table HTML.
+
+⸻
+
+🟦 DAY 7 — WebSockets et temps réel
+
+Pour remote players + matchmaking.
+
+✔ Contenu
+	•	WebSocket natif
+	•	events : open, message, close
+	•	sérialisation JSON
+
+✔ Exemple essentiel
+
+const ws = new WebSocket("wss://echo.websocket.org");
+
+ws.onopen = () => ws.send("Hello");
+ws.onmessage = (msg) => console.log("Reçu :", msg.data);
+
+✔ Exercices
+	1.	Connecte-toi à un echo server et renvoie un message.
+	2.	Envoie un objet JSON (“player joined”).
+	3.	Détecte les déconnexions.
+
+✔ Mini-projet
+
+“Chat temps réel basique”
+Affiche en direct les messages reçus.
+
+⸻
+
+🟦 DAY 8 — Canvas et animation (pour Pong)
+
+✔ Contenu
+	•	<canvas>
+	•	2D context : fillRect, clearRect
+	•	requestAnimationFrame
+	•	boucle de jeu
+
+✔ Exemple essentiel
+
+function loop() {
+  ctx.clearRect(0, 0, width, height);
+  ball.x += ball.vx;
+  requestAnimationFrame(loop);
+}
+loop();
+
+✔ Exercices
+	1.	Dessine un rectangle mobile.
+	2.	Ajoute un rebond sur les bords.
+	3.	Contrôle une raquette au clavier.
+
+✔ Mini-projet
+
+“Mini Pong solo”
+	•	une balle
+	•	une raquette contrôlée au clavier
+	•	rebond parfait
+
+⸻
+
+🟦 DAY 9 — Patterns essentiels d’un engine de jeu
+
+Objectif : architecture de ton Pong final.
+
+✔ Contenu
+	•	state machine
+	•	découpler rendering / logic
+	•	input system
+	•	collision system
+
+✔ Exercices
+	1.	Implémente une machine d’état : MENU → GAME → FINISH.
+	2.	Découpe la boucle en update() et render().
+	3.	Crée un gestionnaire d’événements clavier propre.
+
+✔ Mini-projet
+
+“Engine Pong modulaire”
+Créer un squelette complet (sans WebSocket).
+
+⸻
+
+🟦 DAY 10 — Mini-projet final JS (avant TS)
+
+Tu vas créer un Pong local jouable à deux sur le même clavier.
+Ce sera la base parfaite pour ft_transcendence.
+
+✔ Le mini-projet doit inclure :
+	•	canvas
+	•	deux raquettes
+	•	gestion clavier
+	•	collisions
+	•	score
+	•	structure modulaire sérieuse
+
+On le fera ensemble si tu veux.
+
+⸻
+
+🗂 Structure de dossier recommandée pour ft_transcendence
+
+(Frontend sans framework)
+
+frontend/
+  index.html
+  src/
+    main.ts        // entrypoint
+    router/
+      router.ts
+      routes.ts
+    pages/
+      home.ts
+      profile.ts
+      tournament.ts
+      game.ts
+    components/
+      Button.ts
+      Modal.ts
+    game/
+      engine.ts
+      pong/
+        ball.ts
+        paddle.ts
+        collisions.ts
+        renderer.ts
+    ws/
+      connection.ts
+    utils/
+      dom.ts
+      math.ts
+  styles/
+    global.css
+  package.json
+  tsconfig.json
+  vite.config.js (si tu utilises Vite → recommandé)
+
+
+⸻
+
+💬 Tu veux que je t’accompagne jour par jour ?
+
+Si tu veux, on peut faire :
+
+➡️ Day 1 maintenant,
+Tu fais les exos,
+Je corrige,
+On avance ensemble.
+
+Tu veux commencer Day 1 ?
