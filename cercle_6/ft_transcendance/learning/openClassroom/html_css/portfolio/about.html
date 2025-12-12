@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang=fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon portfolio - À propos</title>
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- === HEADER / NAV === -->
+    <header>
+        <nav class="navbar">
+            <h1 clas="logo">Portfolio</h1>
+            <ul class="nav-links">
+                <li> <a href="index.html">Acceuil</a></li>
+                <li> <a href="projects.html">Projets</a></li>
+                <li> <a href="about.html">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<!-- === MAIN CONTENT === -->
+    <main>
+        <section class="about">
+            <h1 class="about-title">À propos de moi</h1>
+            <div class="about-intro">
+                <p>
+                    Je suis en voie de finaliser le Common Core, et pour m'entrainer j'ai réalisé ce mini portfolio.
+                    J'ai acquis des compétences solides en programmation bas niveau (langage C), algorithmie, gestion de projets, et développement web.
+                    La pédagogie par projets de 42 m'a permis de développer une autonomie forte, une capacité à apprendre rapidement et à résoudre des problèmes complexes.
+                    <br>Je suis ouvert à des opportunités de stage, d'alternance ou de collaboration dans le développement logiciel ou web.
+                </p>
+            </div>
+
+            <h2 class="about-subtitle">Compétences</h2>
+            <div class="skill-grid">
+                <div class="skill-category">
+                    <h3>Langages</h3>
+                    <ul>
+                        <li>C</li>
+                        <li>C++</li>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
+                        <li>Shell</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Outils</h3>
+                    <ul>
+                        <li>Git</li>
+                        <li>Docker</li>
+                        <li>VSCode</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Soft skills</h3>
+                    <ul>
+                        <li>Travail en équipe</li>
+                        <li>Autonomie</li>
+                        <li>Pédagogie</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="about-subtitle">Contactez moi</h2>
+            <form class="contact-form" method="get" action="">
+                <label for="prenom">Qui êtes-vous?</label>
+                <input type="text" id="prenom" name="prenom" placeholder="NOM et Prénom">
+
+                <label for="email">Quel est votre email?</label>
+                <input type="email" id="email" name="email" placeholder="Email">
+
+                <label for="message">Que voulez-vous me dire?</label>
+                <textarea rows="5" id="message" name="message" placeholder="Je t'aime..."></textarea>
+
+                <button type="submit" class="button primary">Envoyer</button>
+            </form>
+
+            <div class="about-socials">
+                <a href="https://www.linkedin.com/in/daryl-avril-ab43a4250/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/TerijoJocho" target="_blank">GitHub</a>
+            </div>
+        </section>
+    </main>
+
+<!-- === FOOTER === -->
+    <footer>
+        <p>© 2025 — Mon Portfolio - Avril Daryl</p>
+    </footer>
+</body>
+</html>

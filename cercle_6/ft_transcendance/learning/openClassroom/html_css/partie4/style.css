@@ -1,0 +1,109 @@
+/* table1 */
+.table1 table
+{
+    border-collapse: collapse;
+    margin: auto;
+    border-spacing: 0;
+}
+
+.table1 td, th
+{
+    border: 1px black solid;
+    padding: 1em;
+}
+
+.table1 th
+{
+    background-color: azure;
+}
+
+.table1 caption
+{
+    caption-side: bottom;
+}
+
+/* table2 */
+.table2 table
+{
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.table2 td
+{
+    border: 1px black solid;
+    padding: 1em;
+}
+
+/* table3 */
+.table3 table
+{
+    border-collapse: collapse;
+    margin: auto;
+    /* vertical-align:top; */
+}
+
+.table3 td, th
+{
+    border: 1px black solid;
+    padding: 1em;
+}
+
+/* textarea
+{
+    width: auto;
+    height: auto;
+} */
+
+/* form */
+fieldset
+{
+    background-color: cadetblue;
+    border: 2px black solid;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+legend
+{
+    border: 2px black solid;
+    background-color: wheat;
+    border-radius: 5px;
+
+}
+
+:required {
+    background-color:#F2A3BB;
+}
+
+input
+{
+   border: 2px black solid;
+    border-radius: 5px; 
+}
+
+/* media queries */
+p
+{
+    color: blue;
+}
+
+@media screen and (max-width: 1024px)
+{
+    p {
+        color:#F2A3BB;
+        background-color: azure;
+        font-size: 1.3em;
+    }
+}
+
+.media p
+{
+    width: 250px;
+    height: 110px;
+    text-align: justify;
+    border: 1px solid black;
+    /* text-overflow: ellipsis;
+    white-space: no-wrap; */
+    overflow: scroll;
+}

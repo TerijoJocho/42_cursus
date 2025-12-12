@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <div class="table1">
+            <table>
+                <caption>Ma femme et moi</caption>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Âge</th>
+                </tr>
+                <tr>
+                    <td>Avril</td>
+                    <td>Daryl</td>
+                    <td>24 ans</td>
+                </tr>
+                <tr>
+                    <td>Kabulo</td>
+                    <td>Hyona</td>
+                    <td>23 ans</td>
+                </tr>
+            </table>
+        </div>
+         <div class="table2">
+            <table>
+                <caption>Ma femme, mes amis et moi</caption>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Âge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Avril</td>
+                        <td>Daryl</td>
+                        <td>24 ans</td>
+                    </tr>
+                     <tr>
+                        <td>Kabulo</td>
+                        <td>Hyona</td>
+                        <td>23 ans</td>
+                    </tr>
+                     <tr>
+                        <td>Maturin</td>
+                        <td>Daïna</td>
+                        <td>22 ans</td>
+                    </tr>
+                     <tr>
+                        <td>XXXXX</td>
+                        <td>Nicolas</td>
+                        <td>23 ans</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Toal</td>
+                        <td>4</td>
+                        <td>personnes proches</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+         <div class="table3">
+            <table>
+                <caption>Un tableau avec lignes et colonnes fusionnées</caption>
+                <thead>
+                    <tr>
+                        <th>Titre du film</th>
+                        <th>Pour enfants?</th>
+                        <th>Pour ados?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Massacre à la tronçonneuse</td>
+                        <td>Non trop violent</td>
+                        <td rowspan="2">Oui</td>
+                    </tr>
+                    <tr>
+                        <td>The ring</td>
+                        <td>Effrayant</td>
+                        <!-- <td>Oui</td> plus besoin-->
+                    </tr>
+                    <tr>
+                        <td>Les bisounours font du ski</td>
+                        <td>Oui adapté !</td>
+                        <td>Pas assez violent</td>
+                    </tr>
+                    <tr>
+                        <td>Lucky Luck, seul contre tous</td>
+                        <td colspan="2">Pour toutes la famille</td>
+                        <!-- <td>Pour toutes la famille</td> plus besoin -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="formulaire">
+            <form method="get" action="">
+                <label for="prenom">Votre prénom :</label>
+                <input type="text" name="prenom" id="prenom" placeholder="Ex: Gerard" size="25" maxlength="20">
+            </form>
+            <form method="get" action="">
+                <p>
+                    <label for="commentaire">Votre commentaire:</label><br>
+                    <textarea name="commentaire" id="commentaire" rows="5">Je pense que,</textarea>
+                </p>
+            </form>
+            <form method="get" action="">
+                <p>
+                    Quels ingrédients voulez-vous dans votre burger?<br>
+                    <input type="checkbox" name="steak" id="steak" checked> <label for="steak">Steak</label><br>
+                    <input type="checkbox" name="salade" id="salade"> <label for="salade">Salade</label><br>
+                    <input type="checkbox" name="tomate" id="tomate"> <label for="tomate">Tomate</label><br>
+                    <input type="checkbox" name="fromage" id="fromage"> <label for="fromage">Fromage</label><br>
+                    <input type="checkbox" name="bacon" id="bacon"> <label for="bacon">Bacon</label>
+                </p>
+            </form>
+
+            <form method="get" action="">
+                <p>
+                    Tu m'aimes?<br>
+                    <input type="radio" name="choix" id="yes"> <label for="yes">Yes</label>
+                    <input type="radio" name="choix" id="no"> <label for="no">No</label>
+                </p>
+            </form>
+
+            <form method="get" action="">
+                <p>
+                    <label for="pays">Dans quel pays tu habites?</label>
+                    <select name="pays" id="pays">
+                        <option value="france">France</option>
+                        <option value="canada">Canada</option>
+                        <option value="rdc">RDC</option>
+                    </select>
+                </p>
+            </form>
+
+            <form method="get" action="https://www.apple.com/fr/">
+                <fieldset>
+                    <legend>Coordonnées</legend>
+                    <label for="prenom">Votre prénom:</label> <input type="text" name="prenom" id="prenom" autofocus>
+                    <label for="nom">Votre nom:</label> <input type="text" name="nom" id="nom">
+                    <label for="email">Votre e-mail:</label> <input type="email" name="email" id="email" required>
+                </fieldset>
+                <fieldset>
+                    <legend>Bonheur</legend>
+                    <label for="bonheur">Votre niveau de bonheur:</label> <input type="range" name="bonheur" id="bonheur">
+                </fieldset>
+                <input type="submit" value="Envoyer">
+            </form>
+        </div>
+
+        <div class="media">
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
+    </main>
+    
+</body>
+</html>

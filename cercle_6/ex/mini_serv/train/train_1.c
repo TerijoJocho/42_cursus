@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/select.h>
 
 #include <errno.h>
 #include <string.h>
@@ -125,6 +126,8 @@ int main(int argc, char** argv)
     int max_clients = 1024;
     //tableau de clients
     t_client    clients[max_clients];
+    for (int i = 0; i < max_clients; i++)
+        clients[i].id = -1;
     //id des clients
     int current_id = 0;
     //nb max de fd
@@ -203,6 +206,7 @@ int main(int argc, char** argv)
                         //si le cli avait un msg on free
                         if (clients[fd].msg)
                             free(clients[fd].msg);
+                        clients[fd].id = -1;
                         //on retire ce fd (cli) du set current
                         FD_CLR(fd, &current_set);
                         //et on ferme le fd
